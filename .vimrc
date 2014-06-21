@@ -17,7 +17,8 @@ colorscheme vividchalk
 "vividchalk
 "wombat256mod
 
-set nocompatible "we don't want vi compatibility AKA Make Vim more useful
+"we don't want vi compatibility AKA Make Vim more useful
+" set nocompatible 
 set noswapfile
 set autoread
 set selection=exclusive
