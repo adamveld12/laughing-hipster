@@ -1,0 +1,59 @@
+require 'rake/clean'
+require 'fileutils'
+
+CLOBBER.include "Tools/vim/bundle/*"
+
+vimFolder = "Tools/vim"
+bundles_dir = File.join(File.dirname(__FILE__), "#{vimFolder}/bundle/")
+pluginsFile = File.join(File.dirname(__FILE__), "#{vimFolder}/plugins.txt")
+
+
+task :default => ['clobber', 'vim:install']
+
+namespace :vim do
+
+  directory "#{vimFolder}/bundle"
+
+  desc "installs vim plugins from #{vimFolder}/plugins.txt"
+  task :install do
+    puts "loading plugins into #{bundles_dir}..."
+    lines = IO.readlines pluginsFile
+    puts "Loading #{lines.length} plugins..."
+    lines.each { |source|
+      loadTask = Rake::Task['vim:installPlugin']
+      loadTask.invoke source.sub "\n", ''
+      loadTask.reenable()
+    }
+    puts "Plugins installed!"
+  end
+
+  desc 'loads a vim plugin from a git repo'
+  task :installPlugin, [:source] => "#{vimFolder}/bundle" do |t, args|
+    raise "Must specify git repo to pull from." unless args.source not(nil)
+    dir = gitName args.source
+    puts "Installing #{dir}...."
+    Dir.chdir bundles_dir do
+      sh "git clone #{args.source} #{dir}"
+      FileUtils.rm_rf(File.join(dir, ".git"))
+    end
+    puts "\n\n"
+  end
+
+  
+  desc 'adds and installs a new plugin'
+  task :addPlugin, [:sourceName] do |t, args|
+    source = "git://github.com/#{args.sourceName}.git"
+    File.open pluginsFile, 'a' do |file|
+      file.puts "#{source}\n"
+    end
+    Rake::Task['vim:installPlugin'].invoke source
+  end
+
+
+end
+
+def gitName(gitRepo) 
+    return gitRepo.split('/').last.sub(/\.git$/, '')
+end
+
+

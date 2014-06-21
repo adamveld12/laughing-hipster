@@ -1,0 +1,18 @@
+# File
+*.kdbx
+_*
+.vim_colorv_cache
+.NERDTreeBookmars
+*.log
+./**/*.exe
+.DS_Store
+.viminfo
+.bash_history
+
+# Directory
+.vim/bundle/*
+.cache/
+.gem/
+.ssh/
+.node-gyp/
+./Tools/Console2/
