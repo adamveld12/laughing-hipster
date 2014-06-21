@@ -16,3 +16,5 @@ _*
 .ssh/
 .node-gyp/
 ./Tools/Console2/
+target
+Library
