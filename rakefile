@@ -1,18 +1,18 @@
 require 'rake/clean'
 require 'fileutils'
 
-CLOBBER.include "Tools/vim/bundle/*"
 
 vimFolder = "Tools/vim"
 bundles_dir = File.join(File.dirname(__FILE__), "#{vimFolder}/bundle/")
 pluginsFile = File.join(File.dirname(__FILE__), "#{vimFolder}/plugins.txt")
 
+CLOBBER.include "#{bundles_dir}/*"
 
 task :default => ['clobber', 'vim:install']
 
 namespace :vim do
 
-  directory "#{vimFolder}/bundle"
+  directory "#{bundles_dir}"
 
   desc "installs vim plugins from #{vimFolder}/plugins.txt"
   task :install do
@@ -42,6 +42,7 @@ namespace :vim do
   
   desc 'adds and installs a new plugin'
   task :addPlugin, [:sourceName] do |t, args|
+    raise "Must specify git repo to pull from." unless args.source not(nil)
     source = "git://github.com/#{args.sourceName}.git"
     File.open pluginsFile, 'a' do |file|
       file.puts "#{source}\n"
