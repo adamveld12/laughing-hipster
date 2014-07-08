@@ -244,7 +244,8 @@ au BufRead,BufNewFile *.scala setfiletype scala
 au BufRead,BufNewFile *.less setfiletype css
 au BufRead,BufNewFile *.go setfiletype go
 au BufRead,BufNewFile *.js setfiletype javascript
-au BufRead,BufNewFile *.coffee setfiletype coffeescript
+au BufRead,BufNewFile *.coffee setfiletype coffee
+au BufRead,BufNewFile *.iced setfiletype coffee
 au GUIEnter * set vb t_vb=
 
 if has('gui_running')
@@ -252,7 +253,7 @@ if has('gui_running')
   set guioptions -=T
   set guioptions -=r
   set guioptions -=L
-  set guifont=Ubuntu\ Mono:h26,Consolas:h12
+  set guifont=Ubuntu\ Mono:h36,Consolas:h22
 endif
 
 let g:ruby_path = ':C:\ruby193\bin'

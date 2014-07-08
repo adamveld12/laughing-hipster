@@ -8,13 +8,24 @@ _*
 .DS_Store
 .viminfo
 .bash_history
+.erlang.cookie
+.mongorc.js
+.sh_history
+.dbshell
+.netrc
+
+
 
 # Directory
+.heroku/
 .vim/bundle/*
 .cache/
 .gem/
 .ssh/
 .node-gyp/
 ./Tools/Console2/
+.npm/
 target
 Library
+Tools/vim/bundle/*
+Tools/vim/tutor/
