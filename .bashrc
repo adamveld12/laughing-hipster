@@ -1,5 +1,3 @@
-
-
 # vim: set ft=sh
 # https://github.com/smerrell/dotfiles
 #

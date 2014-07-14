@@ -1,3 +1,5 @@
+# vim: set ft=sh
+
 alias pd="pushd $1"
 alias cdp="cd -"
 

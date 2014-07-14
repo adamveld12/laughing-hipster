@@ -1,0 +1,6 @@
+[submodule "Tools/modules/tmux-MacOSX-pasteboard"]
+	path = Tools/modules/tmux-MacOSX-pasteboard
+	url = git://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard.git
+[submodule "Tools/modules/powerline-fonts"]
+	path = Tools/modules/powerline-fonts
+	url = git://github.com/Lokaltog/powerline-fonts.git
