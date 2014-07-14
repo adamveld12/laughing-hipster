@@ -30,3 +30,5 @@ git://github.com/vim-scripts/django.vim.git
 git://github.com/digitaltoad/vim-jade.git
 git://github.com/airblade/vim-gitgutter.git
 git://github.com/kien/ctrlp.vim.git
+git://github.com/Lokaltog/vim-easymotion.git
+git://github.com/Valloric/YouCompleteMe.git

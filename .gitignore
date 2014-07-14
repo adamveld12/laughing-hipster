@@ -13,6 +13,7 @@ _*
 .sh_history
 .dbshell
 .netrc
+*.dll
 
 
 
