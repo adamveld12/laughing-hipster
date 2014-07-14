@@ -42,7 +42,7 @@ namespace :vim do
   
   desc 'adds and installs a new plugin'
   task :addPlugin, [:sourceName] do |t, args|
-    raise "Must specify git repo to pull from." unless args.source not(nil)
+    raise "Must specify git repo to pull from." unless args.sourceName not(nil)
     source = "git://github.com/#{args.sourceName}.git"
     File.open pluginsFile, 'a' do |file|
       file.puts "#{source}\n"

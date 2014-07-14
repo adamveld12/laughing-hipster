@@ -34,6 +34,7 @@ export EDITOR=vim       # Default Editor
 export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
 export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
 export PAGER=less       # Used to display text / man files
+export PORT=3001
 
 
 #
