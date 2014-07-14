@@ -94,9 +94,7 @@ fi
 function vim(){
   if [[ $# -eq 0 ]]; then
     gvim &
-
   else
     gvim --remote-tab-silent "$@" &
   fi
 }
-

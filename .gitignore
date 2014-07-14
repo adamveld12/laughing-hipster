@@ -4,7 +4,7 @@ _*
 .vim_colorv_cache
 .NERDTreeBookmars
 *.log
-./**/*.exe
+*.exe
 .DS_Store
 .viminfo
 .bash_history
@@ -30,3 +30,4 @@ Library
 Tools/vim/bundle/*
 Tools/vim/tutor/
 .config/
+./**/tags
