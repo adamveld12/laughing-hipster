@@ -66,6 +66,22 @@ LIGHTYELLOW="\[\033[38;5;229m\]"
 CONTINUE="\[\033[38;5;242m\]"
 DARKGRAY="\[\033[38;5;247m\]"
 
+
+parse_git_branch () {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+parse_git_tag () {
+  git describe --tags 2> /dev/null
+}
+
+parse_git_branch_or_tag() {
+  local OUT="$(parse_git_branch)"
+  if [ "$OUT" == " ((no branch))" ]; then
+    OUT="($(parse_git_tag))";
+  fi
+  echo $OUT
+}
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
 # $
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
@@ -73,10 +89,10 @@ DARKGRAY="\[\033[38;5;247m\]"
 # Pretty ugly hack for msys... need to figure out how to determine if my
 # console is 256 color capable
 if [ $OSTYPE = 'msys' ]; then
-  PS1="$GREEN[\$(date +%H:%M)] \u@\h $RED $YELLOW\w \n$EMPTY\$ $GRAY"
+  PS1="$GREEN[\$(date +%H:%M)] \u@\h $RED$(parse_git_branch_or_tag) $YELLOW\w \n\$ $GRAY"
   PS2="$CONTINUE> "
 else
-  PS1="$LIGHTBLUE[\$(date +%H:%M)] \u@\h $LIGHTRED $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
+  PS1="$LIGHTBLUE[\$(date +%H:%M)] \u@\h $LIGHTRED$(parse_git_branch_or_tag) $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
   PS2="$CONTINUE> "
 fi
 

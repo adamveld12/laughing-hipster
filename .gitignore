@@ -2,7 +2,7 @@
 *.kdbx
 _*
 .vim_colorv_cache
-.NERDTreeBookmars
+.NERDTreeBookmarks
 *.log
 *.exe
 .DS_Store
