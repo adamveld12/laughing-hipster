@@ -61,7 +61,9 @@ GRAY="\[\033[1;30m\]"
 EMPTY="\[\033[0;37m\]"
 
 LIGHTBLUE="\[\033[38;5;111m\]"
-LIGHTRED="\[\033[38;5;172m\]"
+LIGHTORANGE="\[\033[38;5;172m\]"
+LIGHTGREEN="\[\033[38;5;70m\]"
+LIGHTRED="\[\033[38;5;161m\]"
 LIGHTYELLOW="\[\033[38;5;229m\]"
 CONTINUE="\[\033[38;5;242m\]"
 DARKGRAY="\[\033[38;5;247m\]"
@@ -89,11 +91,11 @@ parse_git_branch_or_tag() {
 # Pretty ugly hack for msys... need to figure out how to determine if my
 # console is 256 color capable
 if [ $OSTYPE = 'msys' ]; then
-  PS1="$GREEN[\$(date +%H:%M)] \u@\h $RED$(parse_git_branch_or_tag) $YELLOW\w \n\$ $GRAY"
-  PS2="$CONTINUE> "
+  PROMPT_COMMAND='PS1="$GREEN[\$(date +%H:%M)] \u@\h $RED$(parse_git_branch_or_tag) $YELLOW\w \n\$ $GRAY"
+  PS2="$CONTINUE> "'
 else
-  PS1="$LIGHTBLUE[\$(date +%H:%M)] \u@\h $LIGHTRED$(parse_git_branch_or_tag) $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
-  PS2="$CONTINUE> "
+  PROMPT_COMMAND='PS1="$LIGHTBLUE[\$(date +%H:%M)] $LIGHTGREEN\u@\h $LIGHTRED$(parse_git_branch_or_tag) $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
+  PS2="$CONTINUE> "'
 fi
 
 # Load any extra aliases
