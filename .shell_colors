@@ -41,13 +41,22 @@ parse_git_tag () {
 }
 
 parse_git_branch_or_tag() {
-  local OUT=" $(parse_git_branch)"
+  local OUT=" $(parse_git_branch)"
   if [ "$OUT" == " ((no branch))" ]; then
-    OUT=" ($(parse_git_tag))";
-	else [ "$OUT" == "" ]; 
-		OUT="";
+    echo OUT="$(colorize 32 41) $(colorize 39 42)  ($(parse_git_tag))"
+	elif [ "$OUT" == " " ]; then
+		echo OUT="$(colorize 32 41) "
   fi
-  echo $OUT
+  echo "$(colorize 32 41) $(colorize 39 42) $OUT"
+}
+
+
+build_prompt(){
+	TIME="$(colorize 39 46)[$(date +%H:%M)]$(colorize 36 42)";
+	USER="$(colorize 39 42) \u@\h"
+	GIT="$(parse_git_branch_or_tag)"
+	DIR="$(colorize 33 49) \w"
+	echo "$TIME$USER$GIT -$DIR"
 }
 
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
@@ -57,8 +66,8 @@ parse_git_branch_or_tag() {
 # Pretty ugly hack for msys... need to figure out how to determine if my
 # console is 256 color capable
 if [ $OSTYPE = 'msys' ]; then
-  PROMPT_COMMAND='PS1="$(colorize 39 46)[$(date +%H:%M)] $(colorize 39 42) \u@\h $(colorize 39 41)$(parse_git_branch)$(colorize 33 49) \w \n$EMPTY\$ $GRAY" 
-PS2="$CONTINUE> "'
+  PROMPT_COMMAND='PS1="$(build_prompt) \n$EMPTY\$ $GRAY" 
+	PS2="$CONTINUE> "'
 else
   PROMPT_COMMAND='PS1="$LIGHTBLUE[\$(date +%H:%M)] $LIGHTGREEN\u@\h $LIGHTRED$(parse_git_branch_or_tag) $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
   PS2="$CONTINUE> "'
