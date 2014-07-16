@@ -8,11 +8,11 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-RED="\033[0;31m\]"
-YELLOW="\033[0;33m\]"
-GREEN="\033[0;32m\]"
-GRAY="\033[1;30m\]"
-EMPTY="\033[0;37m\]"
+RED="\033[0;31m"
+YELLOW="\033[0;33m"
+GREEN="\033[0;32m"
+GRAY="\033[1;30m"
+EMPTY="\033[0;37m"
 
 LIGHTBLUE="\033[38;5;111m"
 LIGHTORANGE="\033[38;5;172m"
@@ -23,7 +23,13 @@ CONTINUE="\033[38;5;242m"
 DARKGRAY="\033[38;5;247m"
 
 colorize() {
-  echo -en "\033[$2;5;$3m $1 \033[0m"
+	# $1 is foreground
+	# $2 is background
+	if [ $OSTYPE = 'msys' ]; then
+		echo "\033[$2;$1m"
+	else
+		echo "\033[$BG;5;$FGm"
+	fi
 }
 
 parse_git_branch () {
@@ -35,17 +41,13 @@ parse_git_tag () {
 }
 
 parse_git_branch_or_tag() {
-  local OUT="$(parse_git_branch)"
+  local OUT=" $(parse_git_branch)"
   if [ "$OUT" == " ((no branch))" ]; then
-    OUT="($(parse_git_tag))";
+    OUT=" ($(parse_git_tag))";
+	else [ "$OUT" == "" ]; 
+		OUT="";
   fi
   echo $OUT
-}
-
-banner() {
-  for i in {16..21} {23..27} {27..23} {21..16} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
-    echo -e "$LIGHTBLUE $1"
-  for i in {16..21} {23..27} {27..23} {21..16} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
 }
 
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
@@ -55,14 +57,26 @@ banner() {
 # Pretty ugly hack for msys... need to figure out how to determine if my
 # console is 256 color capable
 if [ $OSTYPE = 'msys' ]; then
-  
-  PROMPT_COMMAND='PS1="$GREEN[\$(date +%H:%M)]  \u@\h  $RED$(parse_git_branch_or_tag) $YELLOW\w \n\$ $GRAY"
-  PS2="$CONTINUE> "'
+  PROMPT_COMMAND='PS1="$(colorize 39 46)[$(date +%H:%M)] $(colorize 39 42) \u@\h $(colorize 39 41)$(parse_git_branch)$(colorize 33 49) \w \n$EMPTY\$ $GRAY" 
+PS2="$CONTINUE> "'
 else
   PROMPT_COMMAND='PS1="$LIGHTBLUE[\$(date +%H:%M)] $LIGHTGREEN\u@\h $LIGHTRED$(parse_git_branch_or_tag) $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
   PS2="$CONTINUE> "'
 fi
 
 
+print_map(){
+	if [ $OSTYPE = 'msys' ]; then
+		for i in {0..87} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
+	else
+		for i in {0..255} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
+	fi
+}
+
+banner() {
+  for i in {16..21} {23..27} {27..23} {21..16} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
+    echo -e "$LIGHTBLUE $1"
+  for i in {16..21} {23..27} {27..23} {21..16} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
+}
 
 
