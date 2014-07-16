@@ -2,14 +2,6 @@
 # https://github.com/smerrell/dotfiles
 #
 
-
-# downside of using MSYS
-# LS_COLORS="di=01;36:"
-# export LS_COLORS
-
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
-
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 #
@@ -54,51 +46,9 @@ shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
 
-#
-# Prompt Customizations
-#
-RED="\[\033[0;31m\]"
-YELLOW="\[\033[0;33m\]"
-GREEN="\[\033[0;32m\]"
-GRAY="\[\033[1;30m\]"
-EMPTY="\[\033[0;37m\]"
-
-LIGHTBLUE="\[\033[38;5;111m\]"
-LIGHTORANGE="\[\033[38;5;172m\]"
-LIGHTGREEN="\[\033[38;5;70m\]"
-LIGHTRED="\[\033[38;5;161m\]"
-LIGHTYELLOW="\[\033[38;5;229m\]"
-CONTINUE="\[\033[38;5;242m\]"
-DARKGRAY="\[\033[38;5;247m\]"
-
-
-parse_git_branch () {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-
-parse_git_tag () {
-  git describe --tags 2> /dev/null
-}
-
-parse_git_branch_or_tag() {
-  local OUT="$(parse_git_branch)"
-  if [ "$OUT" == " ((no branch))" ]; then
-    OUT="($(parse_git_tag))";
-  fi
-  echo $OUT
-}
-# [hh:mm] username@host (git branch || svn revision) ~/working/directory
-# $
-# [hh:mm] username@host (git branch || svn revision) ~/working/directory
-# $
-# Pretty ugly hack for msys... need to figure out how to determine if my
-# console is 256 color capable
-if [ $OSTYPE = 'msys' ]; then
-  PROMPT_COMMAND='PS1="$GREEN[\$(date +%H:%M)] \u@\h $RED$(parse_git_branch_or_tag) $YELLOW\w \n\$ $GRAY"
-  PS2="$CONTINUE> "'
-else
-  PROMPT_COMMAND='PS1="$LIGHTBLUE[\$(date +%H:%M)] $LIGHTGREEN\u@\h $LIGHTRED$(parse_git_branch_or_tag) $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
-  PS2="$CONTINUE> "'
+# Load pretty colors
+if [ -f ~/.shell_colors ]; then
+    . ~/.shell_colors
 fi
 
 # Load any extra aliases
