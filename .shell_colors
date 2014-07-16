@@ -8,20 +8,23 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-RED="\[\033[0;31m\]"
-YELLOW="\[\033[0;33m\]"
-GREEN="\[\033[0;32m\]"
-GRAY="\[\033[1;30m\]"
-EMPTY="\[\033[0;37m\]"
+RED="\033[0;31m\]"
+YELLOW="\033[0;33m\]"
+GREEN="\033[0;32m\]"
+GRAY="\033[1;30m\]"
+EMPTY="\033[0;37m\]"
 
-LIGHTBLUE="\[\033[38;5;111m\]"
-LIGHTORANGE="\[\033[38;5;172m\]"
-LIGHTGREEN="\[\033[38;5;70m\]"
-LIGHTRED="\[\033[38;5;161m\]"
-LIGHTYELLOW="\[\033[38;5;229m\]"
-CONTINUE="\[\033[38;5;242m\]"
-DARKGRAY="\[\033[38;5;247m\]"
+LIGHTBLUE="\033[38;5;111m"
+LIGHTORANGE="\033[38;5;172m"
+LIGHTGREEN="\033[38;5;70m"
+LIGHTRED="\033[38;5;161m"
+LIGHTYELLOW="\033[38;5;229m"
+CONTINUE="\033[38;5;242m"
+DARKGRAY="\033[38;5;247m"
 
+colorize() {
+  echo -en "\033[$2;5;$3m $1 \033[0m"
+}
 
 parse_git_branch () {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -39,6 +42,12 @@ parse_git_branch_or_tag() {
   echo $OUT
 }
 
+banner() {
+  for i in {16..21} {23..27} {27..23} {21..16} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
+    echo -e "$LIGHTBLUE $1"
+  for i in {16..21} {23..27} {27..23} {21..16} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
+}
+
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
 # $
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
@@ -52,7 +61,6 @@ if [ $OSTYPE = 'msys' ]; then
 else
   PROMPT_COMMAND='PS1="$LIGHTBLUE[\$(date +%H:%M)] $LIGHTGREEN\u@\h $LIGHTRED$(parse_git_branch_or_tag) $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
   PS2="$CONTINUE> "'
-  for i in {16..21} {21..16} ; do echo -en "\e[38;5;${i}m#\e[0m" ; done ; echo
 fi
 
 
