@@ -28,7 +28,7 @@ colorize() {
 	if [ $OSTYPE = 'msys' ]; then
 		echo "\033[$2;$1m"
 	else
-		echo "\033[$BG;5;$FGm"
+		echo "$(tput setaf $1)$(tput setab $2)"
 	fi
 }
 
@@ -41,22 +41,30 @@ parse_git_tag () {
 }
 
 parse_git_branch_or_tag() {
-  local OUT=" $(parse_git_branch)"
+  local OUT="$(parse_git_branch)"
   if [ "$OUT" == " ((no branch))" ]; then
-    echo OUT="$(colorize 32 41) $(colorize 39 42)  ($(parse_git_tag))"
+    $OUT="($(parse_git_tag))"
 	elif [ "$OUT" == " " ]; then
-		echo OUT="$(colorize 32 41) "
+		$OUT=""
   fi
-  echo "$(colorize 32 41) $(colorize 39 42) $OUT"
+  echo "$OUT"
 }
 
 
-build_prompt(){
-	TIME="$(colorize 39 46)[$(date +%H:%M)]$(colorize 36 42)";
-	USER="$(colorize 39 42) \u@\h"
-	GIT="$(parse_git_branch_or_tag)"
+build_prompt_win(){
+	TIME="$(colorize 39 48)[$(date +%H:%M)]$(colorize 36 42)";
+	USER="$(colorize 39 42) \u@\h $(colorize 32 41)"
+	GIT="$(colorize 39 42)$(parse_git_branch_or_tag) $(colorize 42 49)"
 	DIR="$(colorize 33 49) \w"
-	echo "$TIME$USER$GIT -$DIR"
+	echo "$TIME$USER$GIT $DIR"
+}
+
+build_prompt_mac(){
+	TIME="$(colorize 15 33)[$(date +%H:%M)] $(colorize 33 34)";
+	USER="$(colorize 15 34) \u@\h $(colorize 34 124)"
+	GIT="$(colorize 252 124) $(parse_git_branch_or_tag) $(colorize 124 0)"
+	DIR="$(colorize 11 0) \w"
+	echo "$TIME$USER$GIT $DIR"
 }
 
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
@@ -66,19 +74,40 @@ build_prompt(){
 # Pretty ugly hack for msys... need to figure out how to determine if my
 # console is 256 color capable
 if [ $OSTYPE = 'msys' ]; then
-  PROMPT_COMMAND='PS1="$(build_prompt) \n$EMPTY\$ $GRAY" 
+  PROMPT_COMMAND='PS1="$(build_prompt_win) \n$EMPTY\$ $GRAY" 
 	PS2="$CONTINUE> "'
 else
-  PROMPT_COMMAND='PS1="$LIGHTBLUE[\$(date +%H:%M)] $LIGHTGREEN\u@\h $LIGHTRED$(parse_git_branch_or_tag) $LIGHTYELLOW\w \n$EMPTY\$ $DARKGRAY"
+  PROMPT_COMMAND='PS1="$(build_prompt_mac) \n$EMPTY\$ $LIGHTGRAY"
   PS2="$CONTINUE> "'
 fi
 
 
 print_map(){
 	if [ $OSTYPE = 'msys' ]; then
-		for i in {0..87} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
+		#Background
+		for clbg in {40..47} {100..107} 49 ; do
+			#Foreground
+			for clfg in {30..37} {90..97} 39 ; do
+				#Formatting
+				for attr in 0 1 2 4 5 7 ; do
+					#Print the result
+					echo -en "\e[${attr};${clbg};${clfg}m ^[${attr};${clbg};${clfg}m \e[0m"
+				done
+				echo #Newline
+			done
+		done
 	else
-		for i in {0..255} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
+		for fgbg in 38 48 ; do #Foreground/Background
+			for color in {0..256} ; do #Colors
+				#Display the color
+				echo -en "\033[${fgbg};5;${color}m ${color}\t\e[0m"
+				#Display 10 colors per lines
+				if [ $((($color + 1) % 10)) == 0 ] ; then
+					echo #New line
+				fi
+			done
+			echo #New line
+		done
 	fi
 }
 
@@ -87,5 +116,6 @@ banner() {
     echo -e "$LIGHTBLUE $1"
   for i in {16..21} {23..27} {27..23} {21..16} ; do echo -en "\033[38;5;${i}m#" ; done ; echo
 }
+
 
 
