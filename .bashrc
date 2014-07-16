@@ -19,6 +19,9 @@ if [ -d "${HOME}/bin" ] ; then
     PATH=${HOME}/bin:${PATH}
 fi
 
+if [ -d "${HOME}/tools/vim" ] ; then
+    PATH=${HOME}/tools/vim:${PATH}
+fi
 
 #
 # Dircolors

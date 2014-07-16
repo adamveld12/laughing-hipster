@@ -15,15 +15,15 @@ imenu Stmts.if	if   thenfiki	kk0elli
 imenu Stmts.if-else	if   thenelsefiki	kki	kk0elli
 imenu Stmts.elif	elif   thenki	kk0elli
 imenu Stmts.while	while   dodoneki	kk0elli
-imenu Stmts.break	break 
-imenu Stmts.continue	continue 
+imenu Stmts.break	break
+imenu Stmts.continue	continue
 imenu Stmts.function	() {}ki	k0i
-imenu Stmts.return	return 
+imenu Stmts.return	return
 imenu Stmts.return-true	return 0
 imenu Stmts.return-false	return 1
-imenu Stmts.exit	exit 
-imenu Stmts.shift	shift 
-imenu Stmts.trap	trap 
+imenu Stmts.exit	exit
+imenu Stmts.shift	shift
+imenu Stmts.trap	trap
 imenu Test.existence	[ -e  ]hi
 imenu Test.existence - file		[ -f  ]hi
 imenu Test.existence - file (not empty)	[ -s  ]hi
