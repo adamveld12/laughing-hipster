@@ -24,7 +24,7 @@ alias ss='startserver'
 alias projects='cd /c/Projects'
 alias resrc='source ~/.bash_aliases && source ~/.bashrc && source ~/.profile'
 alias role='whoami -groups -fo list | grep -i'
-alias fu='find ./ -type f -print0 | xargs -0 grep $1'
+alias fu='find ./ -type f -print0 | xargs -0 grep -n $1'
 
 function cc()
 {
