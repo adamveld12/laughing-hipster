@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <settings>
-	<console change_refresh="10" refresh="100" rows="30" columns="80" buffer_rows="9999" buffer_columns="0" shell="&quot;C:\Program Files (x86)\Git\bin\sh.exe&quot; --login -i" init_dir="C:\Users\Adam\Home" start_hidden="0" save_size="0">
+	<console change_refresh="10" refresh="100" rows="30" columns="80" buffer_rows="9999" buffer_columns="0" shell="&quot;C:\Program Files (x86)\Git\bin\sh.exe&quot; --login -i" init_dir="C:\Projects" start_hidden="0" save_size="0">
 		<colors>
 			<color id="0" r="0" g="0" b="0"/>
 			<color id="1" r="0" g="0" b="128"/>
@@ -91,7 +91,7 @@
 	</mouse>
 	<tabs>
 		<tab title="Git Bash" icon="C:\Program Files (x86)\Git\etc\git.ico" use_default_icon="0">
-			<console shell="&quot;C:\Program Files (x86)\Git\bin\sh.exe&quot; --login -i" init_dir="C:\Users\Adam\Home" run_as_user="0" user=""/>
+			<console shell="&quot;C:\Program Files (x86)\Git\bin\sh.exe&quot; --login -i" init_dir="C:\Projects" run_as_user="0" user=""/>
 			<cursor style="11" r="255" g="255" b="255"/>
 			<background type="0" r="0" g="0" b="0">
 				<image file="" relative="0" extend="0" position="0">

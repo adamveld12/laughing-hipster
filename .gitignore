@@ -18,6 +18,7 @@ tags
 
 
 
+
 # Directory
 .heroku/
 .vim/bundle/*
@@ -33,3 +34,5 @@ Tools/vim/bundle/*
 Tools/vim/tutor/
 .config/
 .lesshst
+.atom/compile-cache
+

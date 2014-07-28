@@ -1,0 +1,14 @@
+'editor':
+  'fontSize': 16
+'core':
+  'themes': [
+    'spacegray-mocha-ui'
+    'jellybeans'
+  ]
+  'useReactEditor': true
+'exception-reporting':
+  'userId': '1c9d1b3d-fdb9-e390-da2c-bd840428aa77'
+'welcome':
+  'showOnStartup': false
+'metrics':
+  'userId': 'c4e928ad4b095ae6ca1595c2945c97457bc6fe1f'
