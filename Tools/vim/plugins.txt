@@ -31,5 +31,4 @@ git://github.com/digitaltoad/vim-jade.git
 git://github.com/airblade/vim-gitgutter.git
 git://github.com/kien/ctrlp.vim.git
 git://github.com/Lokaltog/vim-easymotion.git
-git://github.com/OrangeT/vim-csharp.git
 git://github.com/fholgado/minibufexpl.vim.git
