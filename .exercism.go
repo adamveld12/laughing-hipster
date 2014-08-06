@@ -1,0 +1,1 @@
+{"githubUsername":"adamveld12","apiKey":"637eb46302741cf48645b0d1fee03b4d6c49c8c6","exercismDirectory":"/Users/Adam/Projects/exercism","hostname":"http://exercism.io"}

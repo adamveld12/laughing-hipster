@@ -65,7 +65,6 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-
 function vim(){
   if [[ $# -eq 0 ]]; then
     gvim &
