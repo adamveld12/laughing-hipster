@@ -32,3 +32,4 @@ git://github.com/airblade/vim-gitgutter.git
 git://github.com/kien/ctrlp.vim.git
 git://github.com/Lokaltog/vim-easymotion.git
 git://github.com/fholgado/minibufexpl.vim.git
+git://github.com/mxw/vim-jsx.git
