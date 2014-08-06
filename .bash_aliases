@@ -52,26 +52,27 @@ alias sym='~/nugetsymlink'
 alias cw='compass watch $1'
 alias dlb='dml'
 
+# delete merged local branches
 function dml(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
 }
 
-function ehclone()
+function clone()
 {
   if [ -z "$1" ]
   then
     echo "Missing git repository url ending"
-    echo "usage: ehclone 'extendhealth git repository ending' ['target directory name']"
+    echo "usage: clone 'git repository ending' ['target directory name']"
   else
-    giturl="git@github.extendhealth.com:extend-health/$1.git"
+    giturl="git@github.com:$1.git"
 
     if [ -z "$2" ]
     then
       # we DON'T HAVE a target directory
-      git clone --template=C:/Users/adve/eh-git $giturl $1
+      git clone $giturl
     else
       # we HAVE a target directory
-      git clone --template=C:/Users/adve/eh-git $giturl $2
+      git clone $giturl $2
     fi
   fi
 }
