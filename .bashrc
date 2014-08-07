@@ -1,15 +1,7 @@
-# vim: set ft=sh
-# https://github.com/smerrell/dotfiles
-#
+#!/bin/bash
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-#
-# Initialization
-#
-if [ -d "${HOME}/bin" ] ; then
-    PATH=${HOME}/bin:${PATH}
-fi
 
 if [ -d "${HOME}/tools/vim" ] ; then
     PATH=${HOME}/tools/vim:${PATH}
@@ -18,13 +10,6 @@ fi
 if [ -d "${HOME}/.bin" ] ; then
     PATH=${HOME}/.bin:${PATH}
 fi
-
-#
-# Dircolors
-#
-#if [ -f ~/.dircolors ]; then
- # eval `dircolors -b ~/.dircolors`
-#fi
 
 # see environ manfile
 export EDITOR=vim       # Default Editor
@@ -42,13 +27,16 @@ HISTSIZE=50000                            # For a huge history
 export HISTIGNORE="[   ]*:&:bg:fg:exit"   # Don't save these commands in the history
 shopt -s histappend                       # Append to the history file, not overwrite
 
-#
-# Bash behavior
-#
-shopt -s checkwinsize   # Checks window size to get proper line wrapping
-shopt -s cdspell        # Corrects minor spelling errors when cd-ing
-set -o vi               # Set prompt to vi mode
-set -o notify           # Report status of terminated background jobs immediately
+# source development settings
+if [ -f ~/.dev_profile ]; then
+      . ~/.dev_profile
+fi
+
+# if there is a C:/Projects folder on this box
+# then I'm obviously using my work computer
+if [ -d "C:/Projects" ]; then
+  . ~/.work_profile
+fi
 
 # Load pretty colors
 if [ -f ~/.shell_colors ]; then

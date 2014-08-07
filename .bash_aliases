@@ -1,10 +1,7 @@
 # vim: set ft=sh
-
-alias pd="pushd $1"
 alias cdp="cd -"
-
 alias ..='cd ..'
-
+alias pd="pushd $1"
 # list files
 alias ll='ls --color=always -l'
 
@@ -14,33 +11,15 @@ alias fbake='bundle exec rake clobber default test:xunit'
 alias bakeserver='bundle exec rake clobber localci build_env=dev'
 alias uberbake='~/uberbake.txt'
 
-function symlink(){
-  bake nuget:symlink[$1,$2]
-}
-
 #tools
 alias s='start Source/*.sln'
-alias ss='startserver'
 alias projects='cd /c/Projects'
 alias resrc='source ~/.bash_aliases && source ~/.bashrc && source ~/.profile'
 alias role='whoami -groups -fo list | grep -i'
 alias fu='find ./ -type f -print0 | xargs -0 grep -n $1'
 
-function cc()
-{
-  if [ -z "$1" ]
-    then 
-      echo "bake compass:compile"
-      bake compass:compile
-  else
-    echo "compass compile"
-    compass compile $1
-  fi
-}
-
 #git
 alias gs='git status'
-alias ehinit='git init --template=C:/Users/adve/eh-git'
 
 alias diff='git difftool'
 alias diffc='git difftool --cached'
@@ -48,10 +27,7 @@ alias gpr='git pull --rebase'
 alias gmt='git mergetool'
 alias grc='git rebase --continue'
 alias gk='git fetch origin; git remote prune origin; gitk --all &'
-alias sym='~/nugetsymlink'
-alias cw='compass watch $1'
 alias dlb='dml'
-
 # delete merged local branches
 function dml(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
@@ -74,5 +50,13 @@ function clone()
       # we HAVE a target directory
       git clone $giturl $2
     fi
+  fi
+}
+
+function vim(){
+  if [[ $# -eq 0 ]]; then
+    gvim &
+  else
+    gvim --remote-tab-silent "$@" &
   fi
 }
