@@ -49,7 +49,10 @@
 	tool = p4merge
 
 [mergetool "p4merge"]
-	cmd = p4merge.exe -db -nb Base -nl Mine-local -nr Theirs-remote $BASE $LOCAL $REMOTE $MERGED
+	cmd = p4merge.exe $BASE $LOCAL $REMOTE $MERGED
+  keepTemporaries = false
+  trustExitCode = false
+  keepBackup = false
 
 [mergetool]
 	prompt = false
