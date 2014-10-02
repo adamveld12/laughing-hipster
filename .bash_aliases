@@ -28,6 +28,8 @@ alias gmt='git mergetool'
 alias grc='git rebase --continue'
 alias gk='git fetch origin; git remote prune origin; gitk --all &'
 alias dlb='dml'
+
+alias mongodps="mongod --config /usr/local/etc/mongod.conf --fork --logpath ~/.docs/mongo.log"
 # delete merged local branches
 function dml(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done

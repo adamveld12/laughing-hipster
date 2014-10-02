@@ -36,3 +36,4 @@ Tools/vim/tutor/
 .lesshst
 .atom/compile-cache
 
+./assets/**/lib
