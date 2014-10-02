@@ -20,7 +20,6 @@ git://github.com/tsaleh/vim-shoulda.git
 git://github.com/vim-scripts/tComment
 git://github.com/tsaleh/vim-tmux.git
 git://github.com/vim-ruby/vim-ruby.git
-git://github.com/vim-scripts/Gist.vim.git
 git://github.com/oscarh/vimerl.git
 git://github.com/bling/vim-airline.git
 git://github.com/sukima/xmledit.git
