@@ -15,7 +15,7 @@ _*
 .netrc
 *.dll
 tags
-
+.atom/packages
 
 
 

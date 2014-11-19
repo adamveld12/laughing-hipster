@@ -6,7 +6,7 @@
 'core':
   'themes': [
     'spacegray-mocha-ui'
-    'jellybeans'
+    'jellybeans-syntax'
   ]
   'useReactEditor': true
   'projectHome': 'C:\\Projects'

@@ -12,7 +12,7 @@ if [ -d "${HOME}/.bin" ] ; then
 fi
 
 # see environ manfile
-export EDITOR=vim       # Default Editor
+export EDITOR=gvim       # Default Editor
 export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
 export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
 export PAGER=less       # Used to display text / man files
