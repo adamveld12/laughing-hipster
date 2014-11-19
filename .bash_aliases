@@ -55,6 +55,16 @@ function clone()
   fi
 }
 
+# runs vim in the terminal without forking, great for tmux on my mac
+function termvim(){
+  if [[ $# -eq 0 ]]; then
+    vim
+  else
+    vim --remote-tab-silent "$@"
+  fi
+}
+
+# runs vim outside of the term by forking the command and gvim, great for my windows box
 function vim(){
   if [[ $# -eq 0 ]]; then
     gvim &
