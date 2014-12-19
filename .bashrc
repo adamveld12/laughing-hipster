@@ -1,8 +1,5 @@
 #!/bin/bash
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-
 if [ -d "${HOME}/tools/vim" ] ; then
     PATH=${HOME}/tools/vim:${PATH}
 fi
@@ -10,21 +7,6 @@ fi
 if [ -d "${HOME}/.bin" ] ; then
     PATH=${HOME}/.bin:${PATH}
 fi
-
-# see environ manfile
-export EDITOR=gvim       # Default Editor
-export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
-export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
-export PAGER=less       # Used to display text / man files
-
-
-#
-# History
-#
-HISTCONTROL=ignoredups                    # No duplicate commands in history
-HISTSIZE=50000                            # For a huge history
-export HISTIGNORE="[   ]*:&:bg:fg:exit"   # Don't save these commands in the history
-shopt -s histappend                       # Append to the history file, not overwrite
 
 # source development settings
 if [ -f ~/.dev_profile ]; then

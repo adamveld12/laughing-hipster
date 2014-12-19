@@ -34,3 +34,4 @@ git://github.com/fholgado/minibufexpl.vim.git
 git://github.com/mxw/vim-jsx.git
 git://github.com/groenewege/vim-less.git
 git://github.com/cakebaker/scss-syntax.vim.git
+git://github.com/scrooloose/syntastic.git

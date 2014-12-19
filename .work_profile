@@ -4,3 +4,4 @@ if [[ $DEBUG ]] ; then
   echo "I'm on my work machine!"
 fi
 
+

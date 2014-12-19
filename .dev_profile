@@ -1,14 +1,23 @@
 #!/bin/bash
 
-export ERLBIN="/d/Programs/erl6.0/erts-6.0/bin"
-if [ -d "$ERLBIN" ]; then
-  PATH=${ERLBIN}:${PATH}
+if [ -d "C:/Windows" ]; then
+  export WINDOWS="TRUE"
+  export GOPATH="$HOME"
+  export GOBIN="$HOME"
+else
+  export GOPATH="$HOME/../Projects/go"
+  export GOBIN="$HOME/../Projects/go/bin"
 fi
-
 
 if [ -d "${HOME}/tools/plugins" ] ; then
     PATH=${HOME}/tools/plugins:${PATH}
 fi
+
+export ERLBIN="/d/Programs/erl6.0/erts-6.0/bin"
+if [ -d "$ERLBIN" ]; then
+  PATH=${PATH}:${ERLBIN}
+fi
+
 
 # see environ manfile
 export EDITOR=vim       # Default Editor
