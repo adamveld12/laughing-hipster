@@ -6,22 +6,10 @@ if [ -d "C:/Windows" ]; then
   export GOROOT="/D/Programs/Go"
 else
   export GOPATH="$HOME/../Projects/go"
-  export GOROOT="$HOME/../Projects/go"
+  export GOROOT="/usr/local/go"
 fi
 
-export GOBIN="$GOROOT/bin"
-
-PATH=${GOPATH}/bin:${GOBIN}:${PATH}
-
-
-if [ -d "${HOME}/tools/plugins" ] ; then
-    PATH=${HOME}/tools/plugins:${PATH}
-fi
-
-export ERLBIN="/d/Programs/erl6.0/erts-6.0/bin"
-if [ -d "$ERLBIN" ]; then
-  PATH=${PATH}:${ERLBIN}
-fi
+PATH=${PATH}:${GOPATH}/bin
 
 # see environ manfile
 export EDITOR=vim       # Default Editor
