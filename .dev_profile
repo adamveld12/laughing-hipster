@@ -2,12 +2,17 @@
 
 if [ -d "C:/Windows" ]; then
   export WINDOWS="TRUE"
-  export GOPATH="$HOME"
-  export GOBIN="$HOME"
+  export GOPATH="/d:/Projects/Languages/Go"
+  export GOROOT="/D/Programs/Go"
 else
   export GOPATH="$HOME/../Projects/go"
-  export GOBIN="$HOME/../Projects/go/bin"
+  export GOROOT="$HOME/../Projects/go"
 fi
+
+export GOBIN="$GOROOT/bin"
+
+PATH=${GOPATH}/bin:${GOBIN}:${PATH}
+
 
 if [ -d "${HOME}/tools/plugins" ] ; then
     PATH=${HOME}/tools/plugins:${PATH}
@@ -17,7 +22,6 @@ export ERLBIN="/d/Programs/erl6.0/erts-6.0/bin"
 if [ -d "$ERLBIN" ]; then
   PATH=${PATH}:${ERLBIN}
 fi
-
 
 # see environ manfile
 export EDITOR=vim       # Default Editor
@@ -40,3 +44,4 @@ shopt -s checkwinsize   # Checks window size to get proper line wrapping
 shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
+
