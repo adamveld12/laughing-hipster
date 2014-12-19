@@ -37,3 +37,4 @@ Tools/vim/tutor/
 .atom/compile-cache
 
 ./assets/**/lib
+.bin
