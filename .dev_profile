@@ -9,7 +9,8 @@ else
   export GOROOT="/usr/local/go"
 fi
 
-PATH=${PATH}:${GOPATH}/bin
+export GOBIN=${GOPATH}/bin
+PATH=${PATH}:${GOBIN}
 
 # see environ manfile
 export EDITOR=vim       # Default Editor
