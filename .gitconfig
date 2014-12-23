@@ -130,5 +130,8 @@
 	default = current
 
 [user]
-  email = adamveld12@gmail.com
-  name = Adam Veldhousen
+	email = adamveld12@gmail.com
+	name = Adam Veldhousen
+	signingkey = 2B19609D
+[commit]
+	gpgsign = true
