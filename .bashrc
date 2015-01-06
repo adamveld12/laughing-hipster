@@ -1,11 +1,12 @@
 #!/bin/bash
 
-if [ -d "${HOME}/tools/vim" ] ; then
-    PATH=${HOME}/tools/vim:${PATH}
-fi
-
 if [ -d "${HOME}/.bin" ] ; then
     PATH=${HOME}/.bin:${PATH}
+fi
+
+
+if [ -d "${HOME}/tools/vim" ] ; then
+    PATH=${HOME}/Tools/vim:${PATH}
 fi
 
 # source development settings
@@ -29,6 +30,11 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+
+# enable programmable completion features
+if [ -f /etc/git_completion ]; then
+    . /etc/git_completion
+fi
 # enable programmable completion features
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
