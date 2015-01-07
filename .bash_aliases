@@ -57,7 +57,7 @@ function clone()
 }
 
 # runs vim in the terminal without forking, great for tmux on my mac
-function termvim(){
+function vimt(){
   if [[ $# -eq 0 ]]; then
     vim
   else
@@ -65,8 +65,9 @@ function termvim(){
   fi
 }
 
+
 # runs vim outside of the term by forking the command and gvim, great for my windows box
-function vim(){
+function vimd(){
   if [[ $# -eq 0 ]]; then
     gvim &
   else
