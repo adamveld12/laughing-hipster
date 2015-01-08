@@ -2,8 +2,8 @@
 
 if [ -d "C:/Windows" ]; then
   export WINDOWS="TRUE"
-  export GOPATH="/d:/Projects/Languages/Go"
-  export GOROOT="/D/Programs/Go"
+  export GOPATH="D:/Projects/Programming/Go"
+  export GOROOT="D:/Programs/Go"
 else
   export GOPATH="$HOME/../Projects/go"
   export GOROOT="/usr/local/go"
