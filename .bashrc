@@ -36,6 +36,10 @@ if [ -f /etc/git_completion ]; then
     . /etc/git_completion
 fi
 # enable programmable completion features
+if [ -f /etc/git_completion ]; then
+    . /etc/git_completion
+fi
+# enable programmable completion features
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi

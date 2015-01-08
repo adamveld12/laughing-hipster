@@ -1,7 +1,6 @@
 #!/bin/bash
-
 if [[ $DEBUG ]] ; then
   echo "I'm on my work machine!"
 fi
 
-
+alias projects='cd /c/Projects'

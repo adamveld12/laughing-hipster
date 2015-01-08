@@ -12,10 +12,10 @@ fi
 export GOBIN=${GOPATH}/bin
 PATH=${PATH}:${GOBIN}
 
-export GIT_EDITOR=vim.exe
+export GIT_EDITOR=~/Tools/vim/gvim.exe
 
 # see environ manfile
-export EDITOR=gvim       # Default Editor
+export EDITOR=$GIT_EDITOR       # Default Editor
 export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
 export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
 export PAGER=less       # Used to display text / man files

@@ -44,7 +44,6 @@
 [difftool "p4diff"]
 	cmd=p4merge.exe -db -nb Base -nl Mine-local -nr Theirs-remote  $BASE $LOCAL $REMOTE
 
-
 [merge]
 	tool = p4merge
 
@@ -81,7 +80,7 @@
   # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
   trustctime = false
 	autocrlf = true
-	editor = "EDITOR"
+	editor = "~/Tools/vim/gvim.exe"
 
 [color]
   # Use colors in Git commands that are capable of colored output when
@@ -128,7 +127,6 @@
 	default = current
 [pull]
 	default = current
-
 [user]
 	email = adamveld12@gmail.com
 	name = Adam Veldhousen

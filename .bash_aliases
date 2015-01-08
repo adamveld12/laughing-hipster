@@ -13,7 +13,6 @@ alias uberbake='~/uberbake.txt'
 
 #tools
 alias s='start Source/*.sln'
-alias projects='cd /c/Projects'
 alias resrc='source ~/.bash_aliases && source ~/.bashrc && source ~/.profile'
 alias role='whoami -groups -fo list | grep -i'
 alias fu='find ./ -type f -print0 | xargs -0 grep -n $1'
@@ -31,6 +30,7 @@ alias dlb='dml'
 alias gl='git log --pretty=format:"%h %ar by %an: %s"'
 
 alias mongodps="mongod --config /usr/local/etc/mongod.conf --fork --logpath ~/.docs/mongo.log"
+
 # delete merged local branches
 function dml(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
