@@ -6,15 +6,16 @@ if [ -d "C:/Windows" ]; then
   export WINDOWS="TRUE"
   export GOPATH="D:/Projects/Programming/Go"
   export GOROOT="D:/Programs/Go"
+  export GIT_EDITOR=~/Tools/vim/gvim.exe
 else
   export GOPATH="$HOME/../Projects/go"
   export GOROOT="/usr/local/go"
+  export GIT_EDITOR=vim
 fi
 
 export GOBIN=${GOPATH}/bin
 PATH=${PATH}:${GOBIN}
 
-export GIT_EDITOR=~/Tools/vim/gvim.exe
 
 # see environ manfile
 export EDITOR=$GIT_EDITOR       # Default Editor

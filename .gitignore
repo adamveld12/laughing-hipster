@@ -15,7 +15,6 @@ _*
 .netrc
 *.dll
 tags
-.atom/packages
 
 
 
@@ -38,3 +37,11 @@ Tools/vim/tutor/
 
 ./assets/**/lib
 .bin
+.plugman
+.npmrc
+.kre
+.forever
+.android
+.atom/packages
+.cordova
+.grunt-init
