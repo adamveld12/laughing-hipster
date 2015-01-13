@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+# Setup go paths and source go bin
 if [ -d "C:/Windows" ]; then
   export WINDOWS="TRUE"
   export GOPATH="D:/Projects/Programming/Go"
@@ -20,17 +22,13 @@ export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
 export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
 export PAGER=less       # Used to display text / man files
 
-#
 # History
-#
 HISTCONTROL=ignoredups                    # No duplicate commands in history
 HISTSIZE=50000                            # For a huge history
 export HISTIGNORE="[   ]*:&:bg:fg:exit:clear"   # Don't save these commands in the history
 shopt -s histappend                       # Append to the history file, not overwrite
 
-#
 # Bash behavior
-#
 shopt -s checkwinsize   # Checks window size to get proper line wrapping
 shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
