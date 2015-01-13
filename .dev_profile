@@ -1,11 +1,11 @@
 #!/bin/bash
 
-
 # Setup go paths and source go bin
-if [ -d "C:/Windows" ]; then
+if [ -d "/c/Windows" ]; then
   export WINDOWS="TRUE"
-  export GOPATH="D:/Projects/Programming/Go"
-  export GOROOT="D:/Programs/Go"
+  export GOPATH="/d/Projects/Programming/Go"
+  export GOROOT="/d/Programs/Go"
+
   export GIT_EDITOR=~/Tools/vim/gvim.exe
 else
   export GOPATH="$HOME/../Projects/go"

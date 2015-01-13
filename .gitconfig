@@ -13,8 +13,14 @@
   c = clone --recursive
   # Commit all changes
   ca = !git add -A && git commit -av -S
+  # commits with gpgsign flag
+  cs = commit -S
+  # commits with gpgsign and inline message flag
+  csm = commit -S -m
   # Switch to a branch, creating it if necessary
   go = checkout -B
+  # pull rebase
+  pr = pull --rebase
   # Show verbose output about tags, branches or remotes
   tags = tag -l
   branches = branch -a

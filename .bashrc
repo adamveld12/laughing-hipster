@@ -14,8 +14,7 @@ if [ -f ~/.dev_profile ]; then
       . ~/.dev_profile
 fi
 
-# if there is a C:/Projects folder on this box
-# then I'm obviously using my work computer
+# if there is a C:/Projects folder on this box then I'm obviously using my work computer
 if [ -d "C:/Projects" ]; then
   . ~/.work_profile
 fi
@@ -30,15 +29,16 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# enable programmable completion features
+if [ -f /etc/git_completion ]; then
+    . /etc/git_completion
+fi
 
 # enable programmable completion features
 if [ -f /etc/git_completion ]; then
     . /etc/git_completion
 fi
-# enable programmable completion features
-if [ -f /etc/git_completion ]; then
-    . /etc/git_completion
-fi
+
 # enable programmable completion features
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion

@@ -4,3 +4,11 @@ if [[ $DEBUG ]] ; then
 fi
 
 alias projects='cd /c/Projects'
+
+if [ -d "/c/Windows" ]; then
+  export GOROOT="/c/Go"
+  export GOPATH="/c/Projects/Go"
+fi
+
+export GOBIN=${GOPATH}/bin
+PATH=${PATH}:${GOBIN}:${GOROOT}/bin
