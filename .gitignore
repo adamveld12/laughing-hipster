@@ -15,7 +15,9 @@ _*
 .netrc
 *.dll
 tags
+*.orig
 
+.gnupg
 
 
 # Directory
@@ -45,3 +47,6 @@ Tools/vim/tutor/
 .atom/packages
 .cordova
 .grunt-init
+Tools/vim/vimrc
+Tools/vim/vim74
+Tools/cmder
