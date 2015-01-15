@@ -16,6 +16,7 @@ fi
 
 # if there is a C:/Projects folder on this box then I'm obviously using my work computer
 if [ -d "C:/Projects" ]; then
+  export WORK="TRUE"
   . ~/.work_profile
 fi
 
@@ -27,11 +28,6 @@ fi
 # Load any extra aliases
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
-fi
-
-# enable programmable completion features
-if [ -f /etc/git_completion ]; then
-    . /etc/git_completion
 fi
 
 # enable programmable completion features

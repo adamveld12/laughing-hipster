@@ -5,17 +5,18 @@ if [ -d "/c/Windows" ]; then
   export WINDOWS="TRUE"
   export GOPATH="/d/Projects/Programming/Go"
   export GOROOT="/d/Programs/Go"
-
   export GIT_EDITOR=~/Tools/vim/gvim.exe
+  PATH=${PATH}:/c/tools/ruby193/bin
 else
   export GOPATH="$HOME/../Projects/go"
   export GOROOT="/usr/local/go"
   export GIT_EDITOR=vim
+  export WINDOWS="FALSE"
 fi
 
-export GOBIN=${GOPATH}/bin
-PATH=${PATH}:${GOBIN}
 
+export GOBIN=${GOPATH}/bin
+PATH=${PATH}:${GOBIN}:${GOROOT}/bin
 
 # see environ manfile
 export EDITOR=$GIT_EDITOR       # Default Editor

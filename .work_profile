@@ -10,5 +10,3 @@ if [ -d "/c/Windows" ]; then
   export GOPATH="/c/Projects/Go"
 fi
 
-export GOBIN=${GOPATH}/bin
-PATH=${PATH}:${GOBIN}:${GOROOT}/bin
