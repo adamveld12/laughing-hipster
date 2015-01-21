@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # Setup go paths and source go bin
 if [ -d "/c/Windows" ]; then
   export WINDOWS="TRUE"
@@ -14,6 +15,11 @@ else
   export WINDOWS="FALSE"
 fi
 
+# if there is a C:/Projects folder on this box then I'm obviously using my work computer
+if [ -d "/c/Projects" ]; then
+  export WORK="TRUE"
+  . ~/.work_profile
+fi
 
 export GOBIN=${GOPATH}/bin
 PATH=${PATH}:${GOBIN}:${GOROOT}/bin

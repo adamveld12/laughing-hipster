@@ -14,12 +14,6 @@ if [ -f ~/.dev_profile ]; then
       . ~/.dev_profile
 fi
 
-# if there is a C:/Projects folder on this box then I'm obviously using my work computer
-if [ -d "C:/Projects" ]; then
-  export WORK="TRUE"
-  . ~/.work_profile
-fi
-
 # Load pretty colors
 if [ -f ~/.shell_colors ]; then
     . ~/.shell_colors
