@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2015-02-04 15:22:11" build="140707">
+		<key name=".Vanilla" modified="2015-02-04 21:22:41" build="140707">
 			<value name="ColorTable00" type="dword" data="00222827"/>
 			<value name="ColorTable01" type="dword" data="009e5401"/>
 			<value name="ColorTable02" type="dword" data="0004aa74"/>
@@ -135,14 +135,14 @@
 			<value name="UseCurrentSizePos" type="hex" data="01"/>
 			<value name="WindowMode" type="dword" data="0000051f"/>
 			<value name="ConWnd Width" type="dword" data="02000050"/>
-			<value name="ConWnd Height" type="dword" data="02000046"/>
+			<value name="ConWnd Height" type="dword" data="02000053"/>
 			<value name="Cascaded" type="hex" data="01"/>
-			<value name="ConWnd X" type="dword" data="000000c0"/>
+			<value name="ConWnd X" type="dword" data="00000090"/>
 			<value name="ConWnd Y" type="dword" data="fffffffd"/>
 			<value name="16bit Height" type="dword" data="00000000"/>
 			<value name="AutoSaveSizePos" type="hex" data="01"/>
 			<value name="IntegralSize" type="hex" data="00"/>
-			<value name="QuakeStyle" type="hex" data="02"/>
+			<value name="QuakeStyle" type="hex" data="01"/>
 			<value name="QuakeAnimation" type="dword" data="0000012c"/>
 			<value name="HideCaption" type="hex" data="00"/>
 			<value name="HideChildCaption" type="hex" data="01"/>
@@ -157,7 +157,7 @@
 			<value name="ConsoleFontHeight" type="dword" data="00000005"/>
 			<value name="DefaultBufferHeight" type="dword" data="00001388"/>
 			<value name="AutoBufferHeight" type="hex" data="01"/>
-			<value name="CmdOutputCP" type="dword" data="00000000"/>
+			<value name="CmdOutputCP" type="dword" data="00000002"/>
 			<value name="ComSpec.Type" type="hex" data="00"/>
 			<value name="ComSpec.Bits" type="hex" data="00"/>
 			<value name="ComSpec.UpdateEnv" type="hex" data="00"/>
@@ -459,10 +459,10 @@
 			<value name="KeyMacro02.Text" type="string" data="Task(&quot;PowerShell&quot;)"/>
 			<value name="KeyMacro03" type="dword" data="000011d0"/>
 			<value name="KeyMacro03.Text" type="string" data="FontSetSize(1,2)"/>
-			<value name="KeyMacro04" type="dword" data="80808000"/>
-			<value name="KeyMacro04.Text" type="string" data=""/>
-			<value name="KeyMacro05" type="dword" data="80808000"/>
-			<value name="KeyMacro05.Text" type="string" data=""/>
+			<value name="KeyMacro04" type="dword" data="0000a253"/>
+			<value name="KeyMacro04.Text" type="string" data="Split(0,0,50)"/>
+			<value name="KeyMacro05" type="dword" data="0000a249"/>
+			<value name="KeyMacro05.Text" type="string" data="Split(0, 50, 0)"/>
 			<value name="KeyMacro06" type="dword" data="00000000"/>
 			<value name="KeyMacro06.Text" type="string" data=""/>
 			<value name="KeyMacro07" type="dword" data="00000000"/>
@@ -525,9 +525,9 @@
 			<value name="DndLKey" type="hex" data="00"/>
 			<value name="DndRKey" type="hex" data="a2"/>
 			<value name="WndDragKey" type="dword" data="00121101"/>
-				<key name="Tasks" modified="2015-02-04 15:22:12" build="140707">
+				<key name="Tasks" modified="2015-02-04 21:22:41" build="140707">
 				<value name="Count" type="dword" data="00000003"/>
-						<key name="Task1" modified="2015-02-04 15:22:12" build="140707">
+						<key name="Task1" modified="2015-02-04 21:22:41" build="140707">
 					<value name="Name" type="string" data="{Bash}"/>
 					<value name="Hotkey" type="dword" data="0000a242"/>
 					<value name="GuiArgs" type="string" data="/icon &quot;C:\Program Files (x86)\Git\unins000.exe&quot;"/>
@@ -535,7 +535,7 @@
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
 				</key>
-						<key name="Task2" modified="2015-02-04 15:22:12" build="140707">
+						<key name="Task2" modified="2015-02-04 21:22:41" build="140707">
 					<value name="Name" type="string" data="{cmd}"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=" /icon &quot;%CMDER_ROOT%\cmder.exe&quot;"/>
@@ -543,7 +543,7 @@
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
 				</key>
-						<key name="Task3" modified="2015-02-04 15:22:12" build="140707">
+						<key name="Task3" modified="2015-02-04 21:22:41" build="140707">
 					<value name="Name" type="string" data="{PowerShell}"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data="/dir &quot;%userprofile%&quot;"/>
@@ -552,11 +552,11 @@
 					<value name="Count" type="dword" data="00000001"/>
 				</key>
 			</key>
-				<key name="Apps" modified="2015-02-04 15:22:12" build="140707">
+				<key name="Apps" modified="2015-02-04 21:22:41" build="140707">
 				<value name="Count" type="dword" data="00000000"/>
 			</key>
-				<key name="Colors" modified="2015-02-04 15:22:12" build="140707">
-			<key name="Palette1" modified="2015-02-04 15:22:12" build="140707">
+				<key name="Colors" modified="2015-02-04 21:22:41" build="140707">
+			<key name="Palette1" modified="2015-02-04 21:22:41" build="140707">
 					<value name="Name" type="string" data="Monokai"/>
 					<value name="ExtendColors" type="hex" data="00"/>
 					<value name="ExtendColorIdx" type="hex" data="0e"/>
