@@ -50,3 +50,10 @@ Tools/vim/tutor/
 Tools/vim/vimrc
 Tools/vim/vim74
 Tools/cmder
+.git-stats
+.wireshark/
+.git-templates/
+.k/
+.vagrant*
+VirtualBox VMs/
+Applications/
