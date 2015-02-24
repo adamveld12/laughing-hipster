@@ -1,14 +1,14 @@
 #!/bin/bash
-
-
 # Setup go paths and source go bin
 if [ -d "/c/Windows" ]; then
+  export ANSIBLE_HOSTS="/c/ansible/hosts"
   export WINDOWS="TRUE"
   export GOPATH="/d/Projects/Programming/Go"
   export GOROOT="/d/Programs/Go"
   export GIT_EDITOR=~/Tools/vim/gvim.exe
   PATH=${PATH}:/c/tools/ruby193/bin
 else
+  export ANSIBLE_HOSTS="~/.ansible/hosts"
   export GOPATH="$HOME/../Projects/go"
   export GOROOT="/usr/local/go"
   export GIT_EDITOR=vim
@@ -42,3 +42,40 @@ shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
 
+
+# Override the Git command
+git() {
+  cmd=$1
+  shift
+  extra=""
+
+  quoted_args=""
+  whitespace="[[:space:]]"
+  for i in "$@"
+  do
+      quoted_args="$quoted_args \"$i\""
+  done
+
+  cmdToRun="`which git` "$cmd" $quoted_args"
+  cmdToRun=`echo $cmdToRun | sed -e 's/^ *//' -e 's/ *$//'`
+  bash -c "$cmdToRun"
+  if [ $? -eq 0 ]; then
+    # Commit stats
+    if [ "$cmd" == "commit" ]; then
+      commit_hash=`git rev-parse HEAD`
+      repo_url=`git config --get remote.origin.url`
+      commit_date=`git log -1 --format=%cd`
+      commit_data="\"{ \"date\": \"$commit_date\", \"url\": \"$repo_url\", \"hash\": \"$commit_hash\" }\""
+      git-stats --record "$commit_data"
+    fi
+  fi
+}
+
+commits() {
+  echo `fortune`
+  if [ -f `which git-stats` ]; then
+    bash -c "git-stats"
+  fi
+}
+
+commits
