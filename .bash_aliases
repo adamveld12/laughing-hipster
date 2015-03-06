@@ -72,7 +72,7 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias mongodps="mongod --config /usr/local/etc/mongod.conf --fork --logpath ~/.docs/mongo.log"
 
 # delete merged local branches
-function dml(){
+function prunelocal(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
 }
 
