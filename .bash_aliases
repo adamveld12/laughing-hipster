@@ -2,6 +2,7 @@
 alias cdp="cd -"
 alias ..='cd ..'
 alias pd="pushd $1"
+
 # list files
 alias ll='ls --color=always -l'
 
@@ -24,6 +25,7 @@ alias gmt='git mergetool'
 alias grc='git rebase --continue'
 alias gk='git fetch origin; git remote prune origin; gitk --all &'
 alias gl='git log --pretty=format:"%h %ar by %an: %s"'
+
 
 # Get week number
 alias week='date +%V'
