@@ -1,4 +1,5 @@
 # File
+.rnd
 *.kdbx
 _*
 .vim_colorv_cache
@@ -35,8 +36,7 @@ Tools/vim/bundle/*
 Tools/vim/tutor/
 .config/
 .lesshst
-.atom/compile-cache
-
+.atom
 ./assets/**/lib
 .bin
 .plugman
@@ -54,6 +54,8 @@ Tools/cmder
 .wireshark/
 .git-templates/
 .k/
+.boot2docker/
 .vagrant*
 VirtualBox VMs/
+.VirtualBox/
 Applications/

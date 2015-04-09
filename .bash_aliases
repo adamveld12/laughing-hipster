@@ -8,6 +8,7 @@ alias ll='ls --color=always -l'
 
 #rake
 alias bake='bundle exec rake'
+alias clear="clear && printmotd"
 
 #tools
 alias s='start Source/*.sln'

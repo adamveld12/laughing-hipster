@@ -4,10 +4,6 @@ function prunelocal(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
 }
 
-function cls(){
-  clear
-  printmotd
-}
 
 function printmotd(){
   if [[ $WORK ]]; then
