@@ -137,7 +137,7 @@
 [user]
 	email = adamveld12@gmail.com
 	name = Adam Veldhousen
-	signingkey = 2B19609D
+	signingkey = 415C0B9C
 [commit]
 	gpgsign = true
 [credential]
