@@ -140,3 +140,7 @@
 	signingkey = 2B19609D
 [commit]
 	gpgsign = true
+[credential]
+	helper = osxkeychain
+[init]
+	templatedir = ~/.git-templates
