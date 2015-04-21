@@ -72,9 +72,8 @@ git() {
 }
 
 commits() {
-  echo `fortune`
   if [ -f `which git-stats` ]; then
-    bash -c "git-stats"
+    "git-stats"
   fi
 }
 
