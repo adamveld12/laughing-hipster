@@ -4,13 +4,14 @@ function prunelocal(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
 }
 
-
 function printmotd(){
   if [[ $WORK ]]; then
    cat ~/work_motd 
   else
     cat ~/motd 
   fi
+  echo ""
+  fortune
   echo ""
 }
 

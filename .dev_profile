@@ -72,9 +72,13 @@ git() {
 }
 
 commits() {
+  echo ""
+  fortune
+  echo ""
   if [ -f `which git-stats` ]; then
     "git-stats"
   fi
+  echo ""
 }
 
 commits
