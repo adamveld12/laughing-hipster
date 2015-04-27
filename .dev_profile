@@ -72,9 +72,7 @@ git() {
 }
 
 commits() {
-  echo ""
-  fortune
-  echo ""
+  printmotd
   if [ -f `which git-stats` ]; then
     "git-stats"
   fi
