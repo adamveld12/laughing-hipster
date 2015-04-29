@@ -54,10 +54,10 @@ nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
 
 
 " pane resizing
-nnoremap <S-w> :resize -2<Cr>
-nnoremap <S-s> :resize +2<Cr>
-nnoremap <S-a> :vertical resize +2<Cr>
-nnoremap <S-d> :vertical resize -2<Cr>
+nnoremap <C-w> :resize -2<Cr>
+nnoremap <C-x> :resize +2<Cr>
+nnoremap <C-a> :vertical resize +2<Cr>
+nnoremap <C-d> :vertical resize -2<Cr>
 
 "pane movements
 noremap <C-h> <C-w>h
