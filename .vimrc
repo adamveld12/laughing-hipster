@@ -2,8 +2,12 @@
 set runtimepath=,$VIMRUNTIME,$VIM/vimfiles,~/Tools/vim
 let g:ruby_path = ':C:\ruby193\bin'
 
+
 call pathogen#infect()
 call pathogen#helptags()
+
+
+set omnifunc=syntaxcomplete#Complete
 
 "we don't want vi compatibility AKA Make Vim more useful
 set nocompatible 
@@ -219,10 +223,13 @@ let g:airline#extensions#branch#empty_message = 'No Branch'
 let g:airline#extensions#branch#displayed_head_limit = 15
 " enable/disable fugitive/lawrencium integration >
 let g:airline#extensions#branch#enabled = 1
+
+" Enable file type detection
+filetype plugin on
+filetype on
+
 " Automatic commands
 if has("autocmd")
-	" Enable file type detection
-	filetype on
 	" Treat .json files as .js
 	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 	" Treat .md files as Markdown
@@ -237,8 +244,6 @@ if has("autocmd")
   autocmd BufRead,BufNewFile *.go setfiletype golang syntax=go
 endif
 
-filetype on
-filetype plugin on  
 
 au GUIEnter * set vb t_vb=
 

@@ -15,6 +15,14 @@ else
   export WINDOWS="FALSE"
 fi
 
+if [-d "/c/Windows" ]; then
+  export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
+else
+  export BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ WIndows/
+fi
+
+PATH=${PATH}:${BOOT2DOCKER}
+
 # if there is a C:/Projects folder on this box then I'm obviously using my work computer
 if [ -d "/c/Projects" ]; then
   export WORK="TRUE"
