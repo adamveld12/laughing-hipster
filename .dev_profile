@@ -1,8 +1,8 @@
 #!/bin/bash
 # Setup go paths and source go bin
 if [ -d "/c/Windows" ]; then
-  export ANSIBLE_HOSTS="/c/ansible/hosts"
   export WINDOWS="TRUE"
+  export ANSIBLE_HOSTS="/c/ansible/hosts"
   export GOPATH="/d/Projects/Programming/Go"
   export GOROOT="/d/Programs/Go"
   export GIT_EDITOR=~/Tools/vim/gvim.exe
@@ -16,12 +16,11 @@ else
 fi
 
 if [ -d "/c/Windows" ]; then
-  export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
+  export BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ Windows/
 else
-  export BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ WIndows/
+  export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
 fi
 
-PATH=${PATH}:${BOOT2DOCKER}
 
 # if there is a C:/Projects folder on this box then I'm obviously using my work computer
 if [ -d "/c/Projects" ]; then
@@ -29,6 +28,7 @@ if [ -d "/c/Projects" ]; then
   . ~/.work_profile
 fi
 
+PATH=${PATH}:${BOOT2DOCKER}
 export GOBIN=${GOPATH}/bin
 PATH=${PATH}:${GOBIN}:${GOROOT}/bin
 
@@ -50,41 +50,8 @@ shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
 
+if [ $OSTYPE = "linux-gnu" ]; then
+  ulimit -n 1000000 unlimited
+fi
 
-# Override the Git command
-git() {
-  cmd=$1
-  shift
-  extra=""
-
-  quoted_args=""
-  whitespace="[[:space:]]"
-  for i in "$@"
-  do
-      quoted_args="$quoted_args \"$i\""
-  done
-
-  cmdToRun="`which git` "$cmd" $quoted_args"
-  cmdToRun=`echo $cmdToRun | sed -e 's/^ *//' -e 's/ *$//'`
-  bash -c "$cmdToRun"
-  if [ $? -eq 0 ]; then
-    # Commit stats
-    if [ "$cmd" == "commit" ]; then
-      commit_hash=`git rev-parse HEAD`
-      repo_url=`git config --get remote.origin.url`
-      commit_date=`git log -1 --format=%cd`
-      commit_data="\"{ \"date\": \"$commit_date\", \"url\": \"$repo_url\", \"hash\": \"$commit_hash\" }\""
-      git-stats --record "$commit_data"
-    fi
-  fi
-}
-
-commits() {
-  printmotd
-  if [ -f `which git-stats` ]; then
-    "git-stats"
-  fi
-  echo ""
-}
-
-commits
+printmotd
