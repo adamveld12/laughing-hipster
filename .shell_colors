@@ -43,12 +43,7 @@ colorize() {
   # $1 is foreground
   # $2 is background
   # $3 is content
-  if [ $OSTYPE = 'msys' ]; then
-    echo "\033[$2;$1m"
-  else
-    echo -e "\033[48;5;$2;38;5;$1m$3\\033[0m"
-    #echo "$(tput setaf $1)$(tput setab $2)"
-  fi
+  echo -e "\033[48;5;$2;38;5;$1m$3\\033[0m"
 }
 
 parse_git_branch () {
@@ -62,7 +57,7 @@ parse_git_tag () {
 parse_git_branch_or_tag() {
   local OUT="$VC$(parse_git_branch)"
   if [ "$OUT" == " ((no branch))" ]; then
-    echo "$VC($(parse_git_tag)) "
+    echo "$VC ($(parse_git_tag)) "
   elif [ "$OUT" == "$VC" ]; then
     echo "x$VC"
   else
@@ -72,11 +67,12 @@ parse_git_branch_or_tag() {
 
 
 build_prompt_win(){
-  TIME="$(colorize 39 46)[$(date +%H:%M)]$(colorize 36 42)$RARS";
-  USER="$(colorize 39 42) \u@\h $(colorize 32 41)$RARS"
-  GIT="$(colorize 39 41)$(parse_git_branch_or_tag) $(colorize 31 49)"
-  DIR="$(colorize 33 49) \w"
-  echo "$TIME$USER$GIT$DIR"
+  local TIME="$(colorize 39 46 ' [$(date +%H:%M)] ')$(colorize 36 42 $RARS)";
+  local USER="$(colorize 39 42 ' \u@\h ')$(colorize 32 41 $RARS)"
+  local GIT="$(colorize 39 41 ' $(parse_git_branch_or_tag) ')$(colorize 31 49 $RARS)"
+  local DIR="$(colorize 33 49 ' \w ')"
+  local LEFT="$TIME$USER$GIT$DIR\033[0;0m "
+  echo "$LEFT"
 }
 
 build_prompt_mac(){
@@ -107,7 +103,7 @@ print_prompt(){
 # Pretty ugly hack for msys... need to figure out how to determine if my
 # console is 256 color capable
 if [ $OSTYPE = 'msys' ]; then
-  PROMPT_COMMAND='PS1="$(build_prompt_win) \n$EMPTY\$ $GRAY" 
+  PROMPT_COMMAND='PS1="$(build_prompt_win) \n$EMPTY\$"
   PS2="$CONTINUE> "'
 else
   PROMPT_COMMAND='PS1="$(build_prompt_mac) \n$EMPTY\$"'
