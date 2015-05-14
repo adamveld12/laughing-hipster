@@ -42,10 +42,12 @@ LK=""
 colorize() {
   # $1 is foreground
   # $2 is background
+  # $3 is content
   if [ $OSTYPE = 'msys' ]; then
     echo "\033[$2;$1m"
   else
-    echo "$(tput setaf $1)$(tput setab $2)"
+    echo -e "\033[48;5;$2;38;5;$1m$3\\033[0m"
+    #echo "$(tput setaf $1)$(tput setab $2)"
   fi
 }
 
@@ -60,7 +62,7 @@ parse_git_tag () {
 parse_git_branch_or_tag() {
   local OUT="$VC$(parse_git_branch)"
   if [ "$OUT" == " ((no branch))" ]; then
-    echo "$VC($(parse_git_tag))"
+    echo "$VC($(parse_git_tag)) "
   elif [ "$OUT" == "$VC" ]; then
     echo "x$VC"
   else
@@ -74,15 +76,15 @@ build_prompt_win(){
   USER="$(colorize 39 42) \u@\h $(colorize 32 41)$RARS"
   GIT="$(colorize 39 41)$(parse_git_branch_or_tag) $(colorize 31 49)"
   DIR="$(colorize 33 49) \w"
-  echo "$TIME$USER$GIT $DIR"
+  echo "$TIME$USER$GIT$DIR"
 }
 
 build_prompt_mac(){
-  local TIME="$(colorize 15 33)[$(date +%H:%M)] $(colorize 33 34)$RARS";
-  local USER="$(colorize 15 34)\u@\h $(colorize 34 124)$RARS"
-  local GIT="$(colorize 252 124) $(parse_git_branch_or_tag) $(colorize 124 240)$RARS"
-  local DIR=" $(colorize 11 240)\w $(colorize 240 0)$RARS"
-  local LEFT="$TIME$USER$GIT$DIR \033[0;0m"
+  local TIME="$(colorize 15 33 ' [$(date +%H:%M)] ')$(colorize 33 34 $RARS)";
+  local USER="$(colorize 15 34 ' \u@\h ')$(colorize 34 124 $RARS)"
+  local GIT="$(colorize 252 124 ' $(parse_git_branch_or_tag) ')$(colorize 124 240 '$RARS')"
+  local DIR="$(colorize 11 240 ' \w')$(colorize 240 0 $RARS)"
+  local LEFT="$TIME$USER$GIT$DIR\033[0;0m"
   echo "$LEFT"
 }
 
