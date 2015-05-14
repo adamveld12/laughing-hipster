@@ -50,8 +50,4 @@ shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
 
-if [ $OSTYPE = "linux-gnu" ]; then
-  ulimit -n 1000000 unlimited
-fi
-
 printmotd
