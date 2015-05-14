@@ -43,7 +43,12 @@ colorize() {
   # $1 is foreground
   # $2 is background
   # $3 is content
-  echo -e "\033[48;5;$2;38;5;$1m$3\\033[0m"
+  #
+  if [ $OSTYPE = 'msys' ]; then
+    echo -e "\033[48;3;$2;38;3;$1m$3\\033[0m"
+  else 
+    echo -e "\033[48;5;$2;38;5;$1m$3\\033[0m"
+  fi
 }
 
 parse_git_branch () {
@@ -67,8 +72,8 @@ parse_git_branch_or_tag() {
 
 
 build_prompt_win(){
-  local TIME="$(colorize 39 46 ' [$(date +%H:%M)] ')$(colorize 36 42 $RARS)";
-  local USER="$(colorize 39 42 ' \u@\h ')$(colorize 32 41 $RARS)"
+  local TIME="$(colorize 38 46 ' [$(date +%H:%M)] ')$(colorize 36 42 $RARS)";
+  local USER="$(colorize 38 42 ' \u@\h ')$(colorize 32 41 $RARS)"
   local GIT="$(colorize 39 41 ' $(parse_git_branch_or_tag) ')$(colorize 31 49 $RARS)"
   local DIR="$(colorize 33 49 ' \w ')"
   local LEFT="$TIME$USER$GIT$DIR\033[0;0m "
@@ -95,18 +100,13 @@ print_prompt(){
   PS1=$(printf "%*s\r%s\n$EMPTY\$$GRAY" "$($(tput cols) + ${compensate})" "$RIGHT" "$LEFT")
 }
 
-
+# looks like the following:
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
 # $
-# [hh:mm] username@host (git branch || svn revision) ~/working/directory
-# $
-# Pretty ugly hack for msys... need to figure out how to determine if my
-# console is 256 color capable
 if [ $OSTYPE = 'msys' ]; then
-  PROMPT_COMMAND='PS1="$(build_prompt_win) \n$EMPTY\$"
-  PS2="$CONTINUE> "'
+  PROMPT_COMMAND='PS1="$(build_prompt_win)\n\$ "'
 else
-  PROMPT_COMMAND='PS1="$(build_prompt_mac) \n$EMPTY\$"'
+  PROMPT_COMMAND='PS1="$(build_prompt_mac)\n\$ "'
 fi
 
 

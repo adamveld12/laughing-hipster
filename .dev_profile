@@ -1,18 +1,28 @@
 #!/bin/bash
+
 # Setup go paths and source go bin
 if [ -d "/c/Windows" ]; then
+  if [ -d "${HOME}/tools/vim" ] ; then
+      PATH=${HOME}/Tools/vim:${PATH}
+  fi
   export WINDOWS="TRUE"
   export ANSIBLE_HOSTS="/c/ansible/hosts"
   export GOPATH="/d/Projects/Programming/Go"
   export GOROOT="/d/Programs/Go"
   export GIT_EDITOR=~/Tools/vim/gvim.exe
+  export FORTUNE=fortune.exe
   PATH=${PATH}:/c/tools/ruby193/bin
 else
+  export FORTUNE=fortune
   export ANSIBLE_HOSTS="~/.ansible/hosts"
   export GOPATH="$HOME/../Projects/go"
   export GOROOT="/usr/local/go"
   export GIT_EDITOR=vim
   export WINDOWS="FALSE"
+fi
+
+if [ -d "${HOME}/.bin" ] ; then
+    PATH=${HOME}/.bin:${PATH}
 fi
 
 if [ -d "/c/Windows" ]; then
@@ -49,5 +59,3 @@ shopt -s checkwinsize   # Checks window size to get proper line wrapping
 shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
-
-printmotd

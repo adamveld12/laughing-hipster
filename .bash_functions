@@ -11,7 +11,7 @@ function printmotd(){
     cat ~/motd 
   fi
   echo ""
-  fortune
+  $FORTUNE
   echo ""
 }
 

@@ -1,12 +1,8 @@
 #!/bin/bash
 
-if [ -d "${HOME}/.bin" ] ; then
-    PATH=${HOME}/.bin:${PATH}
-fi
-
-
-if [ -d "${HOME}/tools/vim" ] ; then
-    PATH=${HOME}/Tools/vim:${PATH}
+# source development settings
+if [ -f ~/.dev_profile ]; then
+      . ~/.dev_profile
 fi
 
 # Load any extra aliases
@@ -17,11 +13,6 @@ fi
 # Load functions
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
-fi
-
-# source development settings
-if [ -f ~/.dev_profile ]; then
-      . ~/.dev_profile
 fi
 
 # Load pretty colors
@@ -42,3 +33,5 @@ fi
 if [ -d ~/.nvm ]; then
   . ~/.nvm/nvm.sh
 fi
+
+printmotd
