@@ -15,6 +15,10 @@ function printmotd(){
   echo ""
 }
 
+function batteryPercent(){
+  ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%d", $10/$5 * 100)}'
+}
+
 function clone()
 {
   if [ -z "$1" ]
