@@ -15,7 +15,7 @@ if [ -d "/c/Windows" ]; then
 else
   export FORTUNE=fortune
   export ANSIBLE_HOSTS="~/.ansible/hosts"
-  export GOPATH="$HOME/../Projects/go"
+  export GOPATH="$HOME/projects/go"
   export GOROOT="/usr/local/go"
   export GIT_EDITOR=vim
   export WINDOWS="FALSE"

@@ -1,6 +1,5 @@
 " change runtime path
 set runtimepath=,$VIMRUNTIME,$VIM/vimfiles,~/Tools/vim
-let g:ruby_path = ':C:\ruby193\bin'
 
 
 call pathogen#infect()
@@ -257,9 +256,11 @@ function! StripWhitespace()
 endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
 
+set guifont=Literation\ Mono\ for\ Powerline:h12,Literation_Mono_for_Powerline:h12,Inconsolata\ for\ Powerline:h10,Ubuntu\ Mono:h26,Consolas:h12,Courier:h12
+
 if has('gui_running')
-  set go =mt
-  set guifont=Liberation\ Mono\ for\ Powerline:h12,Liberation_Mono_for_Powerline:h12,Inconsolata\ for\ Powerline:h10,Ubuntu\ Mono:h26,Consolas:h12,Courier:h12
+  "set go =mt
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline 10,Ubuntu\ Mono\ derivative\ Powerline:h10,Consolas:h12
 endif
 
 let g:ruby_path = ':C:\ruby193\bin'
