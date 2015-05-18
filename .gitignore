@@ -1,4 +1,6 @@
 # File
+.git-stats
+.bashrc
 .rnd
 *.kdbx
 _*
@@ -58,3 +60,9 @@ Tools/cmder
 VirtualBox VMs/
 .VirtualBox/
 Applications/
+.local/
+.thefuck/
+.vim/
+.chefdk/
+projects/
+.keybase-installer/

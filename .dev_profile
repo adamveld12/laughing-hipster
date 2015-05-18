@@ -13,7 +13,6 @@ if [ -d "/c/Windows" ]; then
   export FORTUNE=fortune.exe
   PATH=${PATH}:/c/tools/ruby193/bin
 else
-  export FORTUNE=fortune
   export ANSIBLE_HOSTS="~/.ansible/hosts"
   export GOPATH="$HOME/projects/go"
   export GOROOT="/usr/local/go"
@@ -37,11 +36,11 @@ if [ -d "/c/Projects" ]; then
   . ~/.work_profile
 fi
 
-export GOBIN=${GOPATH}/bin
 export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
+export LANG="en_US.UTF-8"
+export GOBIN=${GOPATH}/bin
 
-PATH=${PATH}:${GOBIN}:${GOROOT}/bin
-PATH=${PATH}:${BOOT2DOCKER}
+PATH=${PATH}:${GOROOT}/bin:${BOOT2DOCKER}:${GOBIN}
 
 
 # see environ manfile
