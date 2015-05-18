@@ -18,6 +18,7 @@ else
   export GOROOT="/usr/local/go"
   export GIT_EDITOR=vim
   export WINDOWS="FALSE"
+
 fi
 
 if [ -d "${HOME}/.bin" ] ; then
@@ -60,3 +61,12 @@ shopt -s checkwinsize   # Checks window size to get proper line wrapping
 shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
+
+
+# http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
+# run these to increase concurrent connections
+# sudo sysctl net.ipv4.ip_local_port_range="15000 61000"
+# sudo sysctl net.ipv4.tcp_fin_timeout="30"
+# sudo sysctl net.ipv4.tcp_tw_recycle=1
+# sudo sysctl net.ipv4.tcp_tw_reuse=1 
+
