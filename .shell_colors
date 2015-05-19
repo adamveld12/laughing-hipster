@@ -72,8 +72,8 @@ parse_git_branch_or_tag() {
 
 
 build_prompt_win(){
-  local TIME="$(colorize 38 46 ' [$(date +%H:%M)] ')$(colorize 36 42 $RARS)";
-  local USER="$(colorize 38 42 ' \u@\h ')$(colorize 32 41 $RARS)"
+  local TIME="$(colorize 39 46 ' [$(date +%H:%M)] ')$(colorize 36 42 $RARS)";
+  local USER="$(colorize 39 42 ' \u@\h ')$(colorize 32 41 $RARS)"
   local GIT="$(colorize 39 41 ' $(parse_git_branch_or_tag) ')$(colorize 31 49 $RARS)"
   local DIR="$(colorize 33 49 ' \w ')"
   local LEFT="$TIME$USER$GIT$DIR\033[0;0m "
