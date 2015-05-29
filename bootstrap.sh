@@ -1,16 +1,19 @@
-bkup=~/.dotfile_bkup
-dest=~/
 source=$(pwd)
+bkup=~/dotfile_bkup
+dest=~
 
-echo ${source}
 
-echo "making a backup of old dotfiles"
 mkdir -p $bkup
-ls -A ~/ | grep ^\\..* | xargs -I file cp ~/file $bkup
+echo "making a backup of old dotfiles into ${bkup}"
+ls -A ${dest} | grep ^\\..* | xargs -I file cp ~/file ${bkup}/file
 
 echo "loading modules"
 git submodule init
 git submodule update
 
-echo "linking dotfiles..."
+echo "linking dotfiles from ${source} into ${dest}"
+cd ${dest}
 ls -A ${source} | xargs -I file cp --symbolic-link -r ${source}/file ${dest}
+
+rm -rf ~/.git
+rm -rf ~/bootstrap.sh
