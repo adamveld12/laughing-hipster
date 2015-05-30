@@ -1,54 +1,10 @@
 #!/bin/bash
 
-# Setup go paths and source go bin
-if [ -d "/c/Windows" ]; then
-  if [ -d "${HOME}/tools/vim" ] ; then
-      PATH=${HOME}/Tools/vim:${PATH}
-  fi
-  export WINDOWS="TRUE"
-  export ANSIBLE_HOSTS="/c/ansible/hosts"
-  export GOPATH="/d/Projects/Programming/Go"
-  export GOROOT="/d/Programs/Go"
-  export GIT_EDITOR=~/Tools/vim/gvim.exe
-  export FORTUNE=fortune.exe
-  PATH=${PATH}:/c/tools/ruby193/bin
-else
-  export ANSIBLE_HOSTS="~/.ansible/hosts"
-  export GOPATH="$HOME/projects/go"
-  export GOROOT="/usr/local/go"
-  export GIT_EDITOR=vim
-  export WINDOWS="FALSE"
-
-fi
-
-if [ -d "${HOME}/.bin" ] ; then
-    PATH=${HOME}/.bin:${PATH}
-fi
-
-if [ -d "/c/Windows" ]; then
-  export BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ Windows/
-else
-  export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
-fi
-
-# if there is a C:/Projects folder on this box then I'm obviously using my work computer
-if [ -d "/c/Projects" ]; then
-  export WORK="TRUE"
-  . ~/.work_profile
-fi
-
-export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
-export LANG="en_US.UTF-8"
-export GOBIN=${GOPATH}/bin
-
-PATH=${PATH}:${GOROOT}/bin:${BOOT2DOCKER}:${GOBIN}
-
-
-# see environ manfile
-export EDITOR=$GIT_EDITOR       # Default Editor
-export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
-export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
-export PAGER=less       # Used to display text / man files
+# Bash behavior
+shopt -s checkwinsize   # Checks window size to get proper line wrapping
+shopt -s cdspell        # Corrects minor spelling errors when cd-ing
+set -o vi               # Set prompt to vi mode
+set -o notify           # Report status of terminated background jobs immediately
 
 # History
 HISTCONTROL=ignoredups                    # No duplicate commands in history
@@ -56,17 +12,125 @@ HISTSIZE=50000                            # For a huge history
 export HISTIGNORE="[   ]*:&:bg:fg:exit:clear"   # Don't save these commands in the history
 shopt -s histappend                       # Append to the history file, not overwrite
 
+# see environ manfile - just setting up my shell environment
+export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
+export PAGER=less       # Used to display text / man files
+
+
+# setup go paths
+export GOPATH="$HOME/projects/go"
+export GOROOT="/usr/local/go"
+export ANSIBLE_HOSTS="~/.ansible/hosts"
+
+
+export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
+export LANG="en_US.UTF-8"
+export WINDOWS="FALSE"
+export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
+
+
+if [ -d "${HOME}/.bin" ] ; then
+    PATH=${HOME}/.bin:${PATH}
+fi
+
+# give windows boxes a chance to override environment
+if [ -d "/c/Windows" ]; then
+  if [ -d "${HOME}/tools/vim" ] ; then
+      PATH=${HOME}/Tools/vim:${PATH}
+  export WINDOWS="TRUE"
+  export ANSIBLE_HOSTS="/c/ansible/hosts"
+  export GOROOT="/d/Programs/Go"
+  export GIT_EDITOR=~/Tools/vim/gvim.exe
+  export FORTUNE=fortune.exe
+  export BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ Windows/
+  PATH=${PATH}:/c/tools/ruby193/bin
+fi
+
+# if there is a C:/Projects folder on this box then I'm using my work computer, which runs in a VM and is setup differently
+if [ -d "/c/Projects" ]; then
+  export WORK="TRUE"
+  . ~/.work_profile
+fi
+
+export GIT_EDITOR=vim
+export EDITOR=$GIT_EDITOR       # Default Editor
+export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
+
+
+PATH=${PATH}:${GOROOT}/bin:${BOOT2DOCKER}:${GOPATH}/bin
+
+# http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
+# run these to increase concurrent connections in linux
+# sudo sysctl net.ipv4.ip_local_port_range="15000 61000"
+# sudo sysctl net.ipv4.tcp_fin_timeout="30"
+# sudo sysctl net.ipv4.tcp_tw_recycle=1
+# sudo sysctl net.ipv4.tcp_tw_reuse=1 
+
+#!/bin/bash
+
 # Bash behavior
 shopt -s checkwinsize   # Checks window size to get proper line wrapping
 shopt -s cdspell        # Corrects minor spelling errors when cd-ing
 set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
 
+# History
+HISTCONTROL=ignoredups                    # No duplicate commands in history
+HISTSIZE=50000                            # For a huge history
+export HISTIGNORE="[   ]*:&:bg:fg:exit:clear"   # Don't save these commands in the history
+shopt -s histappend                       # Append to the history file, not overwrite
+
+# see environ manfile - just setting up my shell environment
+export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
+export PAGER=less       # Used to display text / man files
+
+
+# setup go paths
+export GOPATH="$HOME/projects/go"
+export GOROOT="/usr/local/go"
+export ANSIBLE_HOSTS="~/.ansible/hosts"
+
+
+export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
+export LANG="en_US.UTF-8"
+export WINDOWS="FALSE"
+export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
+
+
+if [ -d "${HOME}/.bin" ] ; then
+    PATH=${HOME}/.bin:${PATH}
+fi
+
+# give windows boxes a chance to override environment
+if [ -d "/c/Windows" ]; then
+  if [ -d "${HOME}/tools/vim" ] ; then
+      PATH=${HOME}/Tools/vim:${PATH}
+  fi
+  export WINDOWS="TRUE"
+  export ANSIBLE_HOSTS="/c/ansible/hosts"
+  export GOROOT="/d/Programs/Go"
+  export GIT_EDITOR=~/Tools/vim/gvim.exe
+  export FORTUNE=fortune.exe
+  export BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ Windows/
+  PATH=${PATH}:/c/tools/ruby193/bin
+fi
+
+# if there is a C:/Projects folder on this box then I'm using my work computer, which runs in a VM and is setup differently
+if [ -d "/c/Projects" ]; then
+  export WORK="TRUE"
+  . ~/.work_profile
+fi
+
+export GIT_EDITOR=vim
+export EDITOR=$GIT_EDITOR       # Default Editor
+export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
+
+
+PATH=${PATH}:${GOROOT}/bin:${BOOT2DOCKER}:${GOPATH}/bin
 
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
-# run these to increase concurrent connections
+# run these to increase concurrent connections in linux
 # sudo sysctl net.ipv4.ip_local_port_range="15000 61000"
 # sudo sysctl net.ipv4.tcp_fin_timeout="30"
 # sudo sysctl net.ipv4.tcp_tw_recycle=1
 # sudo sysctl net.ipv4.tcp_tw_reuse=1 
-
