@@ -25,9 +25,8 @@ export ANSIBLE_HOSTS="~/.ansible/hosts"
 
 export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
 export LANG="en_US.UTF-8"
-export WINDOWS="FALSE"
 export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
-
+export WINDOWS="FALSE"
 
 if [ -d "${HOME}/.bin" ] ; then
     PATH=${HOME}/.bin:${PATH}
@@ -35,6 +34,7 @@ fi
 
 # give windows boxes a chance to override environment
 if [ -d "/c/Windows" ]; then
+
   if [ -d "${HOME}/tools/vim" ] ; then
       PATH=${HOME}/Tools/vim:${PATH}
   export WINDOWS="TRUE"
@@ -52,11 +52,11 @@ if [ -d "/c/Projects" ]; then
   . ~/.work_profile
 fi
 
+PATH=${PATH}:${GOROOT}/bin:${GOPATH}/bin:${BOOT2DOCKER}
+
 export GIT_EDITOR=vim
 export EDITOR=$GIT_EDITOR       # Default Editor
 export VISUAL=$EDITOR   # Visual not really used differently from EDITOR anymore
-
-PATH=${PATH}:${GOROOT}/bin:${BOOT2DOCKER}:${GOPATH}/bin
 
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
 # run these to increase concurrent connections in linux

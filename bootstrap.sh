@@ -17,3 +17,7 @@ ls -A ${source} | xargs -I file cp --symbolic-link -r ${source}/file ${dest}
 
 rm -rf ~/.git
 rm -rf ~/bootstrap.sh
+
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash
+
+source ~/.profile
