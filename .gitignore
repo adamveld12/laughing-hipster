@@ -19,7 +19,7 @@ _*
 *.dll
 tags
 *.orig
-
+.dockercfg
 .gnupg
 
 

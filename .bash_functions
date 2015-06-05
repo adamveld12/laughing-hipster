@@ -41,16 +41,13 @@ function clone()
 
 # sshs into boot2docker
 function b2d() {
-  if [ -n $(ps | grep .boot2docker) ]; then
-    b2dinit
-  fi
-
+  b2dinit
   boot2docker ssh
 }
 
 function b2dinit()
 {
-  if [ -n $(ps | grep .boot2docker) ]; then
+  if [[ -n $(ps -A | grep ".boot2docker") ]]; then
     echo "Initializing boot2docker"
     boot2docker init > /dev/null
     export DOCKER_HOST=tcp://$(boot2docker ip):2376

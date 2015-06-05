@@ -35,3 +35,4 @@ if [ -d ~/.nvm ]; then
 fi
 
 printmotd
+b2dinit
