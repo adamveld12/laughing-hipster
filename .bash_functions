@@ -41,15 +41,33 @@ function clone()
 
 # sshs into boot2docker
 function b2d() {
-  b2dinit
+  if [[ ${WINDOWS} == "TRUE" ]]; then
+    b2dinitW
+  else
+    b2dinit
+  fi
+
   boot2docker ssh
+}
+
+function b2dinitW()
+{
+  if [[ -n $(tasklist.exe | grep "VBoxHeadless") ]]; then
+    echo "Initializing boot2docker"
+    boot2docker.exe init > /dev/null
+    boot2docker.exe up > /dev/null
+    export DOCKER_HOST=tcp://$(boot2docker.exe ip):2376
+    export DOCKER_CERT_PATH=~/../.boot2docker/certs/boot2docker-vm
+    export DOCKER_TLS_VERIFY=1
+  fi
 }
 
 function b2dinit()
 {
-  if [[ -n $(ps -A | grep ".boot2docker") ]]; then
+  if [[ -n $(ps -ae | grep ".boot2docker") ]]; then
     echo "Initializing boot2docker"
     boot2docker init > /dev/null
+    boot2docker up > /dev/null
     export DOCKER_HOST=tcp://$(boot2docker ip):2376
     export DOCKER_CERT_PATH=~/.boot2docker/certs/boot2docker-vm
     export DOCKER_TLS_VERIFY=1
