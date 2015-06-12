@@ -56,7 +56,7 @@ if [ -d "${HOME}/tools/vim" ] ; then
     PATH=${HOME}/Tools/vim:${PATH}
 fi
 
-PATH=${PATH}:${GOROOT}/bin:${GOPATH}/bin:${BOOT2DOCKER}
+PATH=${GOROOT}/bin:${PATH}:${GOPATH}/bin:${BOOT2DOCKER}
 
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
 # run these to increase concurrent connections in linux
