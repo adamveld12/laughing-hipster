@@ -35,9 +35,4 @@ if [ -d ~/.nvm ]; then
 fi
 
 printmotd
-
-if [[  ${WINDOWS} == "TRUE" ]]; then
-  b2dinitW
-else
-  b2dinit
-fi
+b2dinit
