@@ -135,7 +135,7 @@
 [pull]
 	default = current
 [user]
-	email = adam.veldhousen@mtmrecognition.com
+	email = adam@veldhousen.ninja
 	name = Adam Veldhousen
 	signingkey = 415C0B9C
 [commit]
