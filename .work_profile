@@ -4,7 +4,6 @@ if [[ $DEBUG ]] ; then
 fi
 
 alias projects='cd /c/Projects'
-
 export GOROOT="/c/Go"
 export GOPATH="/z/go"
 export GOBIN="/z/go/winbin"

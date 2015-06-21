@@ -3,7 +3,6 @@ alias cdp="cd -"
 alias ..='cd ..'
 alias pd="pushd $1"
 alias fuck='$(thefuck $(fc -ln -1))'
-alias fortune=${GOBIN}/${FORTUNE}
 
 # list files
 alias ll='ls --color=always -l'

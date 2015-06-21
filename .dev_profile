@@ -38,16 +38,18 @@ if [ -d "/c/Windows" ]; then
   WINDOWS="TRUE"
   ANSIBLE_HOSTS="/c/ansible/hosts"
   GOROOT="/d/Programs/Go"
+  GOPATH="/d/Projects/Programming/go"
   BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ Windows/
   GIT_EDITOR=~/Tools/vim/gvim.exe
   export FORTUNE=fortune.exe
+
+  # if there is a C:/Projects folder on this box then I'm using my work computer, which runs in a VM and is setup differently
+  if [ -d "/c/Projects" ]; then
+    export WORK="TRUE"
+    . ~/.work_profile
+  fi
 fi
 
-# if there is a C:/Projects folder on this box then I'm using my work computer, which runs in a VM and is setup differently
-if [ -d "/c/Projects" ]; then
-  export WORK="TRUE"
-  . ~/.work_profile
-fi
 
 export EDITOR=$GIT_EDITOR
 export VISUAL=$EDITOR   

@@ -1,4 +1,8 @@
-# vim: set ft=sh
+#!/bin/bash
+#vim: set ft=sh
+
+IFS=$'\n$\t'
+
 # delete merged local branches
 function prunelocal(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
@@ -10,7 +14,7 @@ function printmotd(){
   else
     cat ~/motd 
   fi
-  echo ""
+  echo "" 
   $FORTUNE
   echo ""
 }
@@ -51,7 +55,7 @@ function b2dinit() {
     boot2docker init &> /dev/null
     boot2docker up &> /dev/null
     export DOCKER_HOST=tcp://$(boot2docker ip):2376
-    export DOCKER_CERT_PATH=~/../.boot2docker/certs/boot2docker-vm
+    export DOCKER_CERT_PATH=~/.boot2docker/certs/boot2docker-vm
     export DOCKER_TLS_VERIFY=1
   fi
 }
