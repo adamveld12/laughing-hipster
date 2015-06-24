@@ -2,48 +2,70 @@
 IFS='\n\t'
 set -euo pipefail
 
-source=$(pwd)
-bkup=~/home_bkup/
-dest=~
+source="$(pwd)"
+bkup="$source/../home_bkup"
+dest="$source/.."
 
-
-echo "making a backup of old dotfiles into ${bkup}..."
-rm -rf ${bkup}
-mkdir -p ${bkup}
+echo "Making a backup of old dotfiles into ${bkup}..."
+rm -rf "${bkup}"
+mkdir -p "${bkup}"
 
 IFS=$'\n'
 if [[ -f ${dest}/.ssh/config ]]; then
+  mkdir -p "${bkup}/.ssh"
   cp "${dest}/.ssh/config" "${bkup}/.ssh/config"
 fi
 for file in $(ls -lA "${source}" | grep "^-" | awk '{print $9}'); do
   if [ -f "${dest}/${file}" ]; then
-    cp -v "${dest}/${file}" "${bkup}/${file}"
+    cp "${dest}/${file}" "${bkup}/${file}"
   fi
 done
 
 echo ""
 echo "loading git modules..."
-git submodule init
+git submodule init 
 git submodule update
 
-
+echo ""
 echo "copying directories..."
-cp -rs ${source}/tools ${dest}/tools
+ln -s ${source}/tools ${dest}/tools
 
-pushd ${dest} 2>&1 /dev/null
-echo "linking dotfiles from ${source} into ${dest}..."
-ls -lA "${source}" | grep "^-" | awk '{print $9}' | xargs -I file ln -vfs "${source}/file" "${dest}/file"
-cp "${source}/.ssh/config" "${dest}/.ssh/config"
+# sometimes its easier if you just change directories
+pushd ${dest} 2&> /dev/null
+
+echo ""
+echo "linking dotfiles from ${source} into ${dest}"
+ls -lA "${source}" | grep "^-" | awk '{print $9}' | xargs -I file ln -fs "${source}/file" "${dest}/file"
+if [[ -z "${dest}/.ssh" ]]; then
+  mkdir "${dest}/.ssh"
+fi
+
+echo ""
+# a check to see if they're using a config file and if it has a host setup
+if [[ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "Host \*") ]]; then
+  echo "Applying ssh config"
+  # we copy it so that the config doesn't mess with the repo
+  cat "${source}/.ssh/config" >> "${dest}/.ssh/config"
+elif [[ -z "${dest}/.ssh/config" ]]; then
+  echo "Copying new ssh config"
+  cp "${source}/.ssh/config" "${dest}/.ssh/config"
+else 
+  echo "Your SSHfu is strong, skipping config copy..."
+fi
 
 #set +u
 #curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash 
 #set -u
 
-echo "cleaning up..."
-# cleanup
-rm -rf ${dest}/bootstrap.sh
+echo ""
+echo "Cleaning up..."
 rm -rf ${dest}/.git
+rm -rf ${dest}/bootstrap.sh
+rm -rf ${dest}/remove.sh
+rm -rf ${dest}/README.md
 
-popd 2>&1 /dev/null
-
+popd 2&> /dev/null
+echo "To uninstall, do cd ./lauging-hipster && ./remove.sh"
+echo "Make sure your home_bkup folder is present, so keep it safe in the meantime!"
+echo "Install ./tools/modules/powerline-fonts and set them up in your terminal to benefit from the custom PS1 in .shell_colors"
 echo "done!"
