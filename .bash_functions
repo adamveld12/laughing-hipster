@@ -8,32 +8,40 @@ function prunelocal(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
 }
 
+# prints message of the day and a fortune
 function printmotd(){
   if [[ $WORK ]]; then
-   cat ~/work_motd 
+    cat ~/work_motd 
   else
     cat ~/motd 
   fi
-  echo "" 
-  fortune
+
+  if [[ -f $GOPATH/bin/fortune ]]; then
+    echo ""
+    $GOPATH/bin/fortune
+  elif [[ -f $(fortune) ]]; then
+    echo "" 
+    fortune
+  fi
   echo ""
 }
 
+# prints battery percentage, only works on OSX
 function batteryPercent(){
   ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%d", $10/$5 * 100)}'
 }
 
+# a shortcut for cloning from github
+# usage: clone user/repo <dir>
 function clone()
 {
-  if [ -z "$1" ]
-  then
+  if [ -z "$1" ]; then
     echo "Missing git repository url ending"
     echo "usage: clone 'git repository ending' ['target directory name']"
   else
     giturl="git@github.com:$1.git"
 
-    if [ -z "$2" ]
-    then
+    if [ -z "$2" ]; then
       # we DON'T HAVE a target directory
       git clone $giturl
     else
@@ -54,10 +62,9 @@ function b2dinit() {
     echo "Initializing boot2docker"
     boot2docker init &> /dev/null
     boot2docker up &> /dev/null
-    export DOCKER_HOST=tcp://$(boot2docker ip):2376
-    export DOCKER_CERT_PATH=~/.boot2docker/certs/boot2docker-vm
-    export DOCKER_TLS_VERIFY=1
   fi
+
+  eval $(boot2docker shellinit) 
 }
 
 function vim(){
