@@ -60,8 +60,7 @@ function b2dinit() {
   fi
 }
 
-# runs vim in the terminal without forking, great for tmux on my mac
-function vimt(){
+function vim(){
   if [[ $# -eq 0 ]]; then
     vim
   else
