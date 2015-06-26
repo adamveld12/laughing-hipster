@@ -12,7 +12,7 @@ set omnifunc=syntaxcomplete#Complete
 set nocompatible 
 
 " color schemes
-colorscheme jellybeans "hickop 
+colorscheme hickop "jellybeans 
 "hickop
 "pablo
 "torte
