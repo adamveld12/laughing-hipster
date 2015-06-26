@@ -16,18 +16,16 @@ shopt -s histappend                       # Append to the history file, not over
 export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
 export PAGER=less       # Used to display text / man files
 
-
 # setup go paths
 export GOPATH="$HOME/projects/go"
 export GOROOT="/usr/local/go"
 export ANSIBLE_HOSTS="~/.ansible/hosts"
-
-
-export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
-export LANG="en_US.UTF-8"
 export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
+
+export LANG="en_US.UTF-8"
 export WINDOWS="FALSE"
 export GIT_EDITOR=vim
+export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
 
 if [ -d "${HOME}/.bin" ] ; then
     PATH=${HOME}/.bin:${PATH}
@@ -41,15 +39,11 @@ if [ -d "/c/Windows" ]; then
   GOPATH="/d/Projects/Programming/go"
   BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ Windows/
   GIT_EDITOR=~/Tools/vim/gvim.exe
-  export FORTUNE=fortune.exe
 
-  # if there is a C:/Projects folder on this box then I'm using my work computer, which runs in a VM and is setup differently
-  if [ -d "/c/Projects" ]; then
-    export WORK="TRUE"
-    . ~/.work_profile
+  if [ -f ~/.windows ]; then
+    . ~/.windows
   fi
 fi
-
 
 export EDITOR=$GIT_EDITOR
 export VISUAL=$EDITOR   

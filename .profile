@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# source development settings
-if [ -f ~/.dev_profile ]; then
-      . ~/.dev_profile
+# source environment settings
+if [ -f ~/.environment ]; then
+      . ~/.environment
 fi
 
 # Load any extra aliases
@@ -30,9 +30,9 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-if [ -d ~/.nvm ]; then
-  . ~/.nvm/nvm.sh
+# for when you want to do custom junk
+if [ -d ~/.extensions ]; then
+  . ~/.extensions
 fi
 
 printmotd
-b2dinit
