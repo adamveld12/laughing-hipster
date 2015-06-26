@@ -1,9 +1,6 @@
-
+#!/bin/bash
 # Prompt Customizations
-
-# downside of using MSYS
-# LS_COLORS="di=01;36:"
-# export LS_COLORS
+# 
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
