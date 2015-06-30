@@ -2,8 +2,8 @@
 set runtimepath=,$VIMRUNTIME,$VIM/vimfiles,~/Tools/vim
 
 
-call pathogen#infect()
-call pathogen#helptags()
+execute pathogen#infect()
+execute pathogen#helptags()
 
 
 set omnifunc=syntaxcomplete#Complete
@@ -36,7 +36,6 @@ colorscheme hickop "jellybeans
 "elflord
 
 let mapleader = ","
-let g:ctrlp_map = '<C-P>'
 
 map <Space> :noh<CR>
 map <leader>w :buffers<CR>
@@ -165,6 +164,33 @@ endif
 " Start scrolling three lines before the horizontal window border
 set scrolloff=4
 
+
+" vim-go
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+ 
+"
+au FileType go nmap <Leader>r <Plug>(go-rename)
+
+" show type info 
+au FileType go nmap <Leader>i <Plug>(go-info)
+
+" go def
+au FileType go nmap <Leader>di <Plug>(go-def-split)
+au FileType go nmap <Leader>ds <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+" go docs
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gs <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
+" ctrl p
+let g:ctrlp_map = '<C-P>'
 
 let g:go_disable_autoinstall = 0  
 let g:ctrlp_working_path_mode = 2
