@@ -35,6 +35,7 @@ pushd ${dest} 2&> /dev/null
 
 echo ""
 echo "linking dotfiles from ${source} into ${dest}"
+# ln doesn't want to work on my windows box, so I'm going to have to figure this out later
 ls -lA "${source}" | grep "^-" | awk '{print $9}' | xargs -I file ln -fs "${source}/file" "${dest}/file"
 if [[ -z "${dest}/.ssh" ]]; then
   mkdir "${dest}/.ssh"
