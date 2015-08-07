@@ -65,6 +65,8 @@ fi
 echo ""
 echo "Cleaning up..."
 rm -rf ${dest}/.git
+rm -rf ${dest}/.gitmodules
+rm -rf ${dest}/.gitignore
 rm -rf ${dest}/bootstrap.sh
 rm -rf ${dest}/remove.sh
 rm -rf ${dest}/README.md
