@@ -38,7 +38,7 @@ if [ -d "/c/Windows" ]; then
   GOROOT="/d/Programs/Go"
   GOPATH="/d/Projects/Programming/go"
   BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ Windows/
-  GIT_EDITOR=~/Tools/vim/gvim.exe
+  GIT_EDITOR=~/tools/vim/gvim.exe
 
   if [ -f ~/.windows ]; then
     . ~/.windows
@@ -49,7 +49,7 @@ export EDITOR=$GIT_EDITOR
 export VISUAL=$EDITOR   
 
 if [ -d "${HOME}/tools/vim" ] ; then
-    PATH=${HOME}/Tools/vim:${PATH}
+    PATH=${HOME}/tools/vim:${PATH}
 fi
 
 PATH=${GOROOT}/bin:${PATH}:${GOPATH}/bin:${BOOT2DOCKER}

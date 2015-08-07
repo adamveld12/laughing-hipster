@@ -1,5 +1,5 @@
 " change runtime path
-set runtimepath=,$VIMRUNTIME,$VIM/vimfiles,~/Tools/vim
+set runtimepath=,$VIMRUNTIME,$VIM/vimfiles,~/tools/vim
 
 
 execute pathogen#infect()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2015-06-09 16:58:45" build="150513">
+		<key name=".Vanilla" modified="2015-08-07 12:48:14" build="150705">
 			<value name="ColorTable00" type="dword" data="00362b00"/>
 			<value name="ColorTable01" type="dword" data="00423607"/>
 			<value name="ColorTable02" type="dword" data="0098a12a"/>
@@ -120,24 +120,24 @@
 			<value name="FontBold" type="hex" data="00"/>
 			<value name="FontItalic" type="hex" data="00"/>
 			<value name="Monospace" type="hex" data="01"/>
-			<value name="BackGround Image show" type="hex" data="00"/>
-			<value name="BackGround Image" type="string" data="c:\back.bmp"/>
-			<value name="bgImageDarker" type="hex" data="ff"/>
+			<value name="BackGround Image show" type="hex" data="01"/>
+			<value name="BackGround Image" type="string" data="C:\Users\Adam\laughing-hipster\Tools\modules\iTerm2-Color-Schemes\backgrounds\solarized_darcula.jpg"/>
+			<value name="bgImageDarker" type="hex" data="cc"/>
 			<value name="bgImageColors" type="dword" data="ffffffff"/>
-			<value name="bgOperation" type="hex" data="00"/>
+			<value name="bgOperation" type="hex" data="08"/>
 			<value name="bgPluginAllowed" type="hex" data="01"/>
-			<value name="AlphaValue" type="hex" data="ed"/>
-			<value name="AlphaValueSeparate" type="hex" data="01"/>
-			<value name="AlphaValueInactive" type="hex" data="ae"/>
-			<value name="UserScreenTransparent" type="hex" data="00"/>
+			<value name="AlphaValue" type="hex" data="f6"/>
+			<value name="AlphaValueSeparate" type="hex" data="00"/>
+			<value name="AlphaValueInactive" type="hex" data="ab"/>
+			<value name="UserScreenTransparent" type="hex" data="01"/>
 			<value name="ColorKeyTransparent" type="hex" data="00"/>
 			<value name="ColorKeyValue" type="dword" data="00010101"/>
 			<value name="UseCurrentSizePos" type="hex" data="01"/>
 			<value name="WindowMode" type="dword" data="0000051f"/>
-			<value name="ConWnd Width" type="dword" data="02000064"/>
-			<value name="ConWnd Height" type="dword" data="0200003c"/>
+			<value name="ConWnd Width" type="dword" data="0200005f"/>
+			<value name="ConWnd Height" type="dword" data="02000028"/>
 			<value name="Cascaded" type="hex" data="01"/>
-			<value name="ConWnd X" type="dword" data="00000000"/>
+			<value name="ConWnd X" type="dword" data="fffffffd"/>
 			<value name="ConWnd Y" type="dword" data="fffffffd"/>
 			<value name="16bit Height" type="dword" data="00000000"/>
 			<value name="AutoSaveSizePos" type="hex" data="01"/>
@@ -525,41 +525,41 @@
 			<value name="DndLKey" type="hex" data="00"/>
 			<value name="DndRKey" type="hex" data="a2"/>
 			<value name="WndDragKey" type="dword" data="00121101"/>
-				<key name="Tasks" modified="2015-06-09 16:58:45" build="150513">
+				<key name="Tasks" modified="2015-08-07 12:48:14" build="150705">
 				<value name="Count" type="dword" data="00000003"/>
-						<key name="Task1" modified="2015-06-09 16:58:45" build="150513">
+						<key name="Task1" modified="2015-08-07 12:48:14" build="150705">
 					<value name="Name" type="string" data="{Bash}"/>
 					<value name="Hotkey" type="dword" data="0000a242"/>
 					<value name="GuiArgs" type="string" data="/icon &quot;C:\Program Files (x86)\Git\unins000.exe&quot;"/>
-					<value name="Cmd1" type="string" data="&quot;C:\Program Files (x86)\Git\bin\sh.exe&quot; --login -i  -new_console:d:C:\Projects"/>
+					<value name="Cmd1" type="string" data="*&quot;C:\Program Files (x86)\Git\bin\sh.exe&quot; --login -i  -new_console:d:D:\Projects\Programming"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
 					<value name="Flags" type="dword" data="00000000"/>
 				</key>
-						<key name="Task2" modified="2015-06-09 16:58:45" build="150513">
+						<key name="Task2" modified="2015-08-07 12:48:14" build="150705">
 					<value name="Name" type="string" data="{cmd}"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=" /icon &quot;%CMDER_ROOT%\cmder.exe&quot;"/>
-					<value name="Cmd1" type="string" data="cmd /k &quot;%ConEmuDir%\..\init.bat&quot;  -new_console:d:%USERPROFILE%"/>
+					<value name="Cmd1" type="string" data="*cmd /k &quot;%ConEmuDir%\..\init.bat&quot;  -new_console:d:%USERPROFILE%"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
 					<value name="Flags" type="dword" data="00000000"/>
 				</key>
-						<key name="Task3" modified="2015-06-09 16:58:45" build="150513">
+						<key name="Task3" modified="2015-08-07 12:48:14" build="150705">
 					<value name="Name" type="string" data="{PowerShell}"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data="/dir &quot;%userprofile%&quot;"/>
-					<value name="Cmd1" type="string" data="powershell"/>
+					<value name="Cmd1" type="string" data="*powershell"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
 					<value name="Flags" type="dword" data="00000000"/>
 				</key>
 			</key>
-				<key name="Apps" modified="2015-06-09 16:58:45" build="150513">
+				<key name="Apps" modified="2015-08-07 12:48:14" build="150705">
 				<value name="Count" type="dword" data="00000000"/>
 			</key>
-				<key name="Colors" modified="2015-06-09 16:58:45" build="150513">
-			<key name="Palette1" modified="2015-06-09 16:58:45" build="150513">
+				<key name="Colors" modified="2015-08-07 12:48:14" build="150705">
+			<key name="Palette1" modified="2015-08-07 12:48:14" build="150705">
 					<value name="Name" type="string" data="Monokai"/>
 					<value name="ExtendColors" type="hex" data="00"/>
 					<value name="ExtendColorIdx" type="hex" data="0e"/>
@@ -617,7 +617,7 @@
 			<value name="StatusBar.Hide.Dpi" type="hex" data="01"/>
 			<value name="TabFlashChanged" type="dword" data="00000008"/>
 			<value name="TabModifiedSuffix" type="string" data="[*]"/>
-			<key name="HotKeys" modified="2015-06-09 16:58:45" build="150513">
+			<key name="HotKeys" modified="2015-08-07 12:48:14" build="150705">
 				<value name="KeyMacroVersion" type="hex" data="02"/>
 				<value name="Multi.Modifier" type="dword" data="00000011"/>
 				<value name="Multi.ArrowsModifier" type="dword" data="0000005b"/>
@@ -794,7 +794,10 @@
 				<value name="DndLKey" type="hex" data="00"/>
 				<value name="DndRKey" type="hex" data="a2"/>
 				<value name="WndDragKey" type="dword" data="00121101"/>
+				<value name="Multi.Unfasten" type="dword" data="00000000"/>
 			</key>
+			<value name="DownShowExOnTopMessage" type="hex" data="00"/>
+			<value name="EnvironmentSet" type="multi"/>
 		</key>
 	</key>
 </key>
