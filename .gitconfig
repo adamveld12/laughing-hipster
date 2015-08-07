@@ -1,7 +1,7 @@
 [alias]
   # View abbreviated SHA, description, and history graph of the latest 20 commits
-  lo = log --oneline -n 20 --graph
-  l = log --oneline -n 20 --graph --show-signature
+  lo = log --oneline -n 40 --graph
+  l = log --oneline -n 40 --graph --show-signature
   # View the current working tree status using the short format
   s = status -s
   # Show the diff between the latest commit and the current state
@@ -121,22 +121,31 @@
   insteadOf = "gh:"
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com/"
+
 [url "git://github.com/"]
   insteadOf = "github:"
+
 [url "git@gist.github.com:"]
   insteadOf = "gst:"
   pushInsteadOf = "gist:"
   pushInsteadOf = "git://gist.github.com/"
+
 [url "git://gist.github.com/"]
   insteadOf = "gist:"
 
 [push]
 	default = current
+
 [pull]
 	default = current
+
 [user]
 	email = adam@veldhousen.ninja
 	name = Adam Veldhousen
 	signingkey = 415C0B9C
+
 [commit]
 	gpgsign = true
+
+[help]
+  autocorrect=20
