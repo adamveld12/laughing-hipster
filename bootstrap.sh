@@ -3,7 +3,7 @@ IFS='\n\t'
 set -euo pipefail
 
 source="$(pwd)"
-bkup="$source/../home_bkup"
+bkup="$source/../.home_bkup"
 dest="$source/.."
 
 echo "Making a backup of old dotfiles into ${bkup}..."
@@ -27,8 +27,12 @@ git submodule init
 git submodule update
 
 echo ""
-echo "copying directories..."
-ln -s ${source}/tools ${dest}/tools
+echo "copying \"./tools\" directories..."
+if [[ -z "${dest}/Tools" ]]; then
+  mkdir ${dest}/Tools
+fi
+#ln -fs  ${source}/Tools ${dest}/tools
+cp -R ${source}/tools ${dest}/tools
 
 # sometimes its easier if you just change directories
 pushd ${dest} 2&> /dev/null
