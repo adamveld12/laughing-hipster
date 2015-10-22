@@ -51,7 +51,7 @@ function clone()
   fi
 }
 
-# sshs into boot2docker
+# simplifies using docker-machine
 function dm() {
   local TARGET=$2
   if [ -z "$2" ]; then
