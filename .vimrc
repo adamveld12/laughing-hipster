@@ -7,12 +7,15 @@ execute pathogen#helptags()
 
 
 set omnifunc=syntaxcomplete#Complete
+set completeopt-=preview
 
 "we don't want vi compatibility AKA Make Vim more useful
 set nocompatible 
 
 " color schemes
-colorscheme hickop "jellybeans 
+colorscheme CandyPaper
+"sunburst
+"jellybeans 
 "hickop
 "pablo
 "torte
@@ -191,9 +194,11 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 
 " ctrl p
 let g:ctrlp_map = '<C-P>'
+let g:ctrlp_by_filename = 0
 
 let g:go_disable_autoinstall = 0  
-let g:ctrlp_working_path_mode = 2
+let g:ctrlp_working_path_mode = 'rc'
+let g:ctrlp_max_files = 5000
 
 "airline config
 let g:airline#extensions#tabline#enabled = 1
