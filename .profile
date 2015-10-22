@@ -31,8 +31,14 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # for when you want to do custom junk
-if [ -d ~/.extensions ]; then
+if [ -f ~/.extensions ]; then
   . ~/.extensions
+# Sources a folder with shell extensions
+elif [ -d ~/.extensions ]; then
+  echo "sourcing plugins"
+  for plugin in ~/.extensions/; do
+    echo $plugin
+  done
 fi
 
 printmotd

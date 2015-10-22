@@ -9,7 +9,13 @@ My dot files
 2. cd into laughing-hipster
 3. run `./bootstrap.sh`
 
-The installer preserves your ssh config and everything in the .ssh folder. 
+The installer backs up your current home folder dotfiles into `.home_bkup` and then symlinks in the dotfiles for this repo. The installer also preserves your ssh config if you have customized it already.
+
+Because everything is symlinked, all you have to do for most updates is just `git pull`.
+
+## Extending with custom scripts
+
+This set up will source all files found in a `~/.extensions/` directory or in a file named `~/.extensions` at the last moment. This allows you to extend and customize how everything works to your liking.
 
 ## Uninstall
  
