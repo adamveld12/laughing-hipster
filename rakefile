@@ -13,21 +13,21 @@ task :default => ['clobber', 'vim:install']
 namespace :vim do
 
   directory "#{bundles_dir}"
-  desc "installs vim plugins from #{vimFolder}/plugins.txt"
+  desc "reinstalls all vim plugins from #{vimFolder}/plugins.txt"
   task :install do
     puts "loading plugins into #{bundles_dir}..."
     lines = IO.readlines pluginsFile
     puts "Loading #{lines.length} plugins..."
     lines.each { |source|
-      loadTask = Rake::Task['vim:installPlugin']
+      loadTask = Rake::Task['vim:loadPlugin']
       loadTask.invoke source.sub "\n", ''
       loadTask.reenable()
     }
     puts "Plugins installed!"
   end
 
-  desc 'loads a vim plugin from a git repo'
-  task :installPlugin, [:source] => "#{bundles_dir}" do |t, args|
+  desc 'Loads a vim plugin from a git repo.'
+  task :loadPlugin, [:source] => "#{bundles_dir}" do |t, args|
     raise "Must specify git repo to pull from." unless args.source not(nil)
     dir = gitName args.source
     puts "Installing #{dir}...."
@@ -39,14 +39,15 @@ namespace :vim do
   end
 
   
-  desc 'adds and installs a new plugin'
+  desc "Loads a new plugin and adds it to #{vimFolder}/plugins.txt"
   task :addPlugin, [:sourceName] do |t, args|
     raise "Must specify git repo to pull from." unless args.sourceName not(nil)
     source = "git://github.com/#{args.sourceName}.git"
+    puts "Adding to #{vimFolder}/plugins.txt"
     File.open pluginsFile, 'a' do |file|
       file.puts "#{source}\n"
     end
-    Rake::Task['vim:installPlugin'].invoke source
+    Rake::Task['vim:loadPlugin'].invoke source
   end
 
 
