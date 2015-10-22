@@ -20,7 +20,6 @@ export PAGER=less       # Used to display text / man files
 export GOPATH="$HOME/projects/go"
 export GOROOT="/usr/local/go"
 export ANSIBLE_HOSTS="~/.ansible/hosts"
-export BOOT2DOCKER=/usr/local/Cellar/boot2docker/1.6.0/bin
 
 export LANG="en_US.UTF-8"
 export WINDOWS="FALSE"
@@ -37,7 +36,6 @@ if [ -d "/c/Windows" ]; then
   ANSIBLE_HOSTS="/c/ansible/hosts"
   GOROOT="/d/Programs/Go"
   GOPATH="/d/Projects/Programming/go"
-  BOOT2DOCKER=/c/Program\ Files/Boot2Docker\ for\ Windows/
   GIT_EDITOR=~/tools/vim/gvim.exe
 
   if [ -f ~/.windows ]; then
@@ -52,7 +50,7 @@ if [ -d "${HOME}/tools/vim" ] ; then
     PATH=${HOME}/tools/vim:${PATH}
 fi
 
-PATH=${GOROOT}/bin:${PATH}:${GOPATH}/bin:${BOOT2DOCKER}
+PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
 
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
 # run these to increase concurrent connections in linux
