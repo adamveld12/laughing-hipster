@@ -86,7 +86,7 @@
   # Make `git rebase` safer on OS X
   # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
   trustctime = false
-	autocrlf = false
+	autocrlf = input
 	editor = $EDITOR
 
 [color]
@@ -121,29 +121,23 @@
   insteadOf = "gh:"
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com/"
-
 [url "git://github.com/"]
   insteadOf = "github:"
-
 [url "git@gist.github.com:"]
   insteadOf = "gst:"
   pushInsteadOf = "gist:"
   pushInsteadOf = "git://gist.github.com/"
-
 [url "git://gist.github.com/"]
   insteadOf = "gist:"
 
 [push]
 	default = current
-
 [pull]
 	default = current
-
 [user]
 	email = adam@veldhousen.ninja
 	name = Adam Veldhousen
 	signingkey = 415C0B9C
-
 [commit]
 	gpgsign = true
 
