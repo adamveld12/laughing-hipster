@@ -63,8 +63,7 @@ function dm() {
 
       if [ -z $(docker-machine ls | grep $TARGET) ]; then
         CREATE=false
-        echo "machine doesn't exist (yes to create)"
-        read CREATE
+        read -e -p "machine doesn't exist (yes to create): " CREATE
         if [[ $CREATE  == "yes" ]]; then
           docker-machine create $TARGET
         else 
