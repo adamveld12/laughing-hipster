@@ -92,16 +92,26 @@ function dm() {
     "ip" )
 
       echo $(docker-machine ip $TARGET) ;;
+    "list" | "ls" )
+      echo $(docker-machine ls) ;;
 
-    * )
+
+    "help" )
 
       echo "usage: dm COMMAND [arg]"
       echo "[machine name] is 'default' if not defined"
       echo "Commands:"
-      echo " start | up [machine name]       Brings up a docker machine and adds variables to the environment"
-      echo " stop | halt [machine name]     Stops the specified docker machine"
+      echo " start | up [machine name]        Brings up a docker machine and adds variables to the environment"
+      echo " stop | halt [machine name]       Stops the specified docker machine"
       echo " delete | destroy [machine name]  Destroys the specified docker machine"
-      echo " ip [machine name]       Prints the ip address for this machine" ;;
+      echo " list | ls                        Lists available machines"
+      echo " ip [machine name]                Prints the ip address for this machine" 
+      echo " *                                Alias for docker-machine" 
+    ;;
+
+    * )
+      docker-machine $@
+    ;;
 
   esac
 }
