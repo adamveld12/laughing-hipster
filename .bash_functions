@@ -1,51 +1,7 @@
 #!/bin/bash
 #vim: set ft=sh
+
 IFS=$'\n$\t'
-
-# `s` with no arguments opens the current directory in Sublime Text, otherwise
-# opens the given location
-function s() {
-	if [ $# -eq 0 ]; then
-		subl .;
-	else
-		subl "$@";
-	fi;
-}
-
-# `a` with no arguments opens the current directory in Atom Editor, otherwise
-# opens the given location
-function a() {
-	if [ $# -eq 0 ]; then
-		atom .;
-	else
-		atom "$@";
-	fi;
-}
-
-# `v` with no arguments opens the current directory in Vim, otherwise opens the
-# given location
-function v() {
-	if [ $# -eq 0 ]; then
-		vim .;
-	else
-		vim "$@";
-	fi;
-}
-
-# `o` with no arguments opens the current directory, otherwise opens the given
-# location
-function o() {
-	if [ $# -eq 0 ]; then
-		open .;
-	else
-		open "$@";
-	fi;
-}
-
-# Create a new directory and enter it
-function mkd() {
-	mkdir -p "$@" && cd "$_";
-}
 
 # delete merged local branches
 function prunelocal(){
@@ -62,12 +18,17 @@ function printmotd(){
 
   if [[ -f $GOPATH/bin/fortune ]]; then
     echo ""
-    $GOPATH/bin/fortune
-  elif [[ -f fortune ]]; then
-    echo ""
+    $GOPATH/bin/fortune -file="$GOPATH/bin/fortunes.txt"
+  elif [[ -f $(fortune) ]]; then
+    echo "" 
     fortune
   fi
   echo ""
+}
+
+# prints battery percentage, only works on OSX
+function batteryPercent(){
+  ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%d", $10/$5 * 100)}'
 }
 
 # a shortcut for cloning from github
@@ -91,28 +52,68 @@ function clone()
 }
 
 # sshs into boot2docker
-function b2d() {
-  b2dinit
-  boot2docker ssh
-}
-
-function b2dinit() {
-  if [[ -n $(ps -ae | grep ".boot2docker") || -n $(tasklist.exe | grep "VBoxHeadless") ]]; then
-    echo "Initializing boot2docker"
-    boot2docker init &> /dev/null
-    boot2docker up &> /dev/null
+function dm() {
+  local TARGET=$2
+  if [ -z "$2" ]; then
+    TARGET="default"
   fi
 
-  eval $(boot2docker shellinit) 
+  case $1 in
+    "start" | "up" )
+
+      if [ -z $(docker-machine ls | grep $TARGET) ]; then
+        CREATE=false
+        echo "machine doesn't exist (yes to create)"
+        read CREATE
+        if [[ $CREATE  == "yes" ]]; then
+          docker-machine create $TARGET
+        else 
+          echo "exiting"
+          return 0
+        fi
+      fi
+
+      if [ -z $(docker-machine status $TARGET | grep Running) ]; then
+        docker-machine start $TARGET
+      fi
+
+      eval $(docker-machine env $TARGET) ;;
+
+    "stop" | "halt" )
+
+      echo "stopping docker machine..." 
+      docker-machine stop $TARGET ;;
+
+    "delete" | "destroy" )
+
+      echo "destroying docker machine..." 
+      docker-machine rm $TARGET ;;
+
+    "ip" )
+
+      echo $(docker-machine ip $TARGET) ;;
+
+    * )
+
+      echo "usage: dm COMMAND [arg]"
+      echo "[machine name] is 'default' if not defined"
+      echo "Commands:"
+      echo " start | up [machine name]       Brings up a docker machine and adds variables to the environment"
+      echo " stop | halt [machine name]     Stops the specified docker machine"
+      echo " delete | destroy [machine name]  Destroys the specified docker machine"
+      echo " ip [machine name]       Prints the ip address for this machine" ;;
+
+  esac
 }
 
-function vim(){
+function vimt(){
   if [[ $# -eq 0 ]]; then
     vim
   else
     vim --remote-tab-silent "$@"
   fi
 }
+
 
 # runs vim outside of the term by forking the command and gvim, great for my windows box
 function vimd(){
@@ -141,7 +142,43 @@ function calc() {
 	printf "\n";
 }
 
+# Create a new directory and enter it
+function mkd() {
+	mkdir -p "$@" && cd "$_";
+}
 
+# Change working directory to the top-most Finder window location
+function cdf() { # short for `cdfinder`
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
+}
+
+# Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
+function targz() {
+	local tmpFile="${@%/}.tar";
+	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1;
+
+	size=$(
+		stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
+		stat -c"%s" "${tmpFile}" 2> /dev/null # GNU `stat`
+	);
+
+	local cmd="";
+	if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
+		# the .tar file is smaller than 50 MB and Zopfli is available; use it
+		cmd="zopfli";
+	else
+		if hash pigz 2> /dev/null; then
+			cmd="pigz";
+		else
+			cmd="gzip";
+		fi;
+	fi;
+
+	echo "Compressing .tar using \`${cmd}\`…";
+	"${cmd}" -v "${tmpFile}" || return 1;
+	[ -f "${tmpFile}" ] && rm "${tmpFile}";
+	echo "${tmpFile}.gz created successfully.";
+}
 
 # Determine size of a file or total size of a directory
 function fs() {
@@ -286,7 +323,45 @@ function getcertnames() {
 	fi;
 }
 
-# Linux
+# `s` with no arguments opens the current directory in Sublime Text, otherwise
+# opens the given location
+function s() {
+	if [ $# -eq 0 ]; then
+		subl .;
+	else
+		subl "$@";
+	fi;
+}
+
+# `a` with no arguments opens the current directory in Atom Editor, otherwise
+# opens the given location
+function a() {
+	if [ $# -eq 0 ]; then
+		atom .;
+	else
+		atom "$@";
+	fi;
+}
+
+# `v` with no arguments opens the current directory in Vim, otherwise opens the
+# given location
+function v() {
+	if [ $# -eq 0 ]; then
+		vim .;
+	else
+		vim "$@";
+	fi;
+}
+
+# `o` with no arguments opens the current directory, otherwise opens the given
+# location
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
@@ -294,45 +369,4 @@ function getcertnames() {
 # small enough for one screen.
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
-}
-
-
-# OSX
-
-# prints battery percentage, only works on OSX
-function batteryPercent(){
-  echo $(ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%d", $10/$5 * 100)}')
-}
-
-# Change working directory to the top-most Finder window location
-function cdf() { # short for `cdfinder`
-	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
-}
-
-# Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
-function targz() {
-	local tmpFile="${@%/}.tar";
-	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1;
-
-	size=$(
-		stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
-		stat -c"%s" "${tmpFile}" 2> /dev/null # GNU `stat`
-	);
-
-	local cmd="";
-	if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
-		# the .tar file is smaller than 50 MB and Zopfli is available; use it
-		cmd="zopfli";
-	else
-		if hash pigz 2> /dev/null; then
-			cmd="pigz";
-		else
-			cmd="gzip";
-		fi;
-	fi;
-
-	echo "Compressing .tar using \`${cmd}\`…";
-	"${cmd}" -v "${tmpFile}" || return 1;
-	[ -f "${tmpFile}" ] && rm "${tmpFile}";
-	echo "${tmpFile}.gz created successfully.";
 }
