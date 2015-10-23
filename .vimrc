@@ -254,6 +254,14 @@ let g:airline#extensions#branch#displayed_head_limit = 15
 " enable/disable fugitive/lawrencium integration >
 let g:airline#extensions#branch#enabled = 1
 
+" syntastic settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_javascript_checkers = ['standard']
+
 " Enable file type detection
 filetype plugin on
 filetype on
