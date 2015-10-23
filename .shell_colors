@@ -27,6 +27,7 @@ DARKGRAY="\033[38;5;247m"
 # U+E0B1    Rightwards arrowhead
 # U+E0B2    Leftwards black arrowhead
 # U+E0B3    Leftwards arrowhead
+# U+1D77A 𝝺 Lambda
 
 LAR=""
 RAR=""
@@ -35,6 +36,7 @@ RARS=""
 LN=""
 VC=""
 LK=""
+LA="𝝺"
 
 colorize() {
   # $1 is foreground
@@ -101,9 +103,9 @@ print_prompt(){
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory
 # $
 if [ $OSTYPE = 'msys' ]; then
-  PROMPT_COMMAND='PS1="$(build_prompt_win)\n\$ "'
+  PROMPT_COMMAND='PS1="$(build_prompt_win)\n\$LA "'
 else
-  PROMPT_COMMAND='PS1="$(build_prompt_mac)\n\$ "'
+  PROMPT_COMMAND='PS1="$(build_prompt_mac)\n\$LA "'
 fi
 
 
