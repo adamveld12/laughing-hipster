@@ -33,8 +33,7 @@ function batteryPercent(){
 
 # a shortcut for cloning from github
 # usage: clone user/repo <dir>
-function clone()
-{
+function clone() {
   if [ -z "$1" ]; then
     echo "Missing git repository url ending"
     echo "usage: clone 'git repository ending' ['target directory name']"
