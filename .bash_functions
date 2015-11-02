@@ -50,6 +50,11 @@ function clone() {
   fi
 }
 
+# simplifies using docker-compose
+function dc(){
+  docker-compose $@
+}
+
 # simplifies using docker-machine
 function dm() {
   local TARGET=$2
