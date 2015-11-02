@@ -88,22 +88,34 @@ function dm() {
       docker-machine rm $TARGET ;;
 
     "ip" )
-
       echo $(docker-machine ip $TARGET) ;;
+
     "list" | "ls" )
       echo $(docker-machine ls) ;;
 
+    "rm" )
+      if [ -z $2 ]; then
+        $2 = "hour"
+      fi
 
-    "help" )
+      docker ps -a | grep $2 | awk '{print $1}' | xargs docker rm ;;
+
+    "rmi" )
+      docker images -a | grep "ago" | awk '{print $3}' | xargs docker rmi ;;
+
+    "help" | "-h" )
 
       echo "usage: dm COMMAND [arg]"
       echo "[machine name] is 'default' if not defined"
       echo "Commands:"
+      echo " help | -h                        Shows this help text"
       echo " start | up [machine name]        Brings up a docker machine and adds variables to the environment"
       echo " stop | halt [machine name]       Stops the specified docker machine"
       echo " delete | destroy [machine name]  Destroys the specified docker machine"
       echo " list | ls                        Lists available machines"
       echo " ip [machine name]                Prints the ip address for this machine" 
+      echo " rm [text]                        Deletes all containers matching [text]"
+      echo " rmi                              Deletes all images"
       echo " *                                Alias for docker-machine" 
     ;;
 
