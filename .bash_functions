@@ -51,7 +51,7 @@ function clone() {
 }
 
 # simplifies using docker-compose
-function dc(){
+function docom(){
   docker-compose $@
 }
 
