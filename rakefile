@@ -43,13 +43,12 @@ namespace :vim do
   task :install, [:sourceName] do |t, args|
     raise "Must specify git repo to pull from." unless args.sourceName not(nil)
     source = "git://github.com/#{args.sourceName}.git"
+    Rake::Task['vim:loadPlugin'].invoke source
     puts "Adding to #{vimFolder}/plugins.txt"
     File.open pluginsFile, 'a' do |file|
       file.puts "#{source}\n"
     end
-    Rake::Task['vim:loadPlugin'].invoke source
   end
-
 
 end
 
