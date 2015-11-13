@@ -51,7 +51,7 @@ function clone() {
 }
 
 # simplifies using docker-compose
-function docom(){
+function dcm(){
   docker-compose $@
 }
 
@@ -67,7 +67,7 @@ function dm() {
 
       if [ -z $(docker-machine ls | grep $TARGET) ]; then
         CREATE=false
-        read -e -p "machine doesn't exist (yes to create): " CREATE
+        read -e -p "a machine named \"${TARGET}\" doesn't exist (yes to create): " CREATE
         if [[ $CREATE  == "yes" ]]; then
           docker-machine create $TARGET
         else 
@@ -89,16 +89,16 @@ function dm() {
 
     "delete" | "destroy" )
 
-      echo "destroying docker machine..." 
+      echo "destroying \"$TARGET\" machine..." 
       docker-machine rm $TARGET ;;
 
     "ip" )
-      echo $(docker-machine ip $TARGET) ;;
+      docker-machine ip $TARGET ;;
 
     "list" | "ls" )
-      echo $(docker-machine ls) ;;
+      docker-machine ls ;;
 
-    "rm" )
+    "rm" | "clean" )
       if [ -z $2 ]; then
         $2 = "hour"
       fi
@@ -106,21 +106,24 @@ function dm() {
       docker ps -a | grep $2 | awk '{print $1}' | xargs docker rm ;;
 
     "rmi" )
-      docker images -a | grep "ago" | awk '{print $3}' | xargs docker rmi ;;
+      if [ -z $2 ]; then
+        $2 = "ago"
+      fi
 
-    "help" | "-h" )
+      docker images -a | grep $2 | awk '{print $3}' | xargs docker rmi ;;
 
+    "help" | "-h" | "--help" )
       echo "usage: dm COMMAND [arg]"
       echo "[machine name] is 'default' if not defined"
       echo "Commands:"
-      echo " help | -h                        Shows this help text"
+      echo " help | -h | --help               Shows this help text"
       echo " start | up [machine name]        Brings up a docker machine and adds variables to the environment"
       echo " stop | halt [machine name]       Stops the specified docker machine"
       echo " delete | destroy [machine name]  Destroys the specified docker machine"
       echo " list | ls                        Lists available machines"
       echo " ip [machine name]                Prints the ip address for this machine" 
-      echo " rm [text]                        Deletes all containers matching [text]"
-      echo " rmi                              Deletes all images"
+      echo " rm | clean [text]                Deletes all containers matching [text]"
+      echo " rmi [text]                       Deletes all images"
       echo " *                                Alias for docker-machine" 
     ;;
 
@@ -131,22 +134,63 @@ function dm() {
   esac
 }
 
-function vimt(){
-  if [[ $# -eq 0 ]]; then
-    vim
+
+# `s` with no arguments opens the current directory in Sublime Text, otherwise
+# opens the given location
+function s() {
+	if [ $# -eq 0 ]; then
+		subl .;
+	else
+		subl "$@";
+	fi;
+}
+
+# `a` with no arguments opens the current directory in Atom Editor, otherwise
+# opens the given location
+function a() {
+	if [ $# -eq 0 ]; then
+		atom .;
+	else
+		atom "$@";
+	fi;
+}
+
+function vim(){
+  local VIM_EXEC="/Applications/MacVim.app/Contents/MacOS/Vim";
+  if [ -f $VIM_EXEC ]; then
+    $VIM_EXEC "$@";
   else
-    vim --remote-tab-silent "$@"
+    $(which vim) "$@";
   fi
 }
 
+# `v` with no arguments opens the current directory in Vim, otherwise opens the
+# given location
+function v(){
+  if [[ $# -eq 0 ]]; then
+    vim .;
+  else
+    vim --remote-tab-silent "$@";
+  fi
+}
 
 # runs vim outside of the term by forking the command and gvim, great for my windows box
-function vimd(){
+function vd(){
   if [[ $# -eq 0 ]]; then
     gvim &
   else
     gvim --remote-tab-silent "$@" &
   fi
+}
+
+# `o` with no arguments opens the current directory, otherwise opens the given
+# location
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
 }
 
 # Simple calculator
@@ -345,46 +389,6 @@ function getcertnames() {
 	else
 		echo "ERROR: Certificate not found.";
 		return 1;
-	fi;
-}
-
-# `s` with no arguments opens the current directory in Sublime Text, otherwise
-# opens the given location
-function s() {
-	if [ $# -eq 0 ]; then
-		subl .;
-	else
-		subl "$@";
-	fi;
-}
-
-# `a` with no arguments opens the current directory in Atom Editor, otherwise
-# opens the given location
-function a() {
-	if [ $# -eq 0 ]; then
-		atom .;
-	else
-		atom "$@";
-	fi;
-}
-
-# `v` with no arguments opens the current directory in Vim, otherwise opens the
-# given location
-function v() {
-	if [ $# -eq 0 ]; then
-		vim .;
-	else
-		vim "$@";
-	fi;
-}
-
-# `o` with no arguments opens the current directory, otherwise opens the given
-# location
-function o() {
-	if [ $# -eq 0 ]; then
-		open .;
-	else
-		open "$@";
 	fi;
 }
 
