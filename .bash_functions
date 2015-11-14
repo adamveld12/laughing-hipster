@@ -69,7 +69,7 @@ function dm() {
         CREATE=false
         read -e -p "a machine named \"${TARGET}\" doesn't exist (yes to create): " CREATE
         if [[ $CREATE  == "yes" ]]; then
-          docker-machine create $TARGET
+          docker-machine create --driver="virtualbox" $TARGET 
         else 
           echo "exiting"
           return 0
