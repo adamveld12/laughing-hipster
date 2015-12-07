@@ -110,18 +110,15 @@ function dm() {
       docker-machine ls ;;
 
     "rm" | "clean" )
-      if [ -z $2 ]; then
-        $2 = "hour"
-      fi
 
-      docker ps -a | grep $2 | awk '{print $1}' | xargs docker rm ;;
+      docker ps -a | grep "ago" | awk '{print $1}' | xargs docker rm ;;
 
     "rmi" )
       if [ -z $2 ]; then
-        $2 = "ago"
+        $2 = "weeks"
       fi
 
-      docker images -a | grep $2 | awk '{print $3}' | xargs docker rmi ;;
+      docker images -a | grep "ago" | awk '{print $3}' | xargs docker rmi ;;
 
     "help" | "-h" | "--help" )
       echo "usage: dm COMMAND [arg]"
