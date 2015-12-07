@@ -50,6 +50,17 @@ function clone() {
   fi
 }
 
+# kill the process using the specified port
+function freeport(){
+
+  if [ -z $1 ]; then
+    echo "usage: freeport <port number>" >&2
+    return 1
+  fi
+
+  lsof -t -i tcp:$1 | xargs kill
+}
+
 # simplifies using docker-compose
 function dcm(){
   docker-compose $@
