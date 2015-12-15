@@ -1,7 +1,7 @@
 require 'rake/clean'
 require 'fileutils'
 
-vimFolder = "Tools/vim"
+vimFolder = "tools/vim"
 bundles_dir = File.join(File.dirname(__FILE__), "#{vimFolder}/bundle/")
 pluginsFile = File.join(File.dirname(__FILE__), "#{vimFolder}/plugins.txt")
 
@@ -38,7 +38,7 @@ namespace :vim do
     puts "\n\n"
   end
 
-  
+
   desc "installs a new plugin and adds it to #{vimFolder}/plugins.txt"
   task :install, [:sourceName] do |t, args|
     raise "Must specify git repo to pull from." unless args.sourceName not(nil)
@@ -52,7 +52,7 @@ namespace :vim do
 
 end
 
-def gitName(gitRepo) 
+def gitName(gitRepo)
     return gitRepo.split('/').last.sub(/\.git$/, '')
 end
 
