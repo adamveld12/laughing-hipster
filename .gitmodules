@@ -1,12 +1,12 @@
-[submodule "Tools/modules/tmux-MacOSX-pasteboard"]
-	path = Tools/modules/tmux-MacOSX-pasteboard
+[submodule "tools/modules/tmux-MacOSX-pasteboard"]
+	path = tools/modules/tmux-MacOSX-pasteboard
 	url = git://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard.git
-[submodule "Tools/modules/powerline-fonts"]
-	path = Tools/modules/powerline-fonts
+[submodule "tools/modules/powerline-fonts"]
+	path = tools/modules/powerline-fonts
 	url = git://github.com/Lokaltog/powerline-fonts.git
-[submodule "Tools/modules/iTerm2-Color-Schemes"]
-	path = Tools/modules/iTerm2-Color-Schemes
+[submodule "tools/modules/iTerm2-Color-Schemes"]
+	path = tools/modules/iTerm2-Color-Schemes
 	url = git://github.com/mbadolato/iTerm2-Color-Schemes.git
-[submodule "Tools/modules/powerline"]
-	path = Tools/modules/powerline
+[submodule "tools/modules/powerline"]
+	path = tools/modules/powerline
 	url = git://github.com/powerline/powerline.git
