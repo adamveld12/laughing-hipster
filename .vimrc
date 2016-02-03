@@ -1,13 +1,9 @@
 " change runtime path
-set runtimepath=,$VIMRUNTIME,$VIM/vimfiles,~/tools/vim
-
+set runtimepath=$VIMRUNTIME,~/tools/vim
 
 execute pathogen#infect()
 execute pathogen#helptags()
 
-
-set omnifunc=syntaxcomplete#Complete
-set completeopt-=preview
 
 "we don't want vi compatibility AKA Make Vim more useful
 set nocompatible 
@@ -37,6 +33,10 @@ colorscheme CandyPaper
 "koehler
 "morning
 "elflord
+
+set omnifunc=syntaxcomplete#Complete
+set completeopt-=preview
+
 
 let mapleader = ","
 
@@ -78,6 +78,7 @@ map <F1> <Nop>
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 set noswapfile
+set backupcopy=yes
 set autoread
 set selection=exclusive
 set ttimeoutlen=50
@@ -97,6 +98,14 @@ set gdefault
 set encoding=utf-8 "nobomb
 " Change mapleader
 let mapleader=","
+
+" enable neocomplete
+let g:neocomplete#enable_at_startup = 1
+
+" Use smartcase
+let g:neocomplete#enable_smart_case = 1
+
+
 " Don't add empty newlines at the end of files
 set binary
 set noeol
@@ -105,13 +114,13 @@ set t_Co=256
 
 " Centralize backups, swapfiles and undo history
 if exists("&backupdir")
-  set backupdir=~/Tools/vim/backups
+  set backupdir=~/tools/vim/backups
 endif
 if exists("&directory")
-  set directory=~/Tools/vim/swaps
+  set directory=~/tools/vim/swaps
 endif
 if exists("&undodir")
-  set undodir=~/Tools/vim/undo
+  set undodir=~/tools/vim/undo
 endif
 
 " Respect modeline in files
@@ -257,15 +266,14 @@ let g:airline#extensions#branch#enabled = 1
 
 " syntastic settings
 let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_javascript_checkers = ['standard']
 
 " Enable file type detection
-filetype plugin on
-filetype on
+filetype plugin indent on
 
 " Automatic commands
 if has("autocmd")

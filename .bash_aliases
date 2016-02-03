@@ -6,7 +6,7 @@ alias pd="pushd $1"
 alias fuck='$(thefuck $(fc -ln -1))'
 
 # list files
-alias ll='ls --color=always -l'
+alias ll='ls -hGla'
 
 #rake
 alias bake='bundle exec rake'

@@ -5,7 +5,7 @@ vimFolder = "tools/vim"
 bundles_dir = File.join(File.dirname(__FILE__), "#{vimFolder}/bundle/")
 pluginsFile = File.join(File.dirname(__FILE__), "#{vimFolder}/plugins.txt")
 
-CLOBBER.include "#{bundles_dir}/*"
+CLOBBER.include "#{bundles_dir}"
 
 task :default => ['clobber', 'vim:reinstall']
 
@@ -19,9 +19,11 @@ namespace :vim do
     lines = IO.readlines pluginsFile
     puts "Loading #{lines.length} plugins..."
     lines.each { |source|
-      loadTask = Rake::Task['vim:loadPlugin']
-      loadTask.invoke source.sub "\n", ''
-      loadTask.reenable()
+      if source[0] != ";" then
+        loadTask = Rake::Task['vim:loadPlugin']
+        loadTask.invoke source.sub "\n", ''
+        loadTask.reenable()
+      end
     }
     puts "Plugins installed!"
   end
@@ -33,7 +35,7 @@ namespace :vim do
     puts "Installing #{dir}...."
     Dir.chdir bundles_dir do
       sh "git clone #{args.source} #{dir}"
-      FileUtils.rm_rf(File.join(dir, ".git"))
+      #FileUtils.rm_rf(File.join(dir, ".git"))
     end
     puts "\n\n"
   end
