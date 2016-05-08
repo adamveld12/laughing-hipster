@@ -38,6 +38,26 @@ set omnifunc=syntaxcomplete#Complete
 set completeopt-=preview
 
 
+set noswapfile
+set backupcopy=yes
+set autoread
+set selection=exclusive
+set ttimeoutlen=50
+" Use the OS clipboard by default (on versions compiled with `+clipboard`)
+set clipboard=unnamed
+" Enhance command-line completion
+set wildmenu
+" Allow cursor keys in insert mode
+set esckeys
+" Allow backspace in insert mode
+set backspace=indent,eol,start
+" Optimize for fast terminal connections
+set ttyfast
+" Add the g flag to search/replace by default
+set gdefault
+" Use UTF-8 without BOM
+set encoding=utf-8 "nobomb
+" Change mapleader
 let mapleader = ","
 
 map <Space> :noh<CR>
@@ -77,27 +97,6 @@ map <F1> <Nop>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
-set noswapfile
-set backupcopy=yes
-set autoread
-set selection=exclusive
-set ttimeoutlen=50
-" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamed
-" Enhance command-line completion
-set wildmenu
-" Allow cursor keys in insert mode
-set esckeys
-" Allow backspace in insert mode
-set backspace=indent,eol,start
-" Optimize for fast terminal connections
-set ttyfast
-" Add the g flag to search/replace by default
-set gdefault
-" Use UTF-8 without BOM
-set encoding=utf-8 "nobomb
-" Change mapleader
-let mapleader=","
 
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 1
@@ -190,7 +189,7 @@ let g:go_fmt_command = "goimports"
 au FileType go nmap <Leader>r <Plug>(go-rename)
 
 " show type info 
-au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>ki <Plug>(go-info)
 
 " go def
 au FileType go nmap <Leader>di <Plug>(go-def-split)
@@ -271,6 +270,9 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_javascript_checkers = ['standard']
+
+" YCM
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
 
 " Enable file type detection
 filetype plugin indent on

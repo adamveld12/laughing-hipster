@@ -58,9 +58,6 @@ else
   echo "Your SSHfu is strong, skipping config copy..."
 fi
 
-#set +u
-#curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash 
-#set -u
 
 echo ""
 echo "Cleaning up..."
