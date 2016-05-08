@@ -58,6 +58,11 @@ else
   echo "Your SSHfu is strong, skipping config copy..."
 fi
 
+if [[ $(uname -s) == "Darwin" ]]; then 
+  echo "installing brew"
+  ./brew.sh
+fi
+
 
 echo ""
 echo "Cleaning up..."
@@ -72,4 +77,5 @@ popd 2&> /dev/null
 echo "To uninstall, do cd ./lauging-hipster && ./remove.sh"
 echo "Make sure your home_bkup folder is present, so keep it safe in the meantime!"
 echo "Install ./tools/modules/powerline-fonts and set them up in your terminal to benefit from the custom PS1 in .shell_colors"
+echo ""
 echo "done!"
