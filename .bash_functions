@@ -50,6 +50,33 @@ function clone() {
   fi
 }
 
+# runs tcp dump on the port specified in $1. $1 defaults to 8080
+function dumptcp(){
+  local DUMPPORT=$1
+  local DUMPINTERFACE=$2
+
+  if [ -z "$1" ]; then
+    DUMPPORT=8080
+  elif [[ "$1"  == "help" ]]; then
+    echo "dumps tcp info at the specified port. Useful for looking at http requests"
+    echo "usage dumptcp <port>"
+    return 1
+  fi
+
+  if [ -z "$2" ]; then
+    DUMPINTERFACE=lo0
+  fi
+
+  echo "dumping tcp connections @ $DUMPINTERFACE on port $DUMPPORT..."
+
+  sudo tcpdump -s 0 -A -i $DUMPINTERFACE "tcp port $DUMPPORT and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)"
+}
+
+function interfaces(){
+  ifconfig | grep "\: flags" | awk '{print $1}' | sed 's/:$//';
+}
+
+
 # kill the process using the specified port
 function freeport(){
 
