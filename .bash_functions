@@ -136,11 +136,10 @@ function dm() {
     "list" | "ls" )
       docker-machine ls ;;
 
-    "rm" | "clean" )
-
+    "clean" )
       docker ps -a | grep "ago" | awk '{print $1}' | xargs docker rm ;;
 
-    "rmi" )
+    "clean-images" )
       if [ -z $2 ]; then
         $2 = "weeks"
       fi
@@ -156,10 +155,10 @@ function dm() {
       echo " stop | halt [machine name]       Stops the specified docker machine"
       echo " delete | destroy [machine name]  Destroys the specified docker machine"
       echo " list | ls                        Lists available machines"
-      echo " ip [machine name]                Prints the ip address for this machine" 
-      echo " rm | clean [text]                Deletes all containers matching [text]"
-      echo " rmi [text]                       Deletes all images"
-      echo " *                                Alias for docker-machine" 
+      echo " ip [machine name]                Prints the ip address for this machine"
+      echo " clean [text]                     Deletes all containers matching [text] in the current machine"
+      echo " clean-images [text]              Deletes all images in the current machine"
+      echo " *                                Alias for docker-machine"
     ;;
 
     * )
