@@ -19,7 +19,7 @@ function printmotd(){
   if [[ -f $GOPATH/bin/fortune ]]; then
     echo ""
     $GOPATH/bin/fortune -file="$GOPATH/bin/fortunes.txt"
-  elif [[ -f $(which fortune) ]]; then
+  elif [[ -f $(which fortune 2>/dev/null) ]]; then
     echo "" 
     fortune
   fi
