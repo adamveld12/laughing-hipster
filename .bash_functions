@@ -72,6 +72,15 @@ function dumptcp(){
   sudo tcpdump -s 0 -A -i $DUMPINTERFACE "tcp port $DUMPPORT and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)"
 }
 
+function gocd(){
+  if [ -z "$1" ]; then
+    cd $GOPATH;
+    return 0;
+  fi
+
+  cd $(go list -f '{{ .Dir }}' $1)
+}
+
 function interfaces(){
   ifconfig | grep "\: flags" | awk '{print $1}' | sed 's/:$//';
 }
