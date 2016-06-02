@@ -47,7 +47,7 @@ fi
 
 echo ""
 # a check to see if they're using a config file and if it has a host setup
-if [[ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "Host \*") ]]; then
+if [[ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "[hH]ost \*")]]; then
   echo "Appending ssh config"
   # we append it so we don't destroy any custom settings they may have
   cat "${source}/.ssh/config" >> "${dest}/.ssh/config"
