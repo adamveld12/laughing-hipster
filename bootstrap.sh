@@ -34,6 +34,10 @@ fi
 #ln -fs  ${source}/Tools ${dest}/tools
 cp -R ${source}/tools ${dest}/tools
 
+echo "installing fonts"
+find -f ${source}/tools/modules/powerline-fonts | grep "\.[to]tf" | xargs -I {} cp {} /Users/$(whoami)/Library/Fonts/
+
+
 # sometimes its easier if you just change directories
 pushd ${dest} 2&> /dev/null
 
