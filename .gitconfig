@@ -136,7 +136,7 @@
 [pull]
 	default = current
 [user]
-	email = adam@veldhousen.ninja
+	email = adamveld12@gmail.com
 	name = Adam Veldhousen
 	signingkey = 415C0B9C
 [commit]

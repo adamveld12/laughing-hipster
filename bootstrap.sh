@@ -59,6 +59,8 @@ else
 fi
 
 if [[ $(uname -s) == "Darwin" ]]; then 
+  echo "running .osx file"
+  ./.osx
   echo "installing brew"
   ./brew.sh
 fi

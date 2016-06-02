@@ -19,9 +19,10 @@ brew update && brew install \
   wget;
 
 brew install go --cross-compile-all;
-brew install macvim --override-system-vim --with-lua --with-python;
 
 brew link --force openssl;
 
 rbenv install 1.9.3-p125;
 rbenv global 1.9.3-p125;
+
+brew install macvim --override-system-vim --with-lua --with-python;

@@ -8,31 +8,31 @@ execute pathogen#helptags()
 "we don't want vi compatibility AKA Make Vim more useful
 set nocompatible 
 
-" color schemes
-colorscheme CandyPaper
-"sunburst
-"jellybeans 
-"hickop
-"pablo
-"torte
-"slate
-"evening
-"darkblue
-"desert
-"base16-flat
-"inkpot
-"jellybeans
-"liquidcarbon
-"molokai
-"moria
-"pinksea
-"sonofobsidian
-"vividchalk
-"wombat256mod
-"evening
-"koehler
-"morning
-"elflord
+"color schemes
+colorscheme jellybeans
+"colorscheme molokai
+"colorscheme moria
+"colorscheme CandyPaper
+"colorscheme sunburst
+"colorscheme hickop
+"colorscheme pablo
+"colorscheme torte
+"colorscheme slate
+"colorscheme evening
+"colorscheme darkblue
+"colorscheme desert
+"colorscheme base16-flat
+"colorscheme inkpot
+"colorscheme jellybeans
+"colorscheme liquidcarbon
+"colorscheme pinksea
+"colorscheme sonofobsidian
+"colorscheme vividchalk
+"colorscheme wombat256mod
+"colorscheme evening
+"colorscheme koehler
+"colorscheme morning
+"colorscheme elflord
 
 set omnifunc=syntaxcomplete#Complete
 set completeopt-=preview
