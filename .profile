@@ -35,8 +35,8 @@ if [ -f ~/.extensions ]; then
   . ~/.extensions
 # Sources a folder with shell extensions
 elif [ -d ~/.extensions ]; then
-  for plugin in ~/.extensions/; do
-    echo $plugin
+  for plugin in ~/.extensions/*; do
+    source $plugin
   done
 fi
 
