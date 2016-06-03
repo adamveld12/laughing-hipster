@@ -10,6 +10,7 @@ brew update && brew install \
   docker-machine \
   git \
   gnupg \
+  mono \
   nvm \
   openssl \
   python \
@@ -26,3 +27,8 @@ rbenv install 1.9.3-p125;
 rbenv global 1.9.3-p125;
 
 brew install macvim --override-system-vim --with-lua --with-python;
+
+rake
+
+~/tools/vim/bundle/YouCompleteMe/install.py --all
+

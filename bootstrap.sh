@@ -51,7 +51,7 @@ fi
 
 echo ""
 # a check to see if they're using a config file and if it has a host setup
-if [[ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "[hH]ost \*")]]; then
+if [[ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "[hH]ost \*") ]]; then
   echo "Appending ssh config"
   # we append it so we don't destroy any custom settings they may have
   cat "${source}/.ssh/config" >> "${dest}/.ssh/config"
@@ -64,7 +64,7 @@ fi
 
 if [[ $(uname -s) == "Darwin" ]]; then 
   echo "running .osx file"
-  ./.osx
+  sudo ./.osx
   echo "installing brew"
   ./brew.sh
 fi
@@ -72,12 +72,24 @@ fi
 
 echo ""
 echo "Cleaning up..."
-rm -rf ${dest}/.git
-rm -rf ${dest}/.gitmodules
-rm -rf ${dest}/.gitignore
-rm -rf ${dest}/bootstrap.sh
-rm -rf ${dest}/remove.sh
-rm -rf ${dest}/README.md
+cleanup=".git
+.gitmodules
+.gitignore
+bootstrap.sh
+remove.sh
+README.md
+.osx
+brew.sh"
+
+
+for f in ${cleanup}
+do
+  filetorm = ${dest}/${f}
+  if [[ -f  ${filetorm} ]]; then
+    rm -rf $filetorm
+  fi
+done
+
 
 popd 2&> /dev/null
 echo "To uninstall, do cd ./lauging-hipster && ./remove.sh"
