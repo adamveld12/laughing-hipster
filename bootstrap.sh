@@ -2,12 +2,18 @@
 IFS='\n\t'
 set -euo pipefail
 
-source="$(pwd)"
-bkup="$source/../.home_bkup"
-dest="$source/.."
+source="$(dirname "$(readlink -f "$0")")"
+dest="$(pwd)"
+bkup="$dest/.home_bkup"
 
+
+if [[ -d ${bkup} ]]; then
+  echo "A backup folder already exists, it must be moved/deleted before bootstrap can apply the new dotfiles."
+  exit -1;
+fi
+
+echo ""
 echo "Making a backup of old dotfiles into ${bkup}..."
-rm -rf "${bkup}"
 mkdir -p "${bkup}"
 
 IFS=$'\n'
@@ -22,31 +28,28 @@ for file in $(ls -lA "${source}" | grep "^-" | awk '{print $9}'); do
 done
 
 echo ""
-echo "loading git modules..."
-git submodule init 
+echo "loading git modules in $source..."
+pushd $source 2&> /dev/null
+git submodule init
 git submodule update
+popd
 
 echo ""
 echo "copying \"./tools\" directories..."
 if [[ -z "${dest}/Tools" ]]; then
-  mkdir ${dest}/Tools
+  mkdir -p ${dest}/tools
 fi
+
 #ln -fs  ${source}/Tools ${dest}/tools
 cp -R ${source}/tools ${dest}/tools
 
-echo "installing fonts"
-find -f ${source}/tools/modules/powerline-fonts | grep "\.[to]tf" | xargs -I {} cp {} /Users/$(whoami)/Library/Fonts/
-
-
-# sometimes its easier if you just change directories
-pushd ${dest} 2&> /dev/null
 
 echo ""
 echo "linking dotfiles from ${source} into ${dest}"
-# ln doesn't want to work on my windows box, so I'm going to have to figure this out later
+# ln on windows pretty much only works with hardlinks it seems
 ls -lA "${source}" | grep "^-" | awk '{print $9}' | xargs -I file ln -fs "${source}/file" "${dest}/file"
 if [[ -z "${dest}/.ssh" ]]; then
-  mkdir "${dest}/.ssh"
+  mkdir -p "${dest}/.ssh"
 fi
 
 echo ""
@@ -55,19 +58,37 @@ if [[ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "[hH]ost
   echo "Appending ssh config"
   # we append it so we don't destroy any custom settings they may have
   cat "${source}/.ssh/config" >> "${dest}/.ssh/config"
-elif [[ -z "${dest}/.ssh/config" ]]; then
-  echo "Copying new ssh config"
-  cp "${source}/.ssh/config" "${dest}/.ssh/config"
-else 
+elif [[ -f "${dest}/.ssh/config" ]]; then
   echo "Your SSHfu is strong, skipping config copy..."
+else 
+  echo "Copying new ssh config"
+  mkdir -p "${dest}/.ssh/"
+  cp -t "${dest}/.ssh/" -n "${source}/.ssh/config" 
 fi
 
 if [[ $(uname -s) == "Darwin" ]]; then 
+  echo "installing fonts"
+  find ${source}/tools/modules/powerline-fonts | grep "\.[to]tf" | xargs -I {} cp {} /Users/$(whoami)/Library/Fonts/
+
   echo "running .osx file"
   sudo ./.osx
   echo "installing brew"
   ./brew.sh
+elif [[ $(uname -o) == "Msys" ]]; then 
+  echo "installing fonts"
+  fonts="$(find ${source}/tools/modules/powerline-fonts | grep "\.[to]tf")"
+
+  mkdir -p "$dest/fonts_to_install"
+  for font in $fonts 
+  do
+    fontname="$(basename $font)"
+    #cp -n $font /c/Windows/Fonts
+    cp -n $font "$dest/fonts_to_install/"
+    #reg add "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "${fontname} (TrueType)" /t REG_SZ /d "$font" /f
+  done
+  echo "go to $dest/fonts_to_install, select all of the font files and right-click -> install"
 fi
+
 
 
 echo ""
@@ -84,16 +105,15 @@ brew.sh"
 
 for f in ${cleanup}
 do
-  filetorm = ${dest}/${f}
+  filetorm=${dest}/${f};
   if [[ -f  ${filetorm} ]]; then
     rm -rf $filetorm
   fi
 done
 
 
-popd 2&> /dev/null
+echo ""
 echo "To uninstall, do cd ./lauging-hipster && ./remove.sh"
 echo "Make sure your home_bkup folder is present, so keep it safe in the meantime!"
 echo "Install ./tools/modules/powerline-fonts and set them up in your terminal to benefit from the custom PS1 in .shell_colors"
-echo ""
 echo "done!"
