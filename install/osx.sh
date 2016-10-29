@@ -1,8 +1,48 @@
+#!/bin/bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)";
 
-# Menu bar: hide the useless Time Machine and Volume icons
-defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" "/System/Library/CoreServices/Menu Extras/AirPort.menu" "/System/Library/CoreServices/Menu Extras/Battery.menu" "/System/Library/CoreServices/Menu Extras/Clock.menu"
+brew update && brew install \
+  bash-completion \
+  brew-cask \
+  cmake \
+  curl \
+  diff-so-fancy \
+  docker\
+  docker-compose \
+  docker-machine \
+  git \
+  gnupg \
+  mono \
+  nvm \
+  openssl \
+  python \
+  rbenv \
+  ruby-build \
+  tmux \
+  wget;
 
+brew install go --cross-compile-all;
+brew install macvim --override-system-vim --with-lua --with-python;
 
+brew install homebrew/games/freeciv
+
+brew link --force openssl;
+
+rbenv install 1.9.3-p125;
+rbenv global 1.9.3-p125;
+
+brew tap homebrew/completions
+
+brewcompletions=<<EOF
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+  fi
+EOF
+
+echo ${brewcompletions} > ~/.extensions/.osx
+
+# Menu bar: hide the useless Time Machine icon
+defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" "/System/Library/CoreServices/Menu Extras/AirPort.menu" "/System/Library/CoreServices/Menu Extras/Battery.menu" "/System/Library/CoreServices/Menu Extras/Clock.menu" "/System/Library/CoreServices/Menu Extras/Volume.menu"
 
 # Disable opening and closing window animations
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
@@ -20,7 +60,6 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 # Display ASCII control characters using caret notation in standard text views
 # Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
 defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
-
 
 
 # Disable automatic termination of inactive apps

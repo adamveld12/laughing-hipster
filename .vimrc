@@ -37,7 +37,9 @@ colorscheme jellybeans
 set omnifunc=syntaxcomplete#Complete
 set completeopt-=preview
 
-
+set wildignore=*.png,*.jpg,node_modules,*.min.js,*.txt,*.bak,*.exe
+set autochdir
+set tags=./.git/tags,tags;$HOME
 set noswapfile
 set backupcopy=yes
 set autoread
@@ -61,8 +63,13 @@ set encoding=utf-8 "nobomb
 let mapleader = ","
 
 map <Space> :noh<CR>
+
+"list buffers
 map <leader>w :buffers<CR>
 map <leader>q :buffer#<CR>
+
+" open erros
+map <leader>e :lw 5<CR>
 
 " mini buffer explorer toggle 
 map <Leader>b :MBEToggle<cr>
@@ -77,12 +84,24 @@ map <leader>s <Plug>(easymotion-s2)
 nmap <leader>n :NERDTreeToggle %:p:h<CR>
 nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
 
+" strips whitespace
+noremap <leader>ss :call StripWhitespace()<CR>
+
+" Strip trailing whitespace (,ss)
+function! StripWhitespace()
+  let save_cursor = getpos(".")
+  let old_query = getreg('/')
+  :%s/\s\+$//e
+  call setpos('.', save_cursor)
+  call setreg('/', old_query)
+endfunction
+
 
 " pane resizing
-nnoremap <C-w> :resize -2<Cr>
-nnoremap <C-s> :resize +2<Cr>
-nnoremap <C-a> :vertical resize +2<Cr>
-nnoremap <C-d> :vertical resize -2<Cr>
+noremap <C-w> :resize -3<Cr>
+noremap <C-x> :resize +3<Cr>
+noremap <C-a> :vertical resize +3<Cr>
+noremap <C-d> :vertical resize -3<Cr>
 
 "pane movements
 noremap <C-h> <C-w>h
@@ -91,23 +110,28 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 map <leader>x :%s/\s\+$//<CR>:noh<Cr>
+
+"open vimrc in a new tab
 map <leader>v :tabedit ~/.vimrc<CR>
 map <F1> <Nop>
 
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
+" generate tags
+nnoremap <leader>t ctags -R -f ./.git/tags .
 
 " enable neocomplete
-let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_at_startup = 0
 
 " Use smartcase
-let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_smart_case = 0
 
+set binary
 
 " Don't add empty newlines at the end of files
-set binary
 set noeol
+
 set history=500  " Number of things to remember in history.
 set t_Co=256
 
@@ -167,14 +191,9 @@ set showmode
 set title
 " Show the (partial) command as its being typed
 set showcmd
-" Use relative line numbers
-if exists("&relativenumber")
-  set relativenumber
-  au BufReadPost * set relativenumber
-endif
-" Start scrolling three lines before the horizontal window border
-set scrolloff=4
 
+" Start scrolling x lines before the horizontal window border
+set scrolloff=4
 
 " vim-go
 let g:go_highlight_functions = 1
@@ -184,30 +203,54 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_fmt_command = "goimports"
- 
-" rename symbol
-au FileType go nmap <Leader>r <Plug>(go-rename)
 
-" show type info 
-au FileType go nmap <Leader>ki <Plug>(go-info)
+let g:syntastic_go_checkers = ['go', 'errcheck', 'gofmt', 'golint', 'govet']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
-" go def
-au FileType go nmap <Leader>di <Plug>(go-def-split)
-au FileType go nmap <Leader>ds <Plug>(go-def-vertical)
-au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+" Automatic commands
+if has("autocmd")
+  " Use relative line numbers
+  if exists("&relativenumber")
+    set relativenumber
+    au BufReadPost * set relativenumber
+  endif
 
-" go docs
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gs <Plug>(go-doc-vertical)
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+  " rename symbol
+  au FileType go nmap <Leader>r <Plug>(go-rename)
+
+  " show type info
+  au FileType go nmap <Leader>ki <Plug>(go-info)
+
+  " go def
+  au FileType go nmap <Leader>di <Plug>(go-def-split)
+  au FileType go nmap <Leader>ds <Plug>(go-def-vertical)
+  au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+  " go docs
+  au FileType go nmap <Leader>gd <Plug>(go-doc)
+  au FileType go nmap <Leader>gi <Plug>(go-doc-vertical)
+  au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+endif
 
 " ctrl p
 let g:ctrlp_map = '<C-P>'
-let g:ctrlp_by_filename = 0
+nnoremap <C-n> :CtrlPTag<cr>
 
-let g:go_disable_autoinstall = 0  
+let g:ctrlp_cmd = 'CtrlPLastMode'
+let g:ctrlp_extensions = ['line']
+
+
+"'c' - the directory of the current file.
+"'a' - the directory of the current file, unless it is a subdirectory of the cwd
+"'r' - the nearest ancestor of the current file that contains one of these directories or files: .git .hg .svn .bzr _darcs
+"'w' - modifier to "r": start search from the cwd instead of the current file's directory
+"0 or '' (empty string) - disable this feature.
 let g:ctrlp_working_path_mode = 'rc'
+
+let g:ctrlp_by_filename = 0
 let g:ctrlp_max_files = 5000
+
+let g:go_disable_autoinstall = 0
 
 "airline config
 let g:airline#extensions#tabline#enabled = 1
@@ -265,9 +308,11 @@ let g:airline#extensions#branch#enabled = 1
 
 " syntastic settings
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
+let g:syntastic_loc_list_height = 1
+let g:syntastic_enable_balloons = 1
 
 let g:syntastic_javascript_checkers = ['standard']
 
@@ -284,27 +329,14 @@ if has("autocmd")
 	" Treat .md files as Markdown
 	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 
-  autocmd BufRead,BufNewFile *.aspx setfiletype apsx syntax=htmldjango
-  autocmd BufRead,BufNewFile *.ascx setfiletype ascx syntax=htmldjango
-  autocmd BufRead,BufNewFile *.spark setfiletype spark syntax=htmldjango
   autocmd BufRead,BufNewFile *.html setfiletype html syntax=htmldjango
   autocmd BufRead,BufNewFile *.template setfiletype html template syntax=htmldjango
-  autocmd BufRead,BufNewFile *.iced setfiletype icedcoffee syntax=coffee
   autocmd BufRead,BufNewFile *.go setfiletype golang syntax=go
+  autocmd BufRead,BufNewFile *.php setfiletype php syntax=go
 endif
 
 
 au GUIEnter * set vb t_vb=
-
-" Strip trailing whitespace (,ss)
-function! StripWhitespace()
-  let save_cursor = getpos(".")
-  let old_query = getreg('/')
-  :%s/\s\+$//e
-  call setpos('.', save_cursor)
-  call setreg('/', old_query)
-endfunction
-noremap <leader>ss :call StripWhitespace()<CR>
 
 
 if has('gui_running')

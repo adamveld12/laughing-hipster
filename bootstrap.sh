@@ -70,10 +70,8 @@ if [[ $(uname -s) == "Darwin" ]]; then
   echo "installing fonts"
   find ${source}/tools/modules/powerline-fonts | grep "\.[to]tf" | xargs -I {} cp {} /Users/$(whoami)/Library/Fonts/
 
-  echo "running .osx file"
-  sudo ./.osx
-  echo "installing brew"
-  ./brew.sh
+  echo "installing osx stuff"
+  sudo ./install/.osx
 elif [[ $(uname -o) == "Msys" ]]; then 
   echo "installing fonts"
   fonts="$(find ${source}/tools/modules/powerline-fonts | grep "\.[to]tf")"
@@ -82,26 +80,27 @@ elif [[ $(uname -o) == "Msys" ]]; then
   for font in $fonts 
   do
     fontname="$(basename $font)"
-    #cp -n $font /c/Windows/Fonts
     cp -n $font "$dest/fonts_to_install/"
     #reg add "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "${fontname} (TrueType)" /t REG_SZ /d "$font" /f
   done
   echo "go to $dest/fonts_to_install, select all of the font files and right-click -> install"
 fi
 
+mkdir ~/.extensions
 
+rake
+
+~/tools/vim/bundle/YouCompleteMe/install.py --all
 
 echo ""
 echo "Cleaning up..."
 cleanup=".git
 .gitmodules
 .gitignore
+install
 bootstrap.sh
 remove.sh
-README.md
-.osx
-brew.sh"
-
+README.md"
 
 for f in ${cleanup}
 do

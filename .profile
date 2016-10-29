@@ -20,21 +20,13 @@ if [ -f ~/.shell_colors ]; then
     . ~/.shell_colors
 fi
 
-# enable programmable completion features
-if [ -f /etc/git_completion ]; then
-    . /etc/git_completion
-fi
-
-# enable programmable completion features
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
 # for when you want to do custom junk
-if [ -f ~/.extensions ]; then
-  . ~/.extensions
 # Sources a folder with shell extensions
-elif [ -d ~/.extensions ]; then
+if [ -d ~/.extensions ]; then
   for plugin in ~/.extensions/*; do
     source $plugin
   done

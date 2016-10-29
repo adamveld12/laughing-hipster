@@ -19,7 +19,7 @@ namespace :vim do
     lines = IO.readlines pluginsFile
     puts "Loading #{lines.length} plugins..."
     lines.each { |source|
-      if source[0] != ";" then
+      if source[0] != "#" then
         loadTask = Rake::Task['vim:loadPlugin']
         loadTask.invoke source.sub "\n", ''
         loadTask.reenable()

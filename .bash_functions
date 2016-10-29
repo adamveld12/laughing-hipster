@@ -3,32 +3,53 @@
 
 IFS=$'\n$\t'
 
-# delete merged local branches
-function prunelocal(){
-  for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
+
+# This function checks whether we have a given program on the system.
+#
+have()
+{
+    # Completions for system administrator commands are installed as well in
+    # case completion is attempted via `sudo command ...'.
+    PATH=$PATH:/usr/sbin:/sbin:/usr/local/sbin type $1 &>/dev/null
 }
 
-# prints message of the day and a fortune
-function printmotd(){
-  if [[ $WORK ]]; then
-    cat ~/work_motd 
-  else
-    cat ~/motd 
-  fi
 
-  if [[ -f $GOPATH/bin/fortune ]]; then
-    echo ""
-    $GOPATH/bin/fortune -file="$GOPATH/bin/fortunes.txt"
-  elif [[ -f $(which fortune 2>/dev/null) ]]; then
-    echo "" 
-    fortune
-  fi
-  echo ""
+# `a` with no arguments opens the current directory in Atom Editor, otherwise
+# opens the given location
+function a() {
+	if [ $# -eq 0 ]; then
+		atom .;
+	else
+		atom "$@";
+	fi;
 }
 
 # prints battery percentage, only works on OSX
 function batteryPercent(){
   ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%d", $10/$5 * 100)}'
+}
+
+# Simple calculator
+function calc() {
+	local result="";
+	result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')";
+	#                       └─ default (when `--mathlib` is used) is 20
+	#
+	if [[ "$result" == *.* ]]; then
+		# improve the output for decimal numbers
+		printf "$result" |
+		sed -e 's/^\./0./'        # add "0" for cases like ".5"` \
+		    -e 's/^-\./-0./'      # add "0" for cases like "-.5"`\
+		    -e 's/0*$//;s/\.$//';  # remove trailing zeros
+	else
+		printf "$result";
+	fi;
+	printf "\n";
+}
+
+# Change working directory to the top-most Finder window location
+function cdf() { # short for `cdfinder`
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
 }
 
 # a shortcut for cloning from github
@@ -50,56 +71,33 @@ function clone() {
   fi
 }
 
-# runs tcp dump on the port specified in $1. $1 defaults to 8080
-function dumptcp(){
-  local DUMPPORT=$1
-  local DUMPINTERFACE=$2
-
-  if [ -z "$1" ]; then
-    DUMPPORT=8080
-  elif [[ "$1"  == "help" ]]; then
-    echo "dumps tcp info at the specified port. Useful for looking at http requests"
-    echo "usage dumptcp <port>"
-    return 1
-  fi
-
-  if [ -z "$2" ]; then
-    DUMPINTERFACE=lo0
-  fi
-
-  echo "dumping tcp connections @ $DUMPINTERFACE on port $DUMPPORT..."
-
-  sudo tcpdump -s 0 -A -i $DUMPINTERFACE "tcp port $DUMPPORT and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)"
+# Get a character’s Unicode code point
+function codepoint() {
+	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))";
+	# print a newline unless we’re piping the output to another program
+	if [ -t 1 ]; then
+		echo ""; # newline
+	fi;
 }
 
-function gocd(){
-  if [ -z "$1" ]; then
-    cd $GOPATH;
-    return 0;
-  fi
-
-  cd $(go list -f '{{ .Dir }}' $1)
+# Create a data URL from a file
+function dataurl() {
+	local mimeType=$(file -b --mime-type "$1");
+	if [[ $mimeType == text/* ]]; then
+		mimeType="${mimeType};charset=utf-8";
+	fi
+	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
 }
 
-function interfaces(){
-  ifconfig | grep "\: flags" | awk '{print $1}' | sed 's/:$//';
-}
-
-
-# kill the process using the specified port
-function freeport(){
-
-  if [ -z $1 ]; then
-    echo "usage: freeport <port number>" >&2
-    return 1
-  fi
-
-  lsof -t -i tcp:$1 | xargs kill
-}
 
 # simplifies using docker-compose
 function dcm(){
   docker-compose $@
+}
+
+# Run `dig` and display the most useful info
+function digga() {
+	dig +nocmd "$1" any +multiline +noall +answer;
 }
 
 # simplifies using docker-machine
@@ -177,6 +175,196 @@ function dm() {
   esac
 }
 
+# runs tcp dump on the port specified in $1. $1 defaults to 8080
+function dumptcp(){
+  local DUMPPORT=$1
+  local DUMPINTERFACE=$2
+
+  if [ -z "$1" ]; then
+    DUMPPORT=8080
+  elif [[ "$1"  == "help" ]]; then
+    echo "dumps tcp info at the specified port. Useful for looking at http requests"
+    echo "usage dumptcp <port>"
+    return 1
+  fi
+
+  if [ -z "$2" ]; then
+    DUMPINTERFACE=lo0
+  fi
+
+  echo "dumping tcp connections @ $DUMPINTERFACE on port $DUMPPORT..."
+
+  sudo tcpdump -s 0 -A -i $DUMPINTERFACE "tcp port $DUMPPORT and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)"
+}
+
+# Use Git’s colored diff when available
+hash git &>/dev/null;
+if [ $? -eq 0 ]; then
+	function diff() {
+		git diff --color "$@" | diff-so-fancy;
+	}
+
+	function diff-file() {
+    if [[ -z $1 ]] || [[ -z $2 ]]; then
+      echo "diff-file diffs two files (don't have to be in a repo)"
+      echo "usage diff-file <file1> <file2>"
+      return -1
+    fi
+		git diff --no-index --color --color-words "$@" | diff-so-fancy;
+	}
+fi;
+
+# UTF-8-encode a string of Unicode symbols
+function escape() {
+	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u);
+	# print a newline unless we’re piping the output to another program
+	if [ -t 1 ]; then
+		echo ""; # newline
+	fi;
+}
+
+# kill the process using the specified port
+function freeport(){
+
+  if [ -z $1 ]; then
+    echo "usage: freeport <port number>" >&2
+    return 1
+  fi
+
+  lsof -t -i tcp:$1 | xargs kill
+}
+
+# Compare original and gzipped file size
+function gz() {
+	local origsize=$(wc -c < "$1");
+	local gzipsize=$(gzip -c "$1" | wc -c);
+	local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l);
+	printf "orig: %d bytes\n" "$origsize";
+	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio";
+}
+
+# Show all the names (CNs and SANs) listed in the SSL certificate
+# for a given domain
+function getcertnames() {
+	if [ -z "${1}" ]; then
+		echo "ERROR: No domain specified.";
+		return 1;
+	fi;
+
+	local domain="${1}";
+	echo "Testing ${domain}…";
+	echo ""; # newline
+
+	local tmp=$(echo -e "GET / HTTP/1.0\nEOT" \
+		| openssl s_client -connect "${domain}:443" -servername "${domain}" 2>&1);
+
+	if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
+		local certText=$(echo "${tmp}" \
+			| openssl x509 -text -certopt "no_aux, no_header, no_issuer, no_pubkey, \
+			no_serial, no_sigdump, no_signame, no_validity, no_version");
+		echo "Common Name:";
+		echo ""; # newline
+		echo "${certText}" | grep "Subject:" | sed -e "s/^.*CN=//" | sed -e "s/\/emailAddress=.*//";
+		echo ""; # newline
+		echo "Subject Alternative Name(s):";
+		echo ""; # newline
+		echo "${certText}" | grep -A 1 "Subject Alternative Name:" \
+			| sed -e "2s/DNS://g" -e "s/ //g" | tr "," "\n" | tail -n +2;
+		return 0;
+	else
+		echo "ERROR: Certificate not found.";
+		return 1;
+	fi;
+}
+
+# Create a git.io short URL
+function gitio() {
+	if [ -z "${1}" -o -z "${2}" ]; then
+		echo "Usage: \`gitio slug url\`";
+		return 1;
+	fi;
+	curl -i http://git.io/ -F "url=${2}" -F "code=${1}";
+}
+
+function gocd(){
+  if [ -z "$1" ]; then
+    cd $GOPATH;
+    return 0;
+  fi
+
+  cd $(go list -f '{{ .Dir }}' $1)
+}
+
+function interfaces(){
+  ifconfig | grep "\: flags" | awk '{print $1}' | sed 's/:$//';
+}
+
+function inline_image {
+  printf '\033]1338;url='"$1"';alt='"$2"'\a\n'
+}
+
+# Syntax-highlight JSON strings or files
+# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
+function json() {
+	if [ -t 0 ]; then # argument
+		python -mjson.tool <<< "$*" | pygmentize -l javascript;
+	else # pipe
+		python -mjson.tool | pygmentize -l javascript;
+	fi;
+}
+
+
+
+function pubkey(){
+  if [[ -z $1 ]]; then
+    echo "Takes a path to a private key and prints a compatible public key to stdout"
+    echo "$1 required: path to a private key"
+    return -1
+  fi
+
+
+  ssh-keygen -y -f $1
+}
+
+# delete merged local branches
+function prunelocal(){
+  for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
+}
+
+# prints message of the day and a fortune
+function printmotd(){
+  if [[ $WORK ]]; then
+    cat ~/work_motd
+  else
+    cat ~/motd
+  fi
+
+  if [[ -f $GOPATH/bin/fortune ]]; then
+    echo ""
+    $GOPATH/bin/fortune -file="$GOPATH/bin/fortunes.txt"
+  elif [[ -f $(which fortune 2>/dev/null) ]]; then
+    echo ""
+    fortune
+  fi
+  echo ""
+}
+
+function tunnel(){
+  if [[ -z $1 ]]; then
+      echo "Takes an ssh config host name and starts an SSH tunnel"
+      echo "$1 required: name of an ssh tunnel host"
+      echo "$2 optional: run the tunnel as a background job if defined"
+      return -1
+  fi
+
+  if [[ -z $2 ]]; then
+    sudo ssh -f -N $1
+  else
+    sudo ssh -f -N $1 &
+  fi
+}
+
+
 
 # `s` with no arguments opens the current directory in Sublime Text, otherwise
 # opens the given location
@@ -185,16 +373,6 @@ function s() {
 		subl .;
 	else
 		subl "$@";
-	fi;
-}
-
-# `a` with no arguments opens the current directory in Atom Editor, otherwise
-# opens the given location
-function a() {
-	if [ $# -eq 0 ]; then
-		atom .;
-	else
-		atom "$@";
 	fi;
 }
 
@@ -236,33 +414,12 @@ function o() {
 	fi;
 }
 
-# Simple calculator
-function calc() {
-	local result="";
-	result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')";
-	#                       └─ default (when `--mathlib` is used) is 20
-	#
-	if [[ "$result" == *.* ]]; then
-		# improve the output for decimal numbers
-		printf "$result" |
-		sed -e 's/^\./0./'        # add "0" for cases like ".5"` \
-		    -e 's/^-\./-0./'      # add "0" for cases like "-.5"`\
-		    -e 's/0*$//;s/\.$//';  # remove trailing zeros
-	else
-		printf "$result";
-	fi;
-	printf "\n";
-}
 
 # Create a new directory and enter it
 function mkd() {
 	mkdir -p "$@" && cd "$_";
 }
 
-# Change working directory to the top-most Finder window location
-function cdf() { # short for `cdfinder`
-	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
-}
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
 function targz() {
@@ -306,32 +463,6 @@ function fs() {
 	fi;
 }
 
-# Use Git’s colored diff when available
-hash git &>/dev/null;
-if [ $? -eq 0 ]; then
-	function diff() {
-		git diff --no-index --color-words "$@";
-	}
-fi;
-
-# Create a data URL from a file
-function dataurl() {
-	local mimeType=$(file -b --mime-type "$1");
-	if [[ $mimeType == text/* ]]; then
-		mimeType="${mimeType};charset=utf-8";
-	fi
-	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
-}
-
-# Create a git.io short URL
-function gitio() {
-	if [ -z "${1}" -o -z "${2}" ]; then
-		echo "Usage: \`gitio slug url\`";
-		return 1;
-	fi;
-	curl -i http://git.io/ -F "url=${2}" -F "code=${1}";
-}
-
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
 	local port="${1:-8000}";
@@ -349,40 +480,6 @@ function phpserver() {
 	sleep 1 && open "http://${ip}:${port}/" &
 	php -S "${ip}:${port}";
 }
-
-# Compare original and gzipped file size
-function gz() {
-	local origsize=$(wc -c < "$1");
-	local gzipsize=$(gzip -c "$1" | wc -c);
-	local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l);
-	printf "orig: %d bytes\n" "$origsize";
-	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio";
-}
-
-# Syntax-highlight JSON strings or files
-# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
-function json() {
-	if [ -t 0 ]; then # argument
-		python -mjson.tool <<< "$*" | pygmentize -l javascript;
-	else # pipe
-		python -mjson.tool | pygmentize -l javascript;
-	fi;
-}
-
-# Run `dig` and display the most useful info
-function digga() {
-	dig +nocmd "$1" any +multiline +noall +answer;
-}
-
-# UTF-8-encode a string of Unicode symbols
-function escape() {
-	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u);
-	# print a newline unless we’re piping the output to another program
-	if [ -t 1 ]; then
-		echo ""; # newline
-	fi;
-}
-
 # Decode \x{ABCD}-style Unicode escape sequences
 function unidecode() {
 	perl -e "binmode(STDOUT, ':utf8'); print \"$@\"";
@@ -392,48 +489,6 @@ function unidecode() {
 	fi;
 }
 
-# Get a character’s Unicode code point
-function codepoint() {
-	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))";
-	# print a newline unless we’re piping the output to another program
-	if [ -t 1 ]; then
-		echo ""; # newline
-	fi;
-}
-
-# Show all the names (CNs and SANs) listed in the SSL certificate
-# for a given domain
-function getcertnames() {
-	if [ -z "${1}" ]; then
-		echo "ERROR: No domain specified.";
-		return 1;
-	fi;
-
-	local domain="${1}";
-	echo "Testing ${domain}…";
-	echo ""; # newline
-
-	local tmp=$(echo -e "GET / HTTP/1.0\nEOT" \
-		| openssl s_client -connect "${domain}:443" -servername "${domain}" 2>&1);
-
-	if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
-		local certText=$(echo "${tmp}" \
-			| openssl x509 -text -certopt "no_aux, no_header, no_issuer, no_pubkey, \
-			no_serial, no_sigdump, no_signame, no_validity, no_version");
-		echo "Common Name:";
-		echo ""; # newline
-		echo "${certText}" | grep "Subject:" | sed -e "s/^.*CN=//" | sed -e "s/\/emailAddress=.*//";
-		echo ""; # newline
-		echo "Subject Alternative Name(s):";
-		echo ""; # newline
-		echo "${certText}" | grep -A 1 "Subject Alternative Name:" \
-			| sed -e "2s/DNS://g" -e "s/ //g" | tr "," "\n" | tail -n +2;
-		return 0;
-	else
-		echo "ERROR: Certificate not found.";
-		return 1;
-	fi;
-}
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into

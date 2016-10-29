@@ -3,6 +3,20 @@ laughing-hipster
 
 My dot files
 
+## What's included?
+
+A very simplistic plugin system, drop shell scripts you would like to source into the ~/.extensions directory. .profile will load them automatically.
+
+A custom SSH config setup with nice defaults.
+
+Installs Brew when run on OSX, along with several utilities I commonly use.
+
+Comes with an uninstall script.
+
+Themes for vim, iterm2 and for cmder when ran on windows.
+
+Tmux and vim configurations
+
 ## Install
 
 1. Clone this into ~
