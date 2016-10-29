@@ -72,7 +72,14 @@ if [[ $(uname -s) == "Darwin" ]]; then
 
   echo "installing osx stuff"
   sudo ./install/.osx
+
+  rake
+  ~/tools/vim/bundle/YouCompleteMe/install.py --all
 elif [[ $(uname -o) == "Msys" ]]; then 
+
+  echo "If you would like to install vim plugins, ensure you have ruby 1.9.3 + rake installed and do the following:"
+  echo "rake;"
+  echo "~/tools/vim/bundle/YouCompleteMe/install.py --all;"
   echo "installing fonts"
   fonts="$(find ${source}/tools/modules/powerline-fonts | grep "\.[to]tf")"
 
@@ -88,9 +95,7 @@ fi
 
 mkdir ~/.extensions
 
-rake
 
-~/tools/vim/bundle/YouCompleteMe/install.py --all
 
 echo ""
 echo "Cleaning up..."
