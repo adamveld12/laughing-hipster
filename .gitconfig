@@ -64,24 +64,24 @@
  # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
  # instead of a/b/c/d as prefixes for patches
   mnemonicprefix = true
-	guitool=p4diff
-	tool=p4diff
+  guitool=p4diff
+  tool=p4diff
 
 [difftool "p4diff"]
-	cmd=p4merge.exe -db -nb Base -nl Mine-local -nr Theirs-remote  $BASE $LOCAL $REMOTE
+  cmd=p4merge.exe -db -nb Base -nl Mine-local -nr Theirs-remote  $BASE $LOCAL $REMOTE
 
 [merge]
-	tool = p4merge
+  tool = p4merge
 
 [mergetool "p4merge"]
-	cmd = p4merge.exe $BASE $LOCAL $REMOTE $MERGED
+  cmd = p4merge.exe $BASE $LOCAL $REMOTE $MERGED
   keepTemporaries = false
   trustExitCode = false
   keepBackup = false
 
 [mergetool]
-	prompt = false
-	trustExitCode = false
+  prompt = false
+  trustExitCode = false
 
 [advice]
   statusHints = false
@@ -95,7 +95,7 @@
 
 [core]
   # Use custom `.gitignore` and `.gitattributes`
-	excludesfile = /Users/Adam/.global_ignore
+  excludesfile = /Users/Adam/.gitignore
   attributesfile = ~/.gitattributes
   # Treat spaces before tabs and all kinds of trailing whitespace as an error.
   # [default] trailing-space: looks for spaces at the end of a line
@@ -105,9 +105,9 @@
   # Make `git rebase` safer on OS X
   # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
   trustctime = false
-	autocrlf = false
+  autocrlf = false
   eol = 'lf'
-	editor = $EDITOR
+  editor = $EDITOR
 
 [color]
   # Use colors in Git commands that are capable of colored output when
@@ -151,19 +151,17 @@
   insteadOf = "gist:"
 
 [push]
-	default = current
+  default = current
 [pull]
-	default = current
+  default = current
 [user]
-	email = adamveld12@gmail.com
-	name = Adam Veldhousen
-	signingkey = 415C0B9C
+  email = adamveld12@gmail.com
+  name = Adam Veldhousen
+  signingkey = 415C0B9C
 [commit]
-	gpgsign = true
+  gpgsign = true
 
 [help]
   autocorrect=20
 [credential]
-	helper = osxkeychain
-[http]
-	sslVerify = false
+  helper = osxkeychain

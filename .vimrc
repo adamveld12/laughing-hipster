@@ -119,7 +119,7 @@ map <F1> <Nop>
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 " generate tags
-nnoremap <leader>t ctags -R -f ./.git/tags .
+nnoremap <leader>c ctags -R -f ./.git/tags .
 
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 0
@@ -194,6 +194,11 @@ set showcmd
 
 " Start scrolling x lines before the horizontal window border
 set scrolloff=4
+
+" tern
+let g:tern_show_argument_hits='on_hold'
+let g:tern_map_keys=1
+let g:tern_map_prefix = '<leader>'
 
 " vim-go
 let g:go_highlight_functions = 1
