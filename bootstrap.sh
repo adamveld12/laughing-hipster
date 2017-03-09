@@ -2,7 +2,7 @@
 IFS='\n\t'
 set -euo pipefail
 
-source="$(dirname "$(readlink -f "$0")")"
+source="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 dest="$(pwd)"
 bkup="$dest/.home_bkup"
 
@@ -63,7 +63,7 @@ elif [[ -f "${dest}/.ssh/config" ]]; then
 else 
   echo "Copying new ssh config"
   mkdir -p "${dest}/.ssh/"
-  cp -t "${dest}/.ssh/" -n "${source}/.ssh/config" 
+  cp -n "${source}/.ssh/config" "${dest}/.ssh/"
 fi
 
 if [[ $(uname -s) == "Darwin" ]]; then 
@@ -73,8 +73,8 @@ if [[ $(uname -s) == "Darwin" ]]; then
   echo "installing osx stuff"
   sudo ./install/.osx
 
-  rake
-  ~/tools/vim/bundle/YouCompleteMe/install.py --all
+  #rake
+  #~/tools/vim/bundle/YouCompleteMe/install.py --all
 elif [[ $(uname -o) == "Msys" ]]; then 
 
   echo "If you would like to install vim plugins, ensure you have ruby 1.9.3 + rake installed and do the following:"
