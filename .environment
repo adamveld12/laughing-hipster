@@ -7,7 +7,7 @@ set -o vi               # Set prompt to vi mode
 set -o notify           # Report status of terminated background jobs immediately
 
 # History
-HISTCONTROL=ignoredups                    # No duplicate commands in history
+HISTCONTROL=ignoreboth:erasedups                    # No duplicate commands in history
 HISTSIZE=50000                            # For a huge history
 export HISTIGNORE="[   ]*:&:bg:fg:exit:clear"   # Don't save these commands in the history
 shopt -s histappend                       # Append to the history file, not overwrite

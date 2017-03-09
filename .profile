@@ -33,3 +33,5 @@ if [ -d ~/.extensions ]; then
 fi
 
 printmotd
+
+export PATH="$HOME/.cargo/bin:$PATH"
