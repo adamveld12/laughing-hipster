@@ -1,19 +1,6 @@
 #!/bin/bash
 #vim: set ft=sh
 
-IFS=$'\n$\t'
-
-
-# This function checks whether we have a given program on the system.
-#
-have()
-{
-    # Completions for system administrator commands are installed as well in
-    # case completion is attempted via `sudo command ...'.
-    PATH=$PATH:/usr/sbin:/sbin:/usr/local/sbin type $1 &>/dev/null
-}
-
-
 # `a` with no arguments opens the current directory in Atom Editor, otherwise
 # opens the given location
 function a() {
@@ -22,11 +9,6 @@ function a() {
 	else
 		atom "$@";
 	fi;
-}
-
-# prints battery percentage, only works on OSX
-function batteryPercent(){
-  ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%d", $10/$5 * 100)}'
 }
 
 # Simple calculator
@@ -45,11 +27,6 @@ function calc() {
 		printf "$result";
 	fi;
 	printf "\n";
-}
-
-# Change working directory to the top-most Finder window location
-function cdf() { # short for `cdfinder`
-	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
 }
 
 # a shortcut for cloning from github
@@ -98,81 +75,6 @@ function dcm(){
 # Run `dig` and display the most useful info
 function digga() {
 	dig +nocmd "$1" any +multiline +noall +answer;
-}
-
-# simplifies using docker-machine
-function dm() {
-  local TARGET=$2
-  if [ -z "$2" ]; then
-    TARGET="default"
-  fi
-
-  case $1 in
-    "start" | "up" )
-
-      if [ -z $(docker-machine ls | grep $TARGET) ]; then
-        CREATE=false
-        read -e -p "a machine named \"${TARGET}\" doesn't exist (yes to create): " CREATE
-        if [[ $CREATE  == "yes" ]]; then
-          docker-machine create --driver="virtualbox" $TARGET 
-        else 
-          echo "exiting"
-          return 0
-        fi
-      fi
-
-      if [ -z $(docker-machine status $TARGET | grep Running) ]; then
-        docker-machine start $TARGET
-      fi
-
-      eval $(docker-machine env $TARGET) ;;
-
-    "stop" | "halt" )
-
-      echo "stopping docker machine..." 
-      docker-machine stop $TARGET ;;
-
-    "delete" | "destroy" )
-
-      echo "destroying \"$TARGET\" machine..." 
-      docker-machine rm $TARGET ;;
-
-    "ip" )
-      docker-machine ip $TARGET ;;
-
-    "list" | "ls" )
-      docker-machine ls ;;
-
-    "clean" )
-      docker ps -a | grep "ago" | awk '{print $1}' | xargs docker rm ;;
-
-    "clean-images" )
-      if [ -z $2 ]; then
-        $2 = "weeks"
-      fi
-
-      docker images -a | grep "ago" | awk '{print $3}' | xargs docker rmi ;;
-
-    "help" | "-h" | "--help" )
-      echo "usage: dm COMMAND [arg]"
-      echo "[machine name] is 'default' if not defined"
-      echo "Commands:"
-      echo " help | -h | --help               Shows this help text"
-      echo " start | up [machine name]        Brings up a docker machine and adds variables to the environment"
-      echo " stop | halt [machine name]       Stops the specified docker machine"
-      echo " delete | destroy [machine name]  Destroys the specified docker machine"
-      echo " list | ls                        Lists available machines"
-      echo " ip [machine name]                Prints the ip address for this machine"
-      echo " clean [text]                     Deletes all containers matching [text] in the current machine"
-      echo " clean-images [text]              Deletes all images in the current machine"
-      echo " *                                Alias for docker-machine"
-    ;;
-
-    * )
-      docker-machine $@
-    ;;
-
-  esac
 }
 
 # runs tcp dump on the port specified in $1. $1 defaults to 8080
@@ -376,15 +278,6 @@ function s() {
 	fi;
 }
 
-function vim(){
-  local VIM_EXEC="/Applications/MacVim.app/Contents/MacOS/Vim";
-  if [ -f $VIM_EXEC ]; then
-    $VIM_EXEC "$@";
-  else
-    $(which vim) "$@";
-  fi
-}
-
 # `v` with no arguments opens the current directory in Vim, otherwise opens the
 # given location
 function v(){
@@ -480,6 +373,7 @@ function phpserver() {
 	sleep 1 && open "http://${ip}:${port}/" &
 	php -S "${ip}:${port}";
 }
+
 # Decode \x{ABCD}-style Unicode escape sequences
 function unidecode() {
 	perl -e "binmode(STDOUT, ':utf8'); print \"$@\"";

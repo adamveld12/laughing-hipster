@@ -16,9 +16,6 @@ shopt -s histappend                       # Append to the history file, not over
 export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
 export PAGER=less       # Used to display text / man files
 
-# setup go paths
-export GOPATH="$HOME/projects/go"
-export GOROOT="/usr/local/go"
 export ANSIBLE_HOSTS="~/.ansible/hosts"
 
 export LANG="en_US.UTF-8"

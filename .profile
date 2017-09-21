@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # source environment settings
 if [ -f ~/.environment ]; then
       . ~/.environment
@@ -20,9 +21,6 @@ if [ -f ~/.shell_colors ]; then
     . ~/.shell_colors
 fi
 
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
 
 # for when you want to do custom junk
 # Sources a folder with shell extensions
@@ -32,6 +30,4 @@ if [ -d ~/.extensions ]; then
   done
 fi
 
-printmotd
 
-export PATH="$HOME/.cargo/bin:$PATH"

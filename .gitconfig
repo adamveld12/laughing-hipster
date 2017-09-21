@@ -164,4 +164,7 @@
 [help]
   autocorrect=20
 [credential]
-  helper = osxkeychain
+  # for OSX
+  #helper = osxkeychain
+  # for Linux
+	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
