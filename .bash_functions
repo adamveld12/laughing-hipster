@@ -1,6 +1,26 @@
 #!/bin/bash
 #vim: set ft=sh
 
+IFS=$'\n$\t'
+
+spotlight_reboot(){
+    sudo mdutil -a -i off
+    sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
+    sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
+    sudo mdutil -a -i on
+}
+
+
+# This function checks whether we have a given program on the system.
+#
+have()
+{
+    # Completions for system administrator commands are installed as well in
+    # case completion is attempted via `sudo command ...'.
+    PATH=$PATH:/usr/sbin:/sbin:/usr/local/sbin type $1 &>/dev/null
+}
+
+
 # `a` with no arguments opens the current directory in Atom Editor, otherwise
 # opens the given location
 function a() {

@@ -29,5 +29,3 @@ if [ -d ~/.extensions ]; then
     source $plugin
   done
 fi
-
-
