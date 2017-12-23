@@ -9,7 +9,6 @@ alias ll='ls -hGla'
 
 #rake
 alias bake='bundle exec rake'
-alias clear="clear && printmotd"
 
 #tools
 alias resrc='source ~/.bash_aliases && source ~/.bashrc && source ~/.profile'

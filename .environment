@@ -16,23 +16,20 @@ shopt -s histappend                       # Append to the history file, not over
 export LESS='-iMR'      # Case insensite search, verbose prompting and raw output
 export PAGER=less       # Used to display text / man files
 
-export ANSIBLE_HOSTS="~/.ansible/hosts"
-
 export LANG="en_US.UTF-8"
-export WINDOWS="FALSE"
-export GIT_EDITOR=vim
 export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
+export WINDOWS=false
 
 if [ -d "${HOME}/.bin" ] ; then
     PATH=${HOME}/.bin:${PATH}
 fi
 
+
+export GIT_EDITOR=vim
+
 # give windows boxes a chance to override environment
 if [ -d "/c/Windows" ]; then
   WINDOWS="TRUE"
-  ANSIBLE_HOSTS="/c/ansible/hosts"
-  GOROOT="/d/Programs/Go"
-  GOPATH="/d/Projects/Programming/go"
   GIT_EDITOR=~/tools/vim/gvim.exe
 
   if [ -f ~/.windows ]; then

@@ -1,16 +1,6 @@
 #!/bin/bash
 #vim: set ft=sh
 
-# `a` with no arguments opens the current directory in Atom Editor, otherwise
-# opens the given location
-function a() {
-	if [ $# -eq 0 ]; then
-		atom .;
-	else
-		atom "$@";
-	fi;
-}
-
 # Simple calculator
 function calc() {
 	local result="";
@@ -99,22 +89,14 @@ function dumptcp(){
   sudo tcpdump -s 0 -A -i $DUMPINTERFACE "tcp port $DUMPPORT and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)"
 }
 
-# Use Git’s colored diff when available
-hash git &>/dev/null;
-if [ $? -eq 0 ]; then
-	function diff() {
-		git diff --color "$@" | diff-so-fancy;
-	}
-
-	function diff-file() {
-    if [[ -z $1 ]] || [[ -z $2 ]]; then
-      echo "diff-file diffs two files (don't have to be in a repo)"
-      echo "usage diff-file <file1> <file2>"
-      return -1
-    fi
-		git diff --no-index --color --color-words "$@" | diff-so-fancy;
-	}
-fi;
+function diff-file() {
+  if [[ -z $1 ]] || [[ -z $2 ]]; then
+    echo "diff-file diffs two files (don't have to be in a repo)"
+    echo "usage diff-file <file1> <file2>"
+    return -1
+  fi
+  git diff --no-index --color --color-words "$@" | diff-so-fancy;
+}
 
 # UTF-8-encode a string of Unicode symbols
 function escape() {
@@ -233,24 +215,6 @@ function prunelocal(){
   for b in `git branch --merged | grep -v \*`; do git branch -D $b; done
 }
 
-# prints message of the day and a fortune
-function printmotd(){
-  if [[ $WORK ]]; then
-    cat ~/work_motd
-  else
-    cat ~/motd
-  fi
-
-  if [[ -f $GOPATH/bin/fortune ]]; then
-    echo ""
-    $GOPATH/bin/fortune -file="$GOPATH/bin/fortunes.txt"
-  elif [[ -f $(which fortune 2>/dev/null) ]]; then
-    echo ""
-    fortune
-  fi
-  echo ""
-}
-
 function tunnel(){
   if [[ -z $1 ]]; then
       echo "Takes an ssh config host name and starts an SSH tunnel"
@@ -265,8 +229,6 @@ function tunnel(){
     sudo ssh -f -N $1 &
   fi
 }
-
-
 
 # `s` with no arguments opens the current directory in Sublime Text, otherwise
 # opens the given location

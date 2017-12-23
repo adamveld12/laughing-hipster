@@ -29,7 +29,7 @@ done
 
 echo ""
 echo "loading git modules in $source..."
-pushd $source 2&> /dev/null
+pushd $source
 git submodule init
 git submodule update
 popd
@@ -94,7 +94,17 @@ elif [[ $(uname -o) == "Msys" ]]; then
 fi
 
 mkdir ~/.extensions
+cat <<EOF >~/.extensions/README.md
+# Extensions
 
+All script files in this folder get loaded by the .profile, so this is a nice place to organize plugins
+or enhancements to the dotfile setup
+EOF
+
+if [[ -f "~/.bashrc" ]]; then
+  echo "sourcing .profile in .bashrc"
+  echo "source ./.profile" >> ~/.bashrc
+fi
 
 
 echo ""
