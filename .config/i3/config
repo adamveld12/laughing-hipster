@@ -1,0 +1,208 @@
+# i3 config file (v4)
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:DejaVu Sans Mono 12
+
+
+######################################################
+# STARTUP
+#######################################
+
+# set dpi settings
+exec_always xrandr --dpi 165
+
+exec --no-startup-id compton --config ~/.config/compton/compton.conf -b
+
+# startup gnome
+exec --no-startup-id /usr/lib/gnome-setting-daemon/gsd-xsettings
+exec_always --no-startup-id gnome-power-manager
+
+# startup pulse audio controls
+exec pa-applet
+
+# wallpaper
+exec --no-startup-id nitrogen --restore
+
+# start polybar
+exec_always --no-startup-id ~/.config/i3/polybar.sh &
+
+# connect to pritunl on i3 start
+exec --no-startup-id pritunl-client enable 65adf618f9dc44b9818b558d1b84bdba && pritunl-client start 65adf618f9dc44b9818b558d1b84bdba
+
+# tell dunst to use the custom dunstrc
+exec --no-startup-id dunst -config ~/.config/dunst/dunstrc &
+
+#############################
+# BINDINGS
+##############################
+
+# audio controls
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 2%+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 2%- unmute
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+#Pause actually works as a play toggle for MPRIS interfaces.
+bindsym XF86AudioPlay exec qdbus org.mpris.clementine /Player Pause
+
+# start a terminal
+bindsym Mod1+Return exec terminator
+
+bindsym Mod1+Shift+i exec sudo insomnia
+
+# start chrome with correct DPI settings
+bindsym Mod1+Shift+Return exec google-chrome-stable --force-device-scale-factor=1.65 %U
+
+#  Sets up 2 external displays side by side, with the laptop display on the far right
+bindsym Mod1+Shift+f exec xrandr --output DVI-I-2-1 --auto --left-of DVI-I-2-1 && xrandr --output DVI-I-3-2 --auto --left-of eDP-1-1 && xrandr --output eDP-1-1 --auto --primary --preferred
+bindsym Mod1+Shift+g exec xrandr --output DVI-I-3-2 --auto --left-of DVI-I-2-1 && xrandr --output DVI-I-2-1 --auto --left-of eDP-1-1 && xrandr --output eDP-1-1 --auto --primary --preferred
+# disconnects the 2 external monitors
+bindsym Mod1+Shift+Ctrl+g exec xrandr --output DVI-I-3-2 --off && xrandr --output DVI-I-2-1 --off
+
+bindsym Mod1+Shift+x move workspace to output right
+
+
+
+# start/stop pritunl
+bindsym Mod1+Shift+v exec pritunl-client start 65adf618f9dc44b9818b558d1b84bdba
+bindsym Mod1+Shift+Ctrl+v exec pritunl-client stop 65adf618f9dc44b9818b558d1b84bdba
+
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that installed.
+ bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
+
+# reload the configuration file
+bindsym Mod1+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod1+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# move the currently focused window to the scratchpad
+bindsym Mod1+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod1+minus scratchpad show
+
+# split in horizontal orientation
+bindsym Mod1+i split h
+
+# split in vertical orientation
+bindsym Mod1+s split t
+
+# enter fullscreen mode for the focused container
+bindsym Mod1+f fullscreen toggle
+
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier Mod1
+
+# kill focused window
+bindsym Mod1+Shift+q kill
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $left h
+set $down j
+set $up k
+set $right l
+
+# change focus
+bindsym Mod1+$left focus left
+bindsym Mod1+$down focus down
+bindsym Mod1+$up focus up
+bindsym Mod1+$right focus right
+
+
+# alternatively, you can use the cursor keys:
+bindsym Mod1+Left focus left
+bindsym Mod1+Down focus down
+bindsym Mod1+Up focus up
+bindsym Mod1+Right focus right
+
+# move focused window
+bindsym Mod1+Shift+$left move left
+bindsym Mod1+Shift+$down move down
+bindsym Mod1+Shift+$up move up
+bindsym Mod1+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+Right move right
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym Mod1+e layout stacking
+bindsym Mod1+w layout tabbed
+bindsym Mod1+q layout toggle split
+
+# toggle tiling / floating
+bindsym Mod1+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym Mod1+space focus mode_toggle
+
+# focus the parent container
+bindsym Mod1+a focus parent
+
+# focus the child container
+#bindsym Mod1+d focus child
+
+# switch to workspace
+bindsym Mod1+1 workspace 1
+bindsym Mod1+2 workspace 2
+bindsym Mod1+3 workspace 3
+bindsym Mod1+4 workspace 4
+bindsym Mod1+5 workspace 5
+bindsym Mod1+6 workspace 6
+bindsym Mod1+7 workspace 7
+bindsym Mod1+8 workspace 8
+bindsym Mod1+9 workspace 9
+bindsym Mod1+0 workspace 10
+
+# move focused container to workspace
+bindsym Mod1+Shift+1 move container to workspace 1
+bindsym Mod1+Shift+2 move container to workspace 2
+bindsym Mod1+Shift+3 move container to workspace 3
+bindsym Mod1+Shift+4 move container to workspace 4
+bindsym Mod1+Shift+5 move container to workspace 5
+bindsym Mod1+Shift+6 move container to workspace 6
+bindsym Mod1+Shift+7 move container to workspace 7
+bindsym Mod1+Shift+8 move container to workspace 8
+bindsym Mod1+Shift+9 move container to workspace 9
+bindsym Mod1+Shift+0 move container to workspace 10
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 5 px or 5 ppt
+        bindsym $down       resize grow height 5 px or 5 ppt
+        bindsym $up         resize shrink height 5 px or 5 ppt
+        bindsym $right      resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 5 px or 5 ppt
+        bindsym Down        resize grow height 5 px or 5 ppt
+        bindsym Up          resize shrink height 5 px or 5 ppt
+        bindsym Right       resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod1+r mode "resize"
+
+# finds out, if available)
+#bar {
+        #status_command i3status
+#}

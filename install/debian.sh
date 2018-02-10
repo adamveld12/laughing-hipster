@@ -1,31 +1,85 @@
 #!/bin/bash
 
-if [ -d "${dest}/.config" ]; then
-  echo ".config exists"
-else
-  mkdir -p "${dest}/.config"
+if [ ! -d  ${dest}/.config ]; then
+  mkdir -p ${dest}/.config/
+  cp -R ${source}/.config/ ${dest}/.config/
 fi
 
-cp -r ${source}/config/ ${dest}/.config/
-
-sudo apt-get update && sudo apt-get install \
+apt-get update && apt-get install -y \
   build-essential \
+  checkinstall \
+  cargo \
   cmake \
+  cmake-data \
+  compton \
   curl \
-  nvm \
+  i3-wm \
+  nitrogen \
   python \
   rbenv \
+  ruby-build \
+  rust \
   tmux \
+  terminator \
   wget \
+  libcairo2-dev \
+  libxcb1-dev \
+  libxcb-ewmh-dev \
+  libxcb-icccm4-dev \
+  libxcb-image0-dev \
+  libxcb-randr0-dev \
+  libxcb-util0-dev \
+  libxcb-xkb-dev \
+  libxcb-xrm-dev \
+  libasound2-dev \
+  libssl-dev \
+  libpulse-dev \
+  libmpdclient-dev \
+  libiw-dev \
+  libcurl4-openssl-dev \
+  libxcb-cursor-dev \
+  snap \
+  pkg-config \
+  python-xcbgen \
+  xcb-proto \
   git;
 
+snap install slack
 
-rbenv install 1.9.3-p125;
-rbenv global 1.9.3-p125;
+curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash
 
-rm -rf ~/tools/modules/iTerm2-Color-Schemes
-rm -rf ~/tools/modules/tmux-MacOSX-pasteboard
+cd ${dest}/projects
 
-rake
+# install polybar
+git clone --branch 3.1.0 --recursive https://github.com/jaagr/polybar polybar
+cd ./polybar
+./build.sh
+cd ..
 
-echo "You must install YouCompleteMe by going to ~/tools/vim/bundle/YouCompleteMe/ and following the instructions in the README.md"
+
+git clone https://github.com/vim/vim vim
+cd ./vim
+
+./configure --with-features=huge \
+  --enable-clipboard \
+  --enable-multibyte  \
+  --enable-rubyinterp=yes \
+  --enable-pythoninterp=yes \
+  --enable-python3interp=yes \
+  --enable-perlinterp=yes \
+  --enable-luainterp=yes \
+  --enable-gui=gtk2 \
+  --enable-cscope \
+  --prefix=/usr/local
+
+make VIMRUNTUME=~/tools/vim/
+
+checkinstall
+cd ..
+
+git clone https://github.com/51v4n/i3-gnome i3-gnome
+cd ./i3-gnome
+make install
+cd ..
+
+cd ${dest}
