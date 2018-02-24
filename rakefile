@@ -5,10 +5,9 @@ vimFolder = "tools/vim"
 bundles_dir = File.join("#{vimFolder}/bundle/")
 pluginsFile = File.join("#{vimFolder}/plugins.txt")
 
-CLOBBER.include "#{bundles_dir}"
 CLEAN.include "#{bundles_dir}"
 
-task :default => ['vim:reinstall']
+task :default => ['clean', 'vim:reinstall']
 
 
 namespace :vim do
@@ -21,7 +20,7 @@ namespace :vim do
     puts "Loading #{lines.length} plugins..."
     lines.each { |source|
       if source[0] != "#" then
-        loadTask = Rake::Task['vim:loadPlugin']
+        loadTask = Rake::Task['vim:downloadPlugin']
         loadTask.invoke source.sub "\n", ''
         loadTask.reenable()
       end
@@ -29,8 +28,8 @@ namespace :vim do
     puts "Plugins installed!"
   end
 
-  desc 'Loads a vim plugin from a git repo.'
-  task :loadPlugin, [:source] => "#{bundles_dir}" do |t, args|
+  desc 'downloads a vim plugin from a git repo.'
+  task :downloadPlugin, [:source] => "#{bundles_dir}" do |t, args|
     raise "Must specify git repo to pull from." unless args.source not(nil)
     dir = gitName args.source
     puts "Installing #{dir}...."
@@ -42,11 +41,11 @@ namespace :vim do
   end
 
 
-  desc "installs a new plugin and adds it to #{vimFolder}/plugins.txt"
+  desc "downloads a new plugin and adds it to #{vimFolder}/plugins.txt"
   task :install, [:sourceName] do |t, args|
     raise "Must specify git repo to pull from." unless args.sourceName not(nil)
     source = "git://github.com/#{args.sourceName}.git"
-    Rake::Task['vim:loadPlugin'].invoke source
+    Rake::Task['vim:downloadPlugin'].invoke source
     puts "Adding to #{vimFolder}/plugins.txt"
     File.open pluginsFile, 'a' do |file|
       file.puts "#{source}\n"

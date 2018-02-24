@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ ! -d  ${dest}/.config ]; then
+if [ ! -d  ${dest}/config ]; then
   mkdir -p ${dest}/.config/
-  cp -R ${source}/.config/ ${dest}/.config/
+  cp -R ${source}/config/ ${dest}/.config/
 fi
 
 apt-get update && apt-get install -y \
@@ -13,6 +13,7 @@ apt-get update && apt-get install -y \
   cmake-data \
   compton \
   curl \
+  git \
   i3-wm \
   nitrogen \
   python \
@@ -41,10 +42,9 @@ apt-get update && apt-get install -y \
   snap \
   pkg-config \
   python-xcbgen \
-  xcb-proto \
-  git;
+  xcb-proto;
 
-snap install slack
+snap install slack;
 
 curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash
 
@@ -57,14 +57,13 @@ cd ./polybar
 cd ..
 
 
+# install vim with all of the necessary features
 git clone https://github.com/vim/vim vim
 cd ./vim
 
 ./configure --with-features=huge \
-  --enable-clipboard \
-  --enable-multibyte  \
+  --enable-multibyte \
   --enable-rubyinterp=yes \
-  --enable-pythoninterp=yes \
   --enable-python3interp=yes \
   --enable-perlinterp=yes \
   --enable-luainterp=yes \
