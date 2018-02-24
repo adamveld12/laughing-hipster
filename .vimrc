@@ -1,29 +1,27 @@
 " change runtime path
-set runtimepath=$VIMRUNTIME,~/tools/vim
+set runtimepath=~/tools/vim
 
 execute pathogen#infect()
 execute pathogen#helptags()
 
-
 "we don't want vi compatibility AKA Make Vim more useful
-set nocompatible 
+set nocompatible
 
 "color schemes
-colorscheme jellybeans
+colorscheme desert
+"colorscheme jellybeans
 "colorscheme molokai
+"colorscheme hickop
 "colorscheme moria
 "colorscheme CandyPaper
 "colorscheme sunburst
-"colorscheme hickop
 "colorscheme pablo
 "colorscheme torte
 "colorscheme slate
 "colorscheme evening
 "colorscheme darkblue
-"colorscheme desert
 "colorscheme base16-flat
 "colorscheme inkpot
-"colorscheme jellybeans
 "colorscheme liquidcarbon
 "colorscheme pinksea
 "colorscheme sonofobsidian
@@ -46,7 +44,7 @@ set autoread
 set selection=exclusive
 set ttimeoutlen=50
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamed
+set clipboard=unnamedplus
 " Enhance command-line completion
 set wildmenu
 " Allow cursor keys in insert mode
@@ -62,16 +60,20 @@ set encoding=utf-8 "nobomb
 " Change mapleader
 let mapleader = ","
 
+map <leader><Space> :HardTimeToggle<CR>
+
 map <Space> :noh<CR>
+
+"replace  with regular newlines
+map <leader>nf :%s///g<CR>
 
 "list buffers
 map <leader>w :buffers<CR>
-map <leader>q :buffer#<CR>
 
 " open erros
 map <leader>e :lw 5<CR>
 
-" mini buffer explorer toggle 
+" mini buffer explorer toggle
 map <Leader>b :MBEToggle<cr>
 
 " easymotion mappings
@@ -110,6 +112,9 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 map <leader>x :%s/\s\+$//<CR>:noh<Cr>
+
+"reload vim config
+noremap <leader>rr :so ~/.vimrc<CR>
 
 "open vimrc in a new tab
 map <leader>v :tabedit ~/.vimrc<CR>
@@ -160,8 +165,8 @@ set number
 syntax on
 " Highlight current line
 set cursorline
-" Make tabs as wide as two spaces
-set tabstop=2
+" Make tabs as wide as four spaces
+set tabstop=4
 set expandtab
 set shiftwidth=2
 " Show “invisible” characters
@@ -250,10 +255,14 @@ let g:ctrlp_extensions = ['line']
 "'r' - the nearest ancestor of the current file that contains one of these directories or files: .git .hg .svn .bzr _darcs
 "'w' - modifier to "r": start search from the cwd instead of the current file's directory
 "0 or '' (empty string) - disable this feature.
-let g:ctrlp_working_path_mode = 'rc'
+let g:ctrlp_working_path_mode = 'ra'
 
 let g:ctrlp_by_filename = 0
 let g:ctrlp_max_files = 5000
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
 
 let g:go_disable_autoinstall = 0
 
@@ -269,7 +278,7 @@ let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 " enable iminsert detection >
 let g:airline_detect_iminsert=1
-" determine whether inactive windows should have the left section collapsed to only the filename of that buffer.  
+" determine whether inactive windows should have the left section collapsed to only the filename of that buffer.
 let g:airline_inactive_collapse=1
 " enable/disable csv integration for displaying the current column.
 let g:airline#extensions#csv#enabled = 1
@@ -277,7 +286,7 @@ let g:airline#extensions#csv#enabled = 1
 let g:airline#extensions#whitespace#symbol = '.'
 " themes are automatically selected based on the matching colorscheme. this can be overridden by defining a value.
 "let g:airline_theme=
-" if you want to patch the airline theme before it gets applied, you can supply the name of a function where you can modify the palette. 
+" if you want to patch the airline theme before it gets applied, you can supply the name of a function where you can modify the palette.
 let g:airline_theme_patch_func = 'AirlineThemePatch'
 function! AirlineThemePatch(palette)
   if g:airline_theme == 'badwolf'
@@ -286,9 +295,9 @@ function! AirlineThemePatch(palette)
     endfor
   endif
 endfunction
-" enable/disable automatic population of the `g:airline_symbols` dictionary with powerline symbols. 
+" enable/disable automatic population of the `g:airline_symbols` dictionary with powerline symbols.
 let g:airline_powerline_fonts=1
-" define the set of text to display for each mode.  
+" define the set of text to display for each mode.
 let g:airline_mode_map = {
     \ '__' : '-',
     \ 'n'  : 'N',
@@ -327,6 +336,11 @@ let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
 " Enable file type detection
 filetype plugin indent on
 
+augroup myvimrc
+  au!
+  au BufWritePost .vimrc so $MYVIMRC
+augroup END
+
 " Automatic commands
 if has("autocmd")
 	" Treat .json files as .js
@@ -348,5 +362,3 @@ if has('gui_running')
   set go =mt
   set guifont=Literation\ Mono\ for\ Powerline:h12,Literation_Mono_for_Powerline:h12,Inconsolata\ for\ Powerline:h10,Ubuntu\ Mono:h26,Consolas:h12,Courier:h12
 endif
-
-let g:ruby_path = ':C:\ruby193\bin'

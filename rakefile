@@ -2,12 +2,13 @@ require 'rake/clean'
 require 'fileutils'
 
 vimFolder = "tools/vim"
-bundles_dir = File.join(File.dirname(__FILE__), "#{vimFolder}/bundle/")
-pluginsFile = File.join(File.dirname(__FILE__), "#{vimFolder}/plugins.txt")
+bundles_dir = File.join("#{vimFolder}/bundle/")
+pluginsFile = File.join("#{vimFolder}/plugins.txt")
 
 CLOBBER.include "#{bundles_dir}"
+CLEAN.include "#{bundles_dir}"
 
-task :default => ['clobber', 'vim:reinstall']
+task :default => ['vim:reinstall']
 
 
 namespace :vim do
@@ -57,5 +58,4 @@ end
 def gitName(gitRepo)
     return gitRepo.split('/').last.sub(/\.git$/, '')
 end
-
 

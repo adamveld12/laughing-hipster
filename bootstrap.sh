@@ -7,7 +7,7 @@ dest="$(pwd)"
 bkup="$dest/.home_bkup"
 
 
-if [[ -d ${bkup} ]]; then
+if [ -d ${bkup} ]; then
   echo "A backup folder already exists, it must be moved/deleted before bootstrap can apply the new dotfiles."
   exit -1;
 fi
@@ -17,7 +17,7 @@ echo "Making a backup of old dotfiles into ${bkup}..."
 mkdir -p "${bkup}"
 
 IFS=$'\n'
-if [[ -f ${dest}/.ssh/config ]]; then
+if [ -f ${dest}/.ssh/config ]; then
   mkdir -p "${bkup}/.ssh"
   cp "${dest}/.ssh/config" "${bkup}/.ssh/config"
 fi
@@ -36,7 +36,7 @@ popd
 
 echo ""
 echo "copying \"./tools\" directories..."
-if [[ -z "${dest}/Tools" ]]; then
+if [ -z "${dest}/Tools" ]; then
   mkdir -p ${dest}/tools
 fi
 
@@ -48,17 +48,18 @@ echo ""
 echo "linking dotfiles from ${source} into ${dest}"
 # ln on windows pretty much only works with hardlinks it seems
 ls -lA "${source}" | grep "^-" | awk '{print $9}' | xargs -I file ln -fs "${source}/file" "${dest}/file"
-if [[ -z "${dest}/.ssh" ]]; then
+if [ -z "${dest}/.ssh" ]; then
   mkdir -p "${dest}/.ssh"
 fi
 
 echo ""
+echo "setting up ssh default"
 # a check to see if they're using a config file and if it has a host setup
-if [[ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "[hH]ost \*") ]]; then
+if [ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "[hH]ost \*") ]; then
   echo "Appending ssh config"
   # we append it so we don't destroy any custom settings they may have
   cat "${source}/.ssh/config" >> "${dest}/.ssh/config"
-elif [[ -f "${dest}/.ssh/config" ]]; then
+elif [ -f "${dest}/.ssh/config" ]; then
   echo "Your SSHfu is strong, skipping config copy..."
 else 
   echo "Copying new ssh config"
@@ -66,7 +67,10 @@ else
   cp -n "${source}/.ssh/config" "${dest}/.ssh/"
 fi
 
-if [[ $(uname -s) == "Darwin" ]]; then 
+
+echo ""
+echo "installing platform stuff"
+if [ $(uname -s) == "Darwin" ]; then
   echo "installing fonts"
   find ${source}/tools/modules/powerline-fonts | grep "\.[to]tf" | xargs -I {} cp {} /Users/$(whoami)/Library/Fonts/
 
@@ -75,7 +79,11 @@ if [[ $(uname -s) == "Darwin" ]]; then
 
   #rake
   #~/tools/vim/bundle/YouCompleteMe/install.py --all
-elif [[ $(uname -o) == "Msys" ]]; then 
+
+elif [ $(uname -s) == "Linux" ]; then
+  echo "installing linux stuff"
+  sudo ./install/debian.sh
+elif [ $(uname -o) == "Msys" ]; then
 
   echo "If you would like to install vim plugins, ensure you have ruby 1.9.3 + rake installed and do the following:"
   echo "rake;"
@@ -101,7 +109,7 @@ All script files in this folder get loaded by the .profile, so this is a nice pl
 or enhancements to the dotfile setup
 EOF
 
-if [[ -f "~/.bashrc" ]]; then
+if [ -f "~/.bashrc" ]; then
   echo "sourcing .profile in .bashrc"
   echo "source ./.profile" >> ~/.bashrc
 fi
@@ -120,7 +128,7 @@ README.md"
 for f in ${cleanup}
 do
   filetorm=${dest}/${f};
-  if [[ -f  ${filetorm} ]]; then
+  if [ -f  ${filetorm} ]; then
     rm -rf $filetorm
   fi
 done

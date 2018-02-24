@@ -167,4 +167,4 @@
   # for OSX
   #helper = osxkeychain
   # for Linux
-  helper =/usr/lib/git-core/git-credential/git-credential-gnome-keyring
+	helper = store --file ~/.git-credentials

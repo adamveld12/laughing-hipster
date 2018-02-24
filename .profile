@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
 # source environment settings
 if [ -f ~/.environment ]; then
       . ~/.environment
@@ -24,7 +30,9 @@ fi
 # Sources a folder with shell extensions
 if [ -d ~/.extensions ]; then
   for plugin in ~/.extensions/*; do
-    source $plugin
+    if [ -f $plugin ]; then
+      source $plugin
+    fi
   done
 fi
 

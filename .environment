@@ -1,14 +1,24 @@
 #!/bin/bash
 
 # Bash behavior
-shopt -s checkwinsize   # Checks window size to get proper line wrapping
-shopt -s cdspell        # Corrects minor spelling errors when cd-ing
-set -o vi               # Set prompt to vi mode
-set -o notify           # Report status of terminated background jobs immediately
+shopt -s checkwinsize                       # Checks window size to get proper line wrapping
+shopt -s cdspell                            # Corrects minor spelling errors when cd-ing
+shopt -s checkjobs                          # Stops bash from exiting if there are jobs running. A second attempt at exiting will ignore.
+set -o vi                                   # Set prompt to vi mode
+set -o notify                               # Report status of terminated background jobs immediately
+set -b                                      # report job status immediately
+
+bind '"\C-l"':redraw-current-line # <Ctrl>-l
+bind '"\e\C-l"':clear-screen      # <Escape>-<Ctrl>-l
+
+set show-mode-in-prompt on                  # Shows vi mode status: + for vi insert mode, : for vi command mode
+set print-completions-horizontally on       # Prints tab completions horizontally in alphabetical order
+set colored-stats on                        # completions are printed colored based on their file type
+set visible-stats on                        # completions are printed colored based on their file type
 
 # History
-HISTCONTROL=ignoreboth:erasedups                    # No duplicate commands in history
-HISTSIZE=50000                            # For a huge history
+export HISTCONTRO=Lignoreboth:erasedups                    # No duplicate commands in history
+export HISTSIZE=-1
 export HISTIGNORE="[   ]*:&:bg:fg:exit:clear"   # Don't save these commands in the history
 shopt -s histappend                       # Append to the history file, not overwrite
 
@@ -18,6 +28,7 @@ export PAGER=less       # Used to display text / man files
 
 export LANG="en_US.UTF-8"
 export POWERLINE_CONFIG_COMMAND=~/Tools/modules/powerline/scripts/powerline-config
+
 export WINDOWS=false
 
 if [ -d "${HOME}/.bin" ] ; then
@@ -35,10 +46,12 @@ if [ -d "/c/Windows" ]; then
   if [ -f ~/.windows ]; then
     . ~/.windows
   fi
+else
+  export GOPATH=~/projects/go
 fi
 
 export EDITOR=$GIT_EDITOR
-export VISUAL=$EDITOR   
+export VISUAL=$EDITOR
 
 if [ -d "${HOME}/tools/vim" ] ; then
     PATH=${HOME}/tools/vim:${PATH}
