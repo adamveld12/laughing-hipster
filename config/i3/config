@@ -25,7 +25,10 @@ exec_always --no-startup-id gnome-power-manager
 exec pa-applet
 
 # wallpaper
-exec --no-startup-id nitrogen --restore
+exec_always --no-startup-id nitrogen --head=0 --save --set-centered ~/Pictures/Wallpapers/landscapes/03886_paintedplains_3840x2160.jpg &
+exec_always --no-startup-id nitrogen --head=1 --save --set-centered ~/Pictures/Wallpapers/landscapes/03886_paintedplains_3840x2160.jpg &
+exec_always --no-startup-id nitrogen --head=2 --save --set-centered ~/Pictures/Wallpapers/landscapes/03886_paintedplains_3840x2160.jpg &
+
 
 # start polybar
 exec_always --no-startup-id ~/.config/i3/polybar.sh &

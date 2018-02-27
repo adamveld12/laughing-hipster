@@ -7,6 +7,7 @@ fi
 
 apt-get update && apt-get install -y \
   build-essential \
+  bison \
   checkinstall \
   cargo \
   cmake \
@@ -15,14 +16,7 @@ apt-get update && apt-get install -y \
   curl \
   git \
   i3-wm \
-  nitrogen \
-  python \
-  rbenv \
-  ruby-build \
-  rust \
-  tmux \
-  terminator \
-  wget \
+  libunwind-dev \
   libcairo2-dev \
   libxcb1-dev \
   libxcb-ewmh-dev \
@@ -39,14 +33,28 @@ apt-get update && apt-get install -y \
   libiw-dev \
   libcurl4-openssl-dev \
   libxcb-cursor-dev \
-  snap \
+  nitrogen \
   pkg-config \
   python-xcbgen \
+  python \
+  snap \
+  rbenv \
+  ruby-build \
+  rust \
+  terminator \
+  tmux \
+  wget \
   xcb-proto;
 
 snap install slack;
 
 curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+source ~/.gvm/scripts/gvm
+gvm install go1.4 -B
+gvm use go1.4
+export GOROOT_BOOTSTRAP=$GOROOT
+gvm install go1.5
 
 cd ${dest}/projects
 
