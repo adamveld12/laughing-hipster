@@ -21,7 +21,7 @@ alert = #bd2c40
 [bar/bar1]
 monitor = ${env:MONITOR:eDP-1-1}
 width = 100%
-height = 45
+height = 45 
 
 ;offset-x = 1%
 ;offset-y = 1%
@@ -344,7 +344,7 @@ expand-right = true
 
 format-spacing = 1
 
-label-open = I/O
+label-open = I/O 
 label-open-foreground = ${colors.secondary}
 label-close =  cancel
 label-close-foreground = ${colors.secondary}

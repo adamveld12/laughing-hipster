@@ -1,6 +1,12 @@
 {
+    "terminal.integrated.shellArgs.linux": ["--login"],
+    "terminal.integrated.shellArgs.osx": ["--login"],
+    "terminal.integrated.fontFamily": "'Ubuntu Mono derivative Powerline', 'Fira Code Retina:style=Retina', 'PragmataPro'",
+    "terminal.integrated.fontSize": 14,
     "editor.renderWhitespace": "boundary",
-    "editor.fontFamily": "'Fira Code Retina:style=Retina', 'PragmataPro',  'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontFamily": "'Fira Code Retina', 'Fira Code', 'PragmataPro'",
+    "editor.fontSize": 12,
+    "editor.codeLens": true,
     "editor.fontLigatures": true,
     "editor.hideCursorInOverviewRuler": true,
     "editor.rulers": [120],
@@ -9,6 +15,8 @@
     "eslint.enable": true,
     "files.autoSave": "onFocusChange",
     "git.enableCommitSigning": true,
+    "git.autofetch": true,
+    "git.autorefresh": true,
     "go.testOnSave": true,
     "go.lintOnSave": "package",
     "go.autocompleteUnimportedPackages": false,
@@ -19,11 +27,15 @@
     "vim.leader": ",",
     "vim.surround": true,
     "vim.useSystemClipboard": true,
-    "workbench.colorTheme": "Monokai Dimmed",
+    "workbench.colorTheme": "Cobalt2",
     "window.zoomLevel": 2,
     "workbench.activityBar.visible": true,
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "explorer.confirmDragAndDrop": false,
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "gitlens.keymap": "alternate"
 }
