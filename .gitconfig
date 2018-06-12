@@ -64,20 +64,11 @@
  # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
  # instead of a/b/c/d as prefixes for patches
   mnemonicprefix = true
-  guitool=p4diff
-  tool=p4diff
-
-[difftool "p4diff"]
-  cmd=p4merge.exe -db -nb Base -nl Mine-local -nr Theirs-remote  $BASE $LOCAL $REMOTE
+  tool = vimdiff
 
 [merge]
-  tool = p4merge
-
-[mergetool "p4merge"]
-  cmd = p4merge.exe $BASE $LOCAL $REMOTE $MERGED
-  keepTemporaries = false
-  trustExitCode = false
-  keepBackup = false
+  tool = vimdiff
+  conflictstyle = diff3
 
 [mergetool]
   prompt = false

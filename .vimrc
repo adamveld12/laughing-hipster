@@ -1,5 +1,5 @@
 " change runtime path
-set runtimepath=~/tools/vim
+set runtimepath=~/tools/vim/
 
 execute pathogen#infect()
 execute pathogen#helptags()
@@ -8,34 +8,44 @@ execute pathogen#helptags()
 set nocompatible
 
 "color schemes
-colorscheme desert
+"colorscheme desert
 "colorscheme jellybeans
 "colorscheme molokai
+"colorscheme wombat256mod
 "colorscheme hickop
+colorscheme torte
+"colorscheme deus
 "colorscheme moria
-"colorscheme CandyPaper
-"colorscheme sunburst
 "colorscheme pablo
-"colorscheme torte
 "colorscheme slate
 "colorscheme evening
 "colorscheme darkblue
 "colorscheme base16-flat
 "colorscheme inkpot
 "colorscheme liquidcarbon
-"colorscheme pinksea
 "colorscheme sonofobsidian
 "colorscheme vividchalk
-"colorscheme wombat256mod
 "colorscheme evening
-"colorscheme koehler
 "colorscheme morning
 "colorscheme elflord
+"colorscheme koehler
+"colorscheme delek
+"colorscheme ron
+"colorscheme shine
+"colorscheme peachpuff
+"colorscheme peaksea
+"colorscheme murphy
+"colorscheme zellner
+
+
+"colorscheme sunburst
+"colorscheme pinksea
+"colorscheme CandyPaper
 
 set omnifunc=syntaxcomplete#Complete
 set completeopt-=preview
 
-set wildignore=*.png,*.jpg,node_modules,*.min.js,*.txt,*.bak,*.exe
+set wildignore=*.png,*.jpg,node_modules,*.min.js,*.txt,*.bak,*.exe,vendor.js
 set autochdir
 set tags=./.git/tags,tags;$HOME
 set noswapfile
@@ -65,7 +75,7 @@ map <leader><Space> :HardTimeToggle<CR>
 map <Space> :noh<CR>
 
 "replace  with regular newlines
-map <leader>nf :%s///g<CR>
+map <leader>ff :%s///g<CR>
 
 "list buffers
 map <leader>w :buffers<CR>
@@ -124,7 +134,7 @@ map <F1> <Nop>
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 " generate tags
-nnoremap <leader>c ctags -R -f ./.git/tags .
+nnoremap <leader>c :! ctags -R -f ./.git/tags .<CR>
 
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 0
