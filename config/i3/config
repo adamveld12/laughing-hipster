@@ -17,18 +17,17 @@ exec_always xrandr --dpi 165
 
 exec --no-startup-id compton --config ~/.config/compton/compton.conf -b
 
-# startup gnome
+# startup gnome 
 exec --no-startup-id /usr/lib/gnome-setting-daemon/gsd-xsettings
 exec_always --no-startup-id gnome-power-manager
 
 # startup pulse audio controls
 exec pa-applet
 
-# wallpaper
+# set wallpaper
 exec_always --no-startup-id nitrogen --head=0 --save --set-centered ~/Pictures/Wallpapers/landscapes/03886_paintedplains_3840x2160.jpg &
 exec_always --no-startup-id nitrogen --head=1 --save --set-centered ~/Pictures/Wallpapers/landscapes/03886_paintedplains_3840x2160.jpg &
 exec_always --no-startup-id nitrogen --head=2 --save --set-centered ~/Pictures/Wallpapers/landscapes/03886_paintedplains_3840x2160.jpg &
-
 
 # start polybar
 exec_always --no-startup-id ~/.config/i3/polybar.sh &
@@ -44,7 +43,7 @@ exec --no-startup-id dunst -config ~/.config/dunst/dunstrc &
 ##############################
 
 # audio controls
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 2%+ unmute
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 2%+ unmute 
 bindsym XF86AudioLowerVolume exec amixer -q set Master 2%- unmute
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
@@ -60,14 +59,16 @@ bindsym Mod1+Shift+i exec sudo insomnia
 bindsym Mod1+Shift+Return exec google-chrome-stable --force-device-scale-factor=1.65 %U
 
 #  Sets up 2 external displays side by side, with the laptop display on the far right
-bindsym Mod1+Shift+f exec xrandr --output DVI-I-2-1 --auto --left-of DVI-I-2-1 && xrandr --output DVI-I-3-2 --auto --left-of eDP-1-1 && xrandr --output eDP-1-1 --auto --primary --preferred
-bindsym Mod1+Shift+g exec xrandr --output DVI-I-3-2 --auto --left-of DVI-I-2-1 && xrandr --output DVI-I-2-1 --auto --left-of eDP-1-1 && xrandr --output eDP-1-1 --auto --primary --preferred
+bindsym Mod1+Shift+f exec xrandr --output DVI-I-2-1 --auto --left-of DVI-I-3-2 && sleep 1 && xrandr --output DVI-I-3-2 --auto --left-of eDP-1-1 && sleep 1 && xrandr --output eDP-1-1 --auto --primary --preferred
+bindsym Mod1+Shift+g exec xrandr --output DVI-I-3-2 --auto --left-of DVI-I-2-1 && sleep 1 && xrandr --output DVI-I-2-1 --auto --left-of eDP-1-1 && sleep 1 && xrandr --output eDP-1-1 --auto --primary --preferred
+
 # disconnects the 2 external monitors
 bindsym Mod1+Shift+Ctrl+g exec xrandr --output DVI-I-3-2 --off && xrandr --output DVI-I-2-1 --off
 
 bindsym Mod1+Shift+x move workspace to output right
 
-
+# turn off laptop monitor
+bindsym Mod1+Shift+~ exec xrandr --output eDP-1-1 --off
 
 # start/stop pritunl
 bindsym Mod1+Shift+v exec pritunl-client start 65adf618f9dc44b9818b558d1b84bdba
@@ -209,3 +210,4 @@ bindsym Mod1+r mode "resize"
 #bar {
         #status_command i3status
 #}
+
