@@ -29,5 +29,29 @@
         "key": "ctrl+w",
         "command": "-workbench.action.closeWindow",
         "when": "!editorIsOpen"
+    },
+    {
+        "key": "ctrl+shift+]",
+        "command": "editor.action.goToDeclaration",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "f12",
+        "command": "-editor.action.goToDeclaration",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+         "key": "ctrl+n",
+         "command": "workbench.action.files.newUntitledFile" 
+    },
+    { 
+        "key": "ctrl+\\",               
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus"
+    },
+    { 
+        "key": "ctrl+k ctrl+i",         
+        "command": "editor.action.showHover",
+        "when": "editorTextFocus"
     }
 ]
