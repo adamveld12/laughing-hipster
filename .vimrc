@@ -75,7 +75,7 @@ map <leader><Space> :HardTimeToggle<CR>
 map <Space> :noh<CR>
 
 "replace  with regular newlines
-map <leader>ff :%s///g<CR>
+noremap <leader>c :%s///g<CR>
 
 "list buffers
 map <leader>w :buffers<CR>
@@ -178,7 +178,7 @@ set cursorline
 " Make tabs as wide as four spaces
 set tabstop=4
 set expandtab
-set shiftwidth=2
+set shiftwidth=4
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set list
@@ -222,7 +222,8 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "goreturns"
+" -b -w -p"
 
 let g:syntastic_go_checkers = ['go', 'errcheck', 'gofmt', 'golint', 'govet']
 "let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -254,7 +255,7 @@ endif
 
 " ctrl p
 let g:ctrlp_map = '<C-P>'
-nnoremap <C-n> :CtrlPTag<cr>
+"nnoremap <C-l> :CtrlPTag<cr>
 
 let g:ctrlp_cmd = 'CtrlPLastMode'
 let g:ctrlp_extensions = ['line']

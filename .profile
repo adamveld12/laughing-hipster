@@ -8,17 +8,17 @@ esac
 
 # source environment settings
 if [ -f ~/.environment ]; then
-      . ~/.environment
+     . ~/.environment
 fi
 
 # Load functions
 #if [ -f ~/.bash_functions ]; then
-    #. ~/.bash_functions
+#    . ~/.bash_functions
 #fi
 
 # Load any extra aliases
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+   . ~/.bash_aliases
 fi
 
 # Load pretty colors

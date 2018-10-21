@@ -99,6 +99,7 @@
   autocrlf = false
   eol = 'lf'
   editor = $EDITOR
+	hooksPath = /home/adam/.githooks/
 
 [color]
   # Use colors in Git commands that are capable of colored output when

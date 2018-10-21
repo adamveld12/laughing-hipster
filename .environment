@@ -52,6 +52,7 @@ fi
 
 export EDITOR=$GIT_EDITOR
 export VISUAL=$EDITOR
+export VIMRUNTIME=~/tools/vim
 
 if [ -d "${HOME}/tools/vim" ] ; then
     PATH=${HOME}/tools/vim:${PATH}
