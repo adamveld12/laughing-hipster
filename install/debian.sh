@@ -1,31 +1,92 @@
 #!/bin/bash
 
-if [ -d "${dest}/.config" ]; then
-  echo ".config exists"
-else
-  mkdir -p "${dest}/.config"
+if [ ! -d  ${dest}/config ]; then
+  mkdir -p ${dest}/.config/
+  cp -R ${source}/config/ ${dest}/.config/
 fi
 
-cp -r ${source}/config/ ${dest}/.config/
-
-sudo apt-get update && sudo apt-get install \
+apt-get update && apt-get install -y \
   build-essential \
+  bison \
+  checkinstall \
+  cargo \
   cmake \
+  cmake-data \
+  compton \
   curl \
-  nvm \
+  git \
+  i3-wm \
+  libunwind-dev \
+  libcairo2-dev \
+  libxcb1-dev \
+  libxcb-ewmh-dev \
+  libxcb-icccm4-dev \
+  libxcb-image0-dev \
+  libxcb-randr0-dev \
+  libxcb-util0-dev \
+  libxcb-xkb-dev \
+  libxcb-xrm-dev \
+  libasound2-dev \
+  libssl-dev \
+  libpulse-dev \
+  libmpdclient-dev \
+  libiw-dev \
+  libcurl4-openssl-dev \
+  libxcb-cursor-dev \
+  nitrogen \
+  pkg-config \
+  python-xcbgen \
   python \
+  snap \
   rbenv \
+  ruby-build \
+  rust \
+  terminator \
   tmux \
   wget \
-  git;
+  xcb-proto;
+
+snap install slack;
+
+curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+source ~/.gvm/scripts/gvm
+gvm install go1.4 -B
+gvm use go1.4
+export GOROOT_BOOTSTRAP=$GOROOT
+gvm install go1.5
+
+cd ${dest}/projects
+
+# install polybar
+git clone --branch 3.1.0 --recursive https://github.com/jaagr/polybar polybar
+cd ./polybar
+./build.sh
+cd ..
 
 
-rbenv install 1.9.3-p125;
-rbenv global 1.9.3-p125;
+# install vim with all of the necessary features
+git clone https://github.com/vim/vim vim
+cd ./vim
 
-rm -rf ~/tools/modules/iTerm2-Color-Schemes
-rm -rf ~/tools/modules/tmux-MacOSX-pasteboard
+./configure --with-features=huge \
+  --enable-multibyte \
+  --enable-rubyinterp=yes \
+  --enable-python3interp=yes \
+  --enable-perlinterp=yes \
+  --enable-luainterp=yes \
+  --enable-gui=gtk2 \
+  --enable-cscope \
+  --prefix=/usr/local
 
-rake
+make VIMRUNTUME=~/tools/vim/
 
-echo "You must install YouCompleteMe by going to ~/tools/vim/bundle/YouCompleteMe/ and following the instructions in the README.md"
+checkinstall
+cd ..
+
+git clone https://github.com/51v4n/i3-gnome i3-gnome
+cd ./i3-gnome
+make install
+cd ..
+
+cd ${dest}

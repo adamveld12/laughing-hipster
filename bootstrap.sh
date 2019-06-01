@@ -55,7 +55,7 @@ fi
 echo ""
 echo "setting up ssh default"
 # a check to see if they're using a config file and if it has a host setup
-if [ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep "[hH]ost \*") ]; then
+if [ -f "${dest}/.ssh/config" && -z $(cat "${dest}/.ssh/config" | grep '[hH]ost \*') ]; then
   echo "Appending ssh config"
   # we append it so we don't destroy any custom settings they may have
   cat "${source}/.ssh/config" >> "${dest}/.ssh/config"
@@ -68,6 +68,8 @@ else
 fi
 
 
+mkdir -p ${dest}/projects/
+
 echo ""
 echo "installing platform stuff"
 if [ $(uname -s) == "Darwin" ]; then
@@ -78,11 +80,9 @@ if [ $(uname -s) == "Darwin" ]; then
   sudo ./install/.osx
 
   #rake
-  #~/tools/vim/bundle/YouCompleteMe/install.py --all
-
 elif [ $(uname -s) == "Linux" ]; then
   echo "installing linux stuff"
-  sudo ./install/debian.sh
+  ${source}/install/debian.sh
 elif [ $(uname -o) == "Msys" ]; then
 
   echo "If you would like to install vim plugins, ensure you have ruby 1.9.3 + rake installed and do the following:"
@@ -101,13 +101,31 @@ elif [ $(uname -o) == "Msys" ]; then
   echo "go to $dest/fonts_to_install, select all of the font files and right-click -> install"
 fi
 
-mkdir ~/.extensions
-cat <<EOF >~/.extensions/README.md
+if [ -d "${dest}/.extensions" ]; then
+  echo "${dest}/.extensions exists"
+else
+  mkdir ${dest}/.extensions
+  cat <<EOF >~/.extensions/README.md
 # Extensions
 
 All script files in this folder get loaded by the .profile, so this is a nice place to organize plugins
 or enhancements to the dotfile setup
 EOF
+fi
+
+rbenv install 1.9.3-p125;
+rbenv global 1.9.3-p125;
+rbenv rehash
+
+rm -rf ${dest}/tools/modules/iTerm2-Color-Schemes
+rm -rf ${dest}/tools/modules/tmux-MacOSX-pasteboard
+
+#./tools/vim/bundle/YouCompleteMe/install.py --all &
+
+rake
+
+
+echo "You must install YouCompleteMe by going to ~/tools/vim/bundle/YouCompleteMe/ and following the instructions in the README.md"
 
 if [ -f "~/.bashrc" ]; then
   echo "sourcing .profile in .bashrc"

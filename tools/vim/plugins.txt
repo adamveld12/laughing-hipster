@@ -22,7 +22,7 @@ git://github.com/cakebaker/scss-syntax.vim.git
 git://github.com/gorodinskiy/vim-coloresque.git
 git://github.com/tpope/vim-dispatch.git
 git://github.com/scrooloose/syntastic.git
-git://github.com/OmniSharp/omnisharp-vim.git
 git://github.com/kien/ctrlp.vim.git
 git://github.com/Valloric/YouCompleteMe.git
 git://github.com/nathanaelkane/vim-indent-guides.git
+git://github.com/easymotion/vim-easymotion.git
