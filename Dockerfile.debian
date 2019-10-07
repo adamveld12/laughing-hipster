@@ -1,0 +1,17 @@
+FROM debian
+
+COPY . /home/dotfiles/Projects/dotfiles
+
+RUN apt-get update && apt-get install -y sudo
+
+RUN useradd  -G sudo -U -u 1000 -m -s /bin/bash dotfiles \
+    && echo 'dotfiles:dotfiles' | chpasswd \
+    && mkdir -p /home/dotfiles/Projects \
+    && chown -R dotfiles:dotfiles /home/dotfiles
+
+
+USER 1000
+
+WORKDIR /home/dotfiles
+
+ENTRYPOINT "/bin/bash"

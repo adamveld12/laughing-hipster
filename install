@@ -1,0 +1,20 @@
+#!/bin/bash
+
+BASE_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd );
+OLD_DIR=${PWD};
+cd ${BASE_DIR};
+./installers/base.sh $@;
+cd ${OLD_DIR};
+
+echo "Installation completed."
+echo "Look in '/home/$@/tools/fonts' to install fonts. There is Fira Code, Pragmata Pro, Iosveka to choose from."
+
+
+POST_INSTALL_MSG="\t- Keybase: https://keybase.io/docs/the_app/install_linux\n
+\t- Firefox Developer Edition: https://www.mozilla.org/en-US/firefox/developer/\n
+\t -Signal: https://signal.org/download/#linuxModal\n
+\t- Docker: https://docs.docker.com/install/linux/docker-ce/ubuntu/\n
+\t- or Podman: https://docs.docker.com/install/linux/docker-ce/ubuntu/\n
+"
+echo "Some things to install yourself:"
+echo -e $POST_INSTALL_MSG
