@@ -4,17 +4,26 @@
 	git submodule init && git submodule update
 
 build: ./tools
-	docker build -t adamveld12/dotfiles:latest -f ./Dockerfile .
+	docker build -t vdhsn/dotfiles:$${VERSION:-latest} \
+		--build-arg version=$${VERSION} \
+		--build-arg commit=$${COMMIT_SHA:-$${CIRCLE_SHA1}} \
+		--build-arg initiator=$${INITIATOR:-$${CIRCLE_USERNAME}} \
+		--build-arg created=$${CREATED_TS:-$$(date +%s)} \
+		-f ./Dockerfile .
+
+
+publish: build
+	docker push vdhsn/dotfiles:$${VERSION}
 
 build-test: ./tools
-	docker build -t adamveld12/dotfiles:deb-test -f ./Dockerfile.debian .
+	docker build -t vdhsn/dotfiles:deb-test -f ./Dockerfile.debian .
 
 deb-test:
 	docker run -it --rm --name dotfiles \
 		-u $${USER_ID:-1000} \
 		-v $$PWD:/home/dotfiles/Projects/dotfiles:ro \
 		--workdir /home/dotfiles/Projects/dotfiles \
-		adamveld12/dotfiles:deb-test
+		vdhsn/dotfiles:deb-test
 
 
 dev:
@@ -22,5 +31,5 @@ dev:
 		-u $${USER_ID:-1000} \
 		-v $$PWD:/home/dev/Projects/dotfiles:ro \
 		--workdir /home/dev/Projects/dotfiles \
-		adamveld12/dotfiles:latest
+		vdhsn/dotfiles:$${VERSION:-latest}
 
