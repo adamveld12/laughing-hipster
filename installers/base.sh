@@ -79,10 +79,12 @@ fi
 #  Set up sub modules - link tools into home
 #------------------------------------------------------------------
 
-git submodule init && git submodule --progress update;
-
-linkDirectory ${TOOLS_DIR} ${HOME_DIR}/tools;
-#find ${BASE_DIR}/tools -type f | sed "s=${BASE_DIR}==" | xargs -I {} ln -fsv ${BASE_DIR}/{} ${HOME_DIR}/{}
+if [ -f "${BASE_DIR}/tools" ]; then
+    git submodule init && git submodule --progress update;
+    linkDirectory ${TOOLS_DIR} ${HOME_DIR}/tools;
+else
+    echo "skipping tools..."
+fi
 
 
 #------------------------------------------------------------------

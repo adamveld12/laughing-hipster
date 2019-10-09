@@ -35,12 +35,12 @@ else
 
     # install polybar
     git clone --branch 3.4.0 --recursive https://github.com/polybar/polybar polybar
-    cd ./polybar
-    cd build
+    cd ./polybar/build
     cmake ..
     make -j$(nproc)
     sudo make install
-    cd ..
+    cd ../..
+    rm -rf ./polybar
 
     snap install code docker firefox thunderbird insomnia discord slack spotify;
 fi
@@ -92,6 +92,7 @@ find ${VIMFILES} -type f | \
 ln -svf ${HOME}/.config/vim/.vimrc ~/.vimrc
 
 cd ..
+rm -rf ./vim
 
 
 cd ${HOME}
