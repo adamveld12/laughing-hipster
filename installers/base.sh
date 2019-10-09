@@ -102,7 +102,7 @@ if [ ! -d "${HOME_DIR}/.gvm/" ]; then
 	echo "[[ -s \"\$HOME/.gvm/scripts/gvm\" ]] && source \"\$HOME/.gvm/scripts/gvm\"" > ${HOME_DIR}/.shell_extensions/gvm.sh;
 	source ${HOME_DIR}/.gvm/scripts/gvm;
 	gvm install go${GO_VERSION} -B;
-    go use go${GO_VERSION} --default;
+    gvm use go${GO_VERSION} --default;
 fi
 
 if [ ! -d "${HOME}/.nvm" ]; then
