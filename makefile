@@ -11,9 +11,10 @@ build: ./tools
 		--build-arg created=$${CREATED_TS:-$$(date +%s)} \
 		-f ./Dockerfile .
 
-
 publish: build
 	docker push vdhsn/dotfiles:$${VERSION}
+	docker tag vdhsn/dotfiles:$${VERSION} vdhsn/dotfiles:$$(echo $${COMMIT_SHA} |  sed -E 's/^(.{10}).*$$/\1/')
+	docker push vdhsn/dotfiles:$$(echo $${COMMIT_SHA} |  sed -E 's/^(.{10}).*$$/\1/')
 
 build-test: ./tools
 	docker build -t vdhsn/dotfiles:deb-test -f ./Dockerfile.debian .
@@ -24,7 +25,6 @@ deb-test:
 		-v $$PWD:/home/dotfiles/Projects/dotfiles:ro \
 		--workdir /home/dotfiles/Projects/dotfiles \
 		vdhsn/dotfiles:deb-test
-
 
 dev:
 	docker run -it --rm --name dotfiles \

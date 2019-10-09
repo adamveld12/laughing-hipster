@@ -4,6 +4,7 @@ ARG version=dev
 ARG commit=dev
 ARG created=never
 
+LABEL maintainer="Adam Veldhousen <adam@veldhousen.net>"
 LABEL net.veldhousen.version=${version}
 LABEL net.veldhousen.commit=${commit}
 LABEL net.veldhousen.created=${created}
