@@ -1,12 +1,21 @@
-[submodule "tools/modules/tmux-MacOSX-pasteboard"]
-	path = tools/modules/tmux-MacOSX-pasteboard
-	url = git://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard.git
-[submodule "tools/modules/powerline-fonts"]
-	path = tools/modules/powerline-fonts
-	url = git://github.com/Lokaltog/powerline-fonts.git
-[submodule "tools/modules/iTerm2-Color-Schemes"]
-	path = tools/modules/iTerm2-Color-Schemes
+[submodule "tmux-MacOSX-pasteboard"]
+	path = tools/osx/iTerm2-Color-Schemes
 	url = git://github.com/mbadolato/iTerm2-Color-Schemes.git
-[submodule "tools/modules/powerline"]
-	path = tools/modules/powerline
+[submodule "iTerm2-Color-Schemes"]
+	path = tools/osx/iTerm2-Color-Schemes
+	url = git://github.com/mbadolato/iTerm2-Color-Schemes.git
+[submodule "powerline-fonts"]
+	path = tools/powerline/powerline-fonts
+	url = git://github.com/Lokaltog/powerline-fonts.git
+[submodule "powerline"]
+	path = tools/powerline/powerline
 	url = git://github.com/powerline/powerline.git
+[submodule "polybar-spotify"]
+	path = tools/polybar/polybar-spotify
+	url = git://github.com/Jvanrhijn/polybar-spotify.git
+[submodule "polypomo"]
+	path = tools/polybar/polypomo
+	url = git://github.com/unode/polypomo.git
+[submodule "polybar-scripts"]
+	path = tools/polybar/polybar-scripts
+	url = git://github.com/polybar/polybar-scripts.git

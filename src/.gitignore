@@ -1,0 +1,99 @@
+# File
+.git-stats
+.bashrc
+.rnd
+*.kdbx
+.vim_colorv_cache
+*.log
+*.exe
+.viminfo
+.bash_history
+.erlang.cookie
+.mongorc.js
+.sh_history
+.dbshell
+.netrc
+*.dll
+*.orig
+.dockercfg
+.gnupg
+
+
+# Directory
+.heroku/
+.vim/bundle/*
+.cache/
+.gem/
+.ssh/
+.node-gyp/
+./Tools/Console2/
+.npm/
+target
+Library
+Tools/vim/bundle/*
+Tools/vim/tutor/
+.lesshst
+.atom
+./assets/**/lib
+.bin
+.plugman
+.npmrc
+.kre
+.forever
+.android
+.atom/packages
+.cordova
+.grunt-init
+Tools/vim/vimrc
+Tools/vim/vim74
+Tools/cmder
+.wireshark/
+.git-templates/
+.k/
+.boot2docker/
+.vagrant*
+VirtualBox VMs/
+.VirtualBox/
+Applications/
+.local/
+.thefuck/
+.vim/
+.chefdk/
+projects/
+.keybase-installer/
+
+# Compiled source #
+###################
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
