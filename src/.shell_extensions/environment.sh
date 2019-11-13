@@ -48,7 +48,7 @@ if [ -d "/c/Windows" ]; then
     . ~/.windows
   fi
 else
-  export GOPATH=~/Projects/go
+  export GOPATH=~/projects/go
   export DOTNETPATH=~/.dotnet/
 fi
 

@@ -40,7 +40,7 @@ export HOME=${HOME_DIR};
 
 echo "installing dot files from ${BASE_DIR} into ${HOME_DIR}...";
 
-mkdir -p ${HOME_DIR}/Projects;
+mkdir -p ${HOME_DIR}/projects;
 mkdir -p ${HOME_DIR}/Downloads;
 mkdir -p ${HOME_DIR}/Desktop;
 mkdir -p ${HOME_DIR}/Documents/Pictures/Wallpapers;
@@ -141,4 +141,4 @@ pushd ${HOME}/.config/vim/
 rake
 popd
 
-find ${HOME} ! -path "${HOME}/Projects" ! -path "${HOME}" | xargs -I {} chown $@ {};
+find ${HOME} ! -path "${HOME}/projects" ! -path "${HOME}" | xargs -I {} chown $@ {};

@@ -35,6 +35,7 @@ set backupcopy=yes
 set autoread
 set selection=exclusive
 set ttimeoutlen=50
+" set termguicolors
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamedplus
 " Enhance command-line completion
@@ -60,13 +61,13 @@ set t_Co=256
 
 " Centralize backups, swapfiles and undo history
 if exists("&backupdir")
-  set backupdir=~/tools/vim/backups
+  set backupdir=~/.config/vim/backups/
 endif
 if exists("&directory")
-  set directory=~/tools/vim/swaps
+  set directory=~/.config/vim/swaps/
 endif
 if exists("&undodir")
-  set undodir=~/tools/vim/undo
+  set undodir=~/.config/vim/undo/
 endif
 
 " Respect modeline in files
