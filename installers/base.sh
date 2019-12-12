@@ -88,9 +88,11 @@ fi
 #------------------------------------------------------------------
 mkdir -p ${HOME_DIR}/.bin;
 
-source ${BASE_DIR}/apps/golang.sh;
-source ${BASE_DIR}/apps/node.sh;
-source ${BASE_DIR}/apps/rust.sh;
-source ${BASE_DIR}/apps/rvm.sh;
+APP_INSTALLS=${BASE_DIR}/installers/app;
+
+source ${APP_INSTALLS}/golang.sh;
+source ${APP_INSTALLS}/node.sh;
+source ${APP_INSTALLS}/rust.sh;
+source ${APP_INSTALLS}/rvm.sh;
 
 find ${HOME} ! -path "${HOME}/projects" ! -path "${HOME}" | xargs -I {} chown $@ {};
