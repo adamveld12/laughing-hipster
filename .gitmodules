@@ -1,9 +1,3 @@
-[submodule "tmux-MacOSX-pasteboard"]
-	path = tools/osx/iTerm2-Color-Schemes
-	url = git://github.com/mbadolato/iTerm2-Color-Schemes.git
-[submodule "iTerm2-Color-Schemes"]
-	path = tools/osx/iTerm2-Color-Schemes
-	url = git://github.com/mbadolato/iTerm2-Color-Schemes.git
 [submodule "powerline-fonts"]
 	path = tools/powerline/powerline-fonts
 	url = git://github.com/Lokaltog/powerline-fonts.git
@@ -19,3 +13,9 @@
 [submodule "polybar-scripts"]
 	path = tools/polybar/polybar-scripts
 	url = git://github.com/polybar/polybar-scripts.git
+[submodule "tools/osx/tmux-MacOSX-pasteboard"]
+	path = tools/osx/tmux-MacOSX-pasteboard
+	url = git://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard.git
+[submodule "tools/osx/iTerm2-Color-Schemes"]
+	path = tools/osx/iTerm2-Color-Schemes
+	url = git://github.com/mbadolato/iTerm2-Color-Schemes.git

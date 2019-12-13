@@ -1,167 +1,171 @@
 [alias]
-  # View abbreviated SHA, description, and history graph of the latest 20 commits
-  lo = log --oneline -n 40 --graph
-  l = log --oneline -n 40 --graph --show-signature
+    # View abbreviated SHA, description, and history graph of the latest 20 commits
+    lo = log --oneline -n 40 --graph
+    l = log --oneline -n 40 --graph --show-signature
 
-  # View the current working tree status using the short format
-  s = status -s
+    # View the current working tree status using the short format
+    s = status -s
 
-  # Show the diff between the latest commit and the current state
-  d = !"git diff --color --patch-with-stat"
-  dc = !"git diff --cached --color --patch-with-stat"
+    # Show the diff between the latest commit and the current state
+    d = !"git diff --color --patch-with-stat"
+    dc = !"git diff --cached --color --patch-with-stat"
 
-  # `git di $number` shows the diff between the state `$number` revisions ago and the current state
-  di = !"d() { git diff --color --patch-with-stat HEAD~$1 | diff-so-fancy; }; git diff-index --color --quiet HEAD --; d"
+    # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+    di = !"d() { git diff --color --patch-with-stat HEAD~$1 | diff-so-fancy; }; git diff-index --color --quiet HEAD --; d"
 
-  # Pull in remote changes for the current repository and all its submodules
-  p = !"git pull; git submodule foreach git pull origin master"
+    # Pull in remote changes for the current repository and all its submodules
+    p = !"git pull; git submodule foreach git pull origin master"
 
-  # Clone a repository including all submodules
-  c = clone --recursive
+    # Clone a repository including all submodules
+    c = clone --recursive
 
-  # Commit all changes
-  ca = !git add -A && git commit -av -S
+    # Commit all changes
+    ca = !git add -A && git commit -av -S
 
-  # commits with gpgsign flag
-  cs = commit -S
+    # commits with gpgsign flag
+    cs = commit -S
 
-  # commits with gpgsign and inline message flag
-  csm = commit -S -m
+    # commits with gpgsign and inline message flag
+    csm = commit -S -m
 
-  # Switch to a branch, creating it if necessary
-  go = checkout -B
+    # Switch to a branch, creating it if necessary
+    go = checkout -B
 
-  # pull rebase
-  pr = pull --rebase
+    # pull rebase
+    pr = pull --rebase
 
-  # Show verbose output about tags, branches or remotes
-  tags = tag -l
-  branches = branch -a
-  remotes = remote -v
+    # Show verbose output about tags, branches or remotes
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
 
-  # Credit an author on the latest commit
-  credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+    # Credit an author on the latest commit
+    credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 
-  # Interactive rebase with the given number of latest commits
-  reb = "!r() { git rebase -i HEAD~$1; }; r"
+    # Interactive rebase with the given number of latest commits
+    reb = "!r() { git rebase -i HEAD~$1; }; r"
 
-  # Find branches containing commit
-  fb = "!f() { git branch -a --contains $1; }; f"
+    # Find branches containing commit
+    fb = "!f() { git branch -a --contains $1; }; f"
 
-  # Find tags containing commit
-  ft = "!f() { git describe --always --contains $1; }; f"
+    # Find tags containing commit
+    ft = "!f() { git describe --always --contains $1; }; f"
 
-  # Find commits by source code
-  fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+    # Find commits by source code
+    fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
 
-  # Find commits by commit message
-  fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+    # Find commits by commit message
+    fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
   # Remove branches that have already been merged with master
-  dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+    dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 	plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
 
 [diff]
- # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
- # instead of a/b/c/d as prefixes for patches
-  mnemonicprefix = true
-  tool = vimdiff
+    # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
+    # instead of a/b/c/d as prefixes for patches
+    mnemonicprefix = true
+    tool = vimdiff
 
 [merge]
-  tool = vimdiff
-  conflictstyle = diff3
+    tool = vimdiff
+    conflictstyle = diff3
 
 [mergetool]
-  prompt = false
-  trustExitCode = false
+    prompt = false
+    trustExitCode = false
 
 [advice]
-  statusHints = false
+    statusHints = false
 
 [apply]
-  # Detect whitespace errors when applying a patch
-  whitespace = fix
+    # Detect whitespace errors when applying a patch
+    whitespace = fix
 
 [gc]
-  auto=1
+    auto=1
 
 [core]
-  # Use custom `.gitignore` and `.gitattributes`
-  excludesfile = /Users/Adam/.gitignore
-  attributesfile = ~/.gitattributes
-  # Treat spaces before tabs and all kinds of trailing whitespace as an error.
-  # [default] trailing-space: looks for spaces at the end of a line
-  # [default] space-before-tab: looks for spaces before tabs at the beginning of
-  # a line
-  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
-  # Make `git rebase` safer on OS X
-  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
-  trustctime = false
-  autocrlf = false
-  eol = 'lf'
-  editor = $EDITOR
-  hooksPath = /home/adam/.githooks/
+    # Use custom `.gitignore` and `.gitattributes`
+    excludesfile = /Users/Adam/.gitignore
+    attributesfile = ~/.gitattributes
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error.
+    # [default] trailing-space: looks for spaces at the end of a line
+    # [default] space-before-tab: looks for spaces before tabs at the beginning of
+    # a line
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+    # Make `git rebase` safer on OS X
+    # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+    trustctime = false
+    autocrlf = false
+    eol = 'lf'
+    editor = $EDITOR
+    hooksPath = /home/adam/.githooks/
 
 [color]
-  # Use colors in Git commands that are capable of colored output when
-  # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
-  ui = auto
+    # Use colors in Git commands that are capable of colored output when
+    # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+    ui = auto
 
 [color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
+    current = yellow reverse
+    local = yellow
+    remote = green
 
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
 
 [color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
+    added = yellow
+    changed = green
+    untracked = cyan
 
 [merge]
-  # Include summaries of merged commits in newly created merge commit messages
-  log = true
-  # better merge messages
-  summary=true
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+    # better merge messages
+    summary=true
 
 # URL shorthands
 [url "git@github.com:"]
-  insteadOf = "gh:"
-  pushInsteadOf = "github:"
-  pushInsteadOf = "git://github.com/"
+    insteadOf = https://github.com/
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+
 [url "git://github.com/"]
-  insteadOf = "github:"
+    insteadOf = "github:"
+
 [url "git@gist.github.com:"]
-  insteadOf = "gst:"
-  pushInsteadOf = "gist:"
-  pushInsteadOf = "git://gist.github.com/"
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+
 [url "git://gist.github.com/"]
-  insteadOf = "gist:"
+    insteadOf = "gist:"
 
 [push]
-  default = current
+    default = current
+
 [pull]
-  default = current
+    default = current
 
 [user]
-  email = adam.veldhousen@liveauctioneers.com
-  name = Adam Veldhousen
-  signingkey = 415C0B9C
+    email = adam.veldhousen@liveauctioneers.com
+    name = Adam Veldhousen
+    signingkey =  4FA79E5B6598505C8DFA30A7A466CEE1415C0B9C
 
 [commit]
-  gpgsign = true
-  template = /home/adam/.gitmessage
+    gpgsign = true
+    template = /home/adam/.gitmessage
 
 [help]
-  autocorrect=20
+    autocorrect=20
 
 [credential]
-  # for OSX
-  #helper = osxkeychain
-  # for Linux
-	helper = store --file ~/.git-credentials
+    # for OSX
+    #helper = osxkeychain
+    # for Linux
+    helper = store --file ~/.git-credentials

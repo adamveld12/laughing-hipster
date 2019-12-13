@@ -7,11 +7,6 @@ case $- in
 esac
 
 
-# source environment settings
-if [ -f ~/.environment ]; then
-     . ~/.environment
-fi
-
 # for when you want to do custom junk
 # Sources a folder with shell extensions
 if [ -d ~/.shell_extensions ]; then
@@ -22,6 +17,12 @@ if [ -d ~/.shell_extensions ]; then
   done
 fi
 
+# source environment settings
+if [ -f ~/.environment ]; then
+     . ~/.environment
+fi
+
 if [ -f "./.motd" ]; then
     source .motd
 fi
+

@@ -35,6 +35,7 @@ set backupcopy=yes
 set autoread
 set selection=exclusive
 set ttimeoutlen=50
+set termguicolors
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamedplus
 " Enhance command-line completion
@@ -60,13 +61,13 @@ set t_Co=256
 
 " Centralize backups, swapfiles and undo history
 if exists("&backupdir")
-  set backupdir=~/tools/vim/backups
+  set backupdir=~/.config/vim/backups/
 endif
 if exists("&directory")
-  set directory=~/tools/vim/swaps
+  set directory=~/.config/vim/swaps/
 endif
 if exists("&undodir")
-  set undodir=~/tools/vim/undo
+  set undodir=~/.config/vim/undo/
 endif
 
 " Respect modeline in files
@@ -154,7 +155,7 @@ nmap <leader>n :NERDTreeToggle %:p:h<CR>
 nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
 
 " strips whitespace
-noremap <leader>ss :call StripWhitespace()<CR>
+noremap <leader>ws :call StripWhitespace()<CR>
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -216,7 +217,8 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
-let g:go_fmt_command = "goreturns"
+let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave = 1
 " -b -w -p"
 
 let g:syntastic_go_checkers = ['go', 'errcheck', 'gofmt', 'golint', 'govet']
