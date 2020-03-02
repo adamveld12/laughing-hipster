@@ -32,6 +32,7 @@ export EDITOR=$GIT_EDITOR
 export VISUAL=$EDITOR
 export VIMRUNTIME=${HOME}/.config/vim/runtime
 export VIM=${HOME}/.config/vim
+export GPG_TTY=$(tty)
 
 export WINDOWS=false
 
@@ -83,3 +84,4 @@ esac
 # sudo sysctl net.ipv4.tcp_fin_timeout="30"
 # sudo sysctl net.ipv4.tcp_tw_recycle=1
 # sudo sysctl net.ipv4.tcp_tw_reuse=1 
+export PATH=${PATH}:/home/linuxbrew/.linuxbrew/bin

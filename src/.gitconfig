@@ -130,10 +130,10 @@
     summary=true
 
 # URL shorthands
-[url "git@github.com:"]
-    insteadOf = https://github.com/
+[url "git@github.com:LIVEauctioneers"]
+    insteadOf = https://github.com/LIVEauctioneers
     pushInsteadOf = "github:"
-    pushInsteadOf = "git://github.com/"
+    pushInsteadOf = "git://github.com/LIVEauctioneers"
 
 [url "git://github.com/"]
     insteadOf = "github:"
@@ -169,3 +169,6 @@
     #helper = osxkeychain
     # for Linux
     helper = store --file ~/.git-credentials
+
+[gpg]
+    program = gpg

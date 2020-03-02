@@ -9,7 +9,7 @@ LABEL net.veldhousen.version=${version}
 LABEL net.veldhousen.commit=${commit}
 LABEL net.veldhousen.created=${created}
 
-RUN apt-get update && apt-get install -y sudo apt-utils && apt-get clean
+RUN apt-get update -qq && apt-get install -qq -y sudo apt-utils && apt-get clean
 RUN useradd  -G sudo -U -u 1000 -m -s /bin/bash dev \
     && echo 'dev:dev' | chpasswd \
     && mkdir -p /home/dev/Projects \

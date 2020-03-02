@@ -16,12 +16,9 @@ elif [ -z "$(which sudo)" ]; then
     exit 1;
 fi
 
-sudo apt-get update;
-sudo apt-get install -y ${INSTALL_LIST};
-wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb;
-sudo dpkg -i /tmp/packages-microsoft-prod.deb;
-sudo apt-get update;
-sudo apt-get install -y dotnet-sdk-3.0;
+sudo apt-get update -qq;
+sudo apt-get install -y -qq ${INSTALL_LIST};
+source ${BASE_DIR}/installers/apps/dotnet.sh;
 
 cd $HOME/Projects
 
@@ -33,6 +30,10 @@ else
     snap install code docker firefox thunderbird insomnia discord slack spotify;
 
     # install polybar and alacritty
+    source ${BASE_DIR}/installers/apps/polybar.sh;
+    source ${BASE_DIR}/installers/apps/alacritty.sh;
 fi
+
+source ${BASE_DIR}/installers/apps/vim.sh;
 
 cd ${HOME}
