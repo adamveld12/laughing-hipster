@@ -25,6 +25,7 @@ SRC_DIR=${BASE_DIR}/src;
 TOOLS_DIR=${BASE_DIR}/tools;
 CONFIG_DIR=${SRC_DIR}/.config;
 EXT_DIR=${SRC_DIR}/.shell_extensions;
+export APP_INSTALLS="${BASE_DIR}/installers/app";
 
 if [ -d ${HOME_DIR} ]; then 
 	echo "installing into ${HOME_DIR}";
@@ -88,11 +89,11 @@ fi
 #------------------------------------------------------------------
 mkdir -p ${HOME_DIR}/.bin;
 
-APP_INSTALLS=${BASE_DIR}/installers/app;
-
+set -x;
 source ${APP_INSTALLS}/golang.sh;
 source ${APP_INSTALLS}/node.sh;
 source ${APP_INSTALLS}/rust.sh;
 source ${APP_INSTALLS}/rvm.sh;
+set +x;
 
 find ${HOME} ! -path "${HOME}/projects" ! -path "${HOME}" | xargs -I {} chown $@ {};

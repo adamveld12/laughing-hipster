@@ -19,14 +19,15 @@
   new_tab = <Primary>t
   new_window = <Primary>n
   next_tab = <Primary>Tab
+  paste = <Primary><Shift>v
   search = <Primary>f
   split_horiz = <Primary>i
   split_vert = <Primary>s
   ungroup_all = <Primary><Shift>g
   ungroup_tab = <Primary><Shift>u
-  zoom_in = <Primary><Alt>equal
-  zoom_normal = <Primary><Alt>0
-  zoom_out = <Primary><Alt>minus
+  zoom_in = <Primary>equal
+  zoom_normal = <Primary><Shift>plus
+  zoom_out = <Primary>minus
 [layouts]
   [[default]]
     [[[child0]]]
@@ -49,11 +50,12 @@
 [plugins]
 [profiles]
   [[default]]
-    background_darkness = 0.82
+    background_color = "#002b36"
+    background_darkness = 0.89
     background_type = transparent
     cursor_color = "#aaaaaa"
-    font = Ubuntu Mono derivative Powerline 16
-    foreground_color = "#ffffff"
+    font = PragmataPro Mono Liga 12
+    foreground_color = "#839496"
     login_shell = True
     palette = "#282828:#cc241d:#98971a:#d79921:#458588:#b16286:#689d6a:#a89984:#928374:#fb4934:#b8bb26:#fabd2f:#83a598:#d3869b:#8ec07c:#ebdbb2"
     scrollback_infinite = True

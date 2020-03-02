@@ -133,7 +133,7 @@ map <leader><Space> :HardTimeToggle<CR>
 map <Space> :noh<CR>
 
 "replace  with regular newlines
-noremap <leader>c :%s///g<CR>
+noremap <leader>k :%s///g<CR>
 
 "list buffers
 map <leader>w :buffers<CR>
@@ -351,23 +351,22 @@ augroup END
 
 " Automatic commands
 if has("autocmd")
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-	" Treat .md files as Markdown
-	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+    " Treat .json files as .js
+    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+    " Treat .md files as Markdown
+    autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 
-  autocmd BufRead,BufNewFile *.html setfiletype html syntax=htmldjango
-  autocmd BufRead,BufNewFile *.template setfiletype html template syntax=htmldjango
-  autocmd BufRead,BufNewFile *.go setfiletype golang syntax=go
-  autocmd BufRead,BufNewFile *.php setfiletype php syntax=go
-  autocmd BufRead,BufNewFile Dockerfile* setfiletype Dockerfile syntax=go
-  " Spell check and line wrap just for git commit messages
-  autocmd Filetype gitcommit setlocal spell textwidth=72
+    autocmd BufRead,BufNewFile *.html setfiletype html syntax=htmldjango
+    autocmd BufRead,BufNewFile *.template setfiletype html template syntax=htmldjango
+    autocmd BufRead,BufNewFile *.go setfiletype golang syntax=go
+    autocmd BufRead,BufNewFile *.php setfiletype php syntax=go
+    autocmd BufRead,BufNewFile Dockerfile* setfiletype Dockerfile syntax=go
+    " Spell check and line wrap just for git commit messages
+    autocmd Filetype gitcommit setlocal spell textwidth=72
 endif
 
 
 au GUIEnter * set vb t_vb=
-
 
 if has('gui_running')
   set go =mt

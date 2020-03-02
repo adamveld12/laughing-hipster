@@ -5,6 +5,7 @@
 
 build: ./tools
 	docker build -t vdhsn/dotfiles:$${VERSION:-latest} \
+		--no-cache \
 		--build-arg version=$${VERSION} \
 		--build-arg commit=$${COMMIT_SHA:-$${CIRCLE_SHA1}} \
 		--build-arg initiator=$${INITIATOR:-$${CIRCLE_USERNAME}} \
