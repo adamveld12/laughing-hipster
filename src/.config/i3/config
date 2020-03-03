@@ -7,7 +7,6 @@
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 12
 
-
 #########################################
 # STARTUP
 #########################################
@@ -19,7 +18,7 @@ font pango:DejaVu Sans Mono 12
 # start polybar
 exec_always --no-startup-id ~/.config/i3/polybar.sh &
 # start picom for window composition
-exec --no-startup-id picom --config ~/.config/compton/compton.conf -b
+exec --no-startup-id picom -C -f --no-fading-openclose --config /dev/null -b
 
 # set wallpaper
 exec_always --no-startup-id nitrogen --head=0 --save --set-scaled ~/Pictures/Wallpapers/retro.jpg &
@@ -46,9 +45,9 @@ exec_always --no-startup-id nitrogen --head=0 --save --set-scaled ~/Pictures/Wal
 # bindsym --release $mod+x exec --no-startup-id import /tmp/latest-screenshot.png
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -60,14 +59,20 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
 
+# lock the screen
+bindsym Ctrl+Shift+l exec i3lock-fancy -f 'Pragmata Pro' -t 'Type Password To Unlock'
+
 # start a terminal
 bindsym Mod1+Return exec terminator
 
+# insomnia
 bindsym Mod1+Shift+i exec insomnia
+
+# start firefox
+bindsym Mod1+Shift+Return exec firefox
 
 # start chrome with correct DPI settings
 # bindsym Mod1+Shift+Return exec google-chrome-stable --force-device-scale-factor=1.65 %U
-bindsym Mod1+Shift+Return exec firefox
 
 #  Sets up 2 external displays side by side, with the laptop display on the far right
 bindsym Mod1+Shift+f exec xrandr --output DVI-I-2-1 --auto --left-of DVI-I-3-2 && sleep 1 && xrandr --output DVI-I-3-2 --auto --left-of DP-0 && sleep 1 && xrandr --output DP-0 --auto --primary --preferred
@@ -78,7 +83,7 @@ bindsym Mod1+Shift+Ctrl+g exec xrandr --output DVI-I-3-2 --off && xrandr --outpu
 bindsym Mod1+Shift+x move workspace to output right
 
 # turn off laptop monitor
-bindsym Mod1+Shift+~ exec xrandr --output DP-0 --off
+# bindsym Mod1+Shift+~ exec xrandr --output DP-0 --off
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that installed.
