@@ -1,0 +1,21 @@
+#!/bin/bash
+
+PRIMARY=$(xrandr | grep primary | awk '{ print $1 }')
+SECONDARY=$(xrandr | grep "DVI.*disconnected" | awk '{ print $1 }')
+BACKGROUND=${BG:~/Pictures/Wallpapers/retro.jpg}
+
+if [ "$1" = "CONNECT" ]; then
+    xrandr --output ${SECONDARY} --auto --above ${PRIMARY} --dpi 165 --filter bilinear;
+    nitrogen --head=1 --save --set-scaled ${BACKGROUND};
+elif [ "$1" = "DISCONNECT" ]; then
+    xrandr --output ${SECONDARY} --off;
+elif [ "$1" = "RECONNECT_PRIMARY" ]; then
+    xrandr --output ${PRIMARY} --off;
+else
+    exit -1;
+fi
+
+sleep 1;
+xrandr --output ${PRIMARY} --auto --primary --preferred --filter bilinear;
+nitrogen --head=0 --save --set-scaled ${BACKGROUND};
+

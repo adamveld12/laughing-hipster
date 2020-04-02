@@ -107,14 +107,11 @@ dpi-x = 100
 
 [bar/4k-bottom]
 ;remove padding around bar
-;override-redirect = true 
+;override-redirect = true
 monitor = ${env:MONITOR:DP-0}
 width = 100%
-; 4k
 height = 50
 
-;offset-x = 1%
-;offset-y = 0% - 10
 radius = 0
 fixed-center = false
 
@@ -124,7 +121,7 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 5 
+border-size = 0
 border-color = #00000000
 
 padding-left = 3
@@ -133,25 +130,64 @@ padding-right = 3
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = "Ubuntu Mono derivative Powerline:style=Regular:pixelsize=16:1"
-font-1 = "Symbola:size=18:antialias=true"
-font-2 = "PragmataPro Liga:style=Regular:pixelsize=12:1"
+font-0 = "Ubuntu Mono derivative Powerline:style=Regular:pixelsize=14:1"
+font-1 = "Symbola:size=16:antialias=true"
+font-2 = "PragmataPro Liga:style=Regular:pixelsize=14:1"
 
-modules-left = i3 xwindow
-modules-center = spotify mpd
-modules-right = volume polypomo filesystem temperature cpu memory wlan eth battery date powermenu
+modules-left = spotify
+modules-center =
+modules-right = volume backlight  filesystem temperature cpu memory keyboard
 
 bottom = true
-tray-position = right
-tray-padding = 4
-tray-transparent = false
-tray-maxsize = 32
-;tray-background = #0063ff
 
 cursor-click = pointer
 cursor-scroll = ns-resize
 dpi-y = 125
 dpi-x = 125
+
+[bar/4k-top]
+monitor = ${env:MONITOR:DP-0}
+width = 100%
+height = 50
+
+radius = 0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 3
+padding-right = 3
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = "Ubuntu Mono derivative Powerline:style=Regular:pixelsize=14:1"
+font-1 = "Symbola:size=16:antialias=true"
+font-2 = "PragmataPro Liga:style=Regular:pixelsize=14:1"
+
+modules-left = powermenu i3 xwindow
+modules-center =
+modules-right = polypomo wlan eth battery date
+
+bottom = false
+tray-position = right
+tray-padding = 4
+tray-transparent = true
+tray-maxsize = 16
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+dpi-y = 130
+dpi-x = 130
+
+
 
 [module/xwindow]
 type = internal/xwindow
@@ -210,7 +246,7 @@ index-sort = true
 wrapping-scroll = false
 
 ; Only show workspaces on the same output as the bar
-;pin-workspaces = false
+pin-workspaces = true
 
 label-mode-padding = 2
 label-mode-foreground = #000
@@ -400,7 +436,7 @@ format-discharging-underline = ${colors.warning}
 format-full-prefix = "|▇|"
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${colors.success}
-label-full = Battery Full
+label-full = " Battery Full"
 
 ramp-capacity-0 = |_|
 ramp-capacity-1 = |▁|
@@ -463,7 +499,7 @@ menu-0-0 = lock
 menu-0-0-exec = i3lock-fancy
 
 menu-0-1 = suspend
-menu-0-1-exec = suspend
+menu-0-1-exec = systemctl suspend
 
 menu-0-2 = reboot
 menu-0-2-exec = menu-open-1

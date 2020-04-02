@@ -1,7 +1,7 @@
 [alias]
     # View abbreviated SHA, description, and history graph of the latest 20 commits
-    lo = log --oneline -n 40 --graph
-    l = log --oneline -n 40 --graph --show-signature
+    lo = log --oneline -n 40 --graph --show-signature
+    l = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches
 
     # View the current working tree status using the short format
     s = status -s
@@ -59,7 +59,7 @@
 
   # Remove branches that have already been merged with master
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-	plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
+	plog = log --graph --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GF %GS %n' --abbrev-commit --date=relative --branches
 
 [diff]
     # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject

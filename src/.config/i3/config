@@ -16,38 +16,46 @@ font pango:DejaVu Sans Mono 12
 #exec_always xrandr --dpi 165
 
 # start polybar
-exec_always --no-startup-id ~/.config/i3/polybar.sh &
+exec_always --no-startup-id ~/.config/i3/polybar.sh
 # start picom for window composition
-exec --no-startup-id picom -C -f --no-fading-openclose --config /dev/null -b
-
+exec_always --no-startup-id ~/.config/i3/picom.sh
 # set wallpaper
-exec_always --no-startup-id nitrogen --head=0 --save --set-scaled ~/Pictures/Wallpapers/retro.jpg &
-
-# startup gnome
-# exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings
-# exec --no-startup-id gnome-power-manager
-# exec --no-startup-id gnome-flashback
+exec_always --no-startup-id nitrogen --head=0 --save --set-scaled ~/Pictures/Wallpapers/retro.jpg
+# start spotify-slack-status
+exec_always --no-startup-id spotify-slack-status -token $SLACK_TOKEN
 
 # start dunst for custom notification popups
 # exec --no-startup-id dunst -config ~/.config/dunst/dunstrc &
-
-# save power
-# exec_always --no-startup-id powertop --auto-tune
-# connect to pritunl
-#exec --no-startup-id pritunl-client enable 65adf618f9dc44b9818b558d1b84bdba && pritunl-client start 65adf618f9dc44b9818b558d1b84bdba
-
 
 #############################
 # BINDINGS
 ##############################
 
 # screen shot (area)
-# bindsym --release $mod+x exec --no-startup-id import /tmp/latest-screenshot.png
+bindsym Mod1+x exec --no-startup-id gnome-screenshot -a -c -f /tmp/latest-screenshot.png
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
+# set default audio sink to laptop speakers
+exec --no-startup-id pactl set-default-sink 'alsa_output.pci-0000_00_1f.3.analog-stereo'
+# set default to jabra
+#pactl set-default-sink 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo'
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 'alsa_output.pci-0000_00_1f.3.analog-stereo' +5% && pactl set-sink-volume 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo' +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 'alsa_output.pci-0000_00_1f.3.analog-stereo' -5% && pactl set-sink-volume 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo' -5% #increase sound volume#decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 'alsa_output.pci-0000_00_1f.3.analog-stereo' toggle && pactl set-sink-mute 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo' toggle # mute sound
+
+# resize window (you can also use the mouse for that)
+mode "Audio Setup" {
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym 1 exec pactl set-default-sink 'alsa_output.pci-0000_00_1f.3.analog-stereo'
+        bindsym 2 exec pactl set-default-sink 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo'
+
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod1+Shift+a mode "Audio Setup"
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -60,34 +68,26 @@ bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
 
 # lock the screen
-bindsym Ctrl+Shift+l exec i3lock-fancy -f 'Pragmata Pro' -t 'Type Password To Unlock'
+bindsym Mod1+Ctrl+Shift+l exec ~/.config/i3/lock.sh SUSPEND
 
 # start a terminal
 bindsym Mod1+Return exec terminator
-
+# start firefox
+bindsym Mod1+Shift+Return exec firefox
+bindsym Ctrl+Shift+Return exec /opt/google/chrome/chrome --type=renderer --disable-webrtc-apm-in-audio-service --lang=en-US  --enable-auto-reload --num-raster-threads=4 --enable-main-frame-before-activation --shared-files
 # insomnia
 bindsym Mod1+Shift+i exec insomnia
 
-# start firefox
-bindsym Mod1+Shift+Return exec firefox
+#  Sets up external display
+bindsym Mod1+Shift+g exec ~/.config/i3/setup_external_displays.sh CONNECT && ~/.config/i3/polybar.sh
+bindsym Mod1+Shift+f exec ~/.config/i3/setup_external_displays.sh DISCONNECT && ~/.config/i3/polybar.sh
+bindsym Mod1+Shift+Ctrl+g exec ~/.config/i3/setup_external_displays.sh RECONNECT_PRIMARY && ~/.config/i3/polybar.sh
 
-# start chrome with correct DPI settings
-# bindsym Mod1+Shift+Return exec google-chrome-stable --force-device-scale-factor=1.65 %U
-
-#  Sets up 2 external displays side by side, with the laptop display on the far right
-bindsym Mod1+Shift+f exec xrandr --output DVI-I-2-1 --auto --left-of DVI-I-3-2 && sleep 1 && xrandr --output DVI-I-3-2 --auto --left-of DP-0 && sleep 1 && xrandr --output DP-0 --auto --primary --preferred
-bindsym Mod1+Shift+g exec xrandr --output DVI-I-2-2 --auto --left-of DVI-I-1-1 && sleep 1 && xrandr --output DVI-I-1-1 --auto --left-of DP-0 && sleep 1 && xrandr --output DP-0 --auto --primary --preferred
-
-# disconnects the 2 external monitors
-bindsym Mod1+Shift+Ctrl+g exec xrandr --output DVI-I-3-2 --off && xrandr --output DVI-I-2-1 --off
 bindsym Mod1+Shift+x move workspace to output right
-
-# turn off laptop monitor
-# bindsym Mod1+Shift+~ exec xrandr --output DP-0 --off
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that installed.
- bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
+bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
 
 # reload the configuration file
 bindsym Mod1+Shift+c reload
@@ -221,3 +221,7 @@ bindsym Mod1+r mode "resize"
         #status_command i3status
 #}
 
+
+# shrink window borders
+for_window [class="^.*"] border pixel 1
+new_window 1pixel

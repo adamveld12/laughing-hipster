@@ -34,7 +34,7 @@ set noswapfile
 set backupcopy=yes
 set autoread
 set selection=exclusive
-set ttimeoutlen=50
+set ttimeoutlen=60
 set termguicolors
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamedplus
@@ -362,7 +362,7 @@ if has("autocmd")
     autocmd BufRead,BufNewFile *.php setfiletype php syntax=go
     autocmd BufRead,BufNewFile Dockerfile* setfiletype Dockerfile syntax=go
     " Spell check and line wrap just for git commit messages
-    autocmd Filetype gitcommit setlocal spell textwidth=72
+    autocmd Filetype gitcommit setlocal spell textwidth=80
 endif
 
 
