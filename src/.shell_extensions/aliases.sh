@@ -6,7 +6,7 @@ alias pd="pushd $1"
 alias tx="tmux -f ~/.config/tmux/.tmux.conf"
 
 # list files
-alias ll='ls -hGla'
+alias ll='ls -hGla --color'
 
 #rake
 alias bake='bundle exec rake'

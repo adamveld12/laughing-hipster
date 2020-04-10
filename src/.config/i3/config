@@ -25,7 +25,7 @@ exec_always --no-startup-id nitrogen --head=0 --save --set-scaled ~/Pictures/Wal
 exec_always --no-startup-id spotify-slack-status -token $SLACK_TOKEN
 
 # start dunst for custom notification popups
-# exec --no-startup-id dunst -config ~/.config/dunst/dunstrc &
+exec --no-startup-id ~/.config/i3/dunst.sh
 
 #############################
 # BINDINGS

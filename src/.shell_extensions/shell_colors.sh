@@ -3,7 +3,6 @@
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-
 RED="\033[0;31m"
 YELLOW="\033[0;33m"
 GREEN="\033[0;32m"
@@ -88,7 +87,12 @@ build_prompt_unix(){
   local USER="$(colorize 15 34 ' \u@\h ')$(colorize 34 124 $RARS)"
   local GIT="$(colorize 252 124 ' $(parse_git_branch_or_tag) ')$(colorize 124 240 '$RARS')"
   local DIR="$(colorize 11 240 ' \w ')$(colorize 240 0 $RARS)"
-  local LEFT="$TIME$USER$GIT$DIR\033[0;0m"
+  local DEPLOYMENT_NOTIF=""
+  if [ ! -z "${NODE_ENV}" ]; then
+      DEPLOYMENT_NOTIF=" (\$NODE_ENV='${NODE_ENV}')"
+  fi
+
+  local LEFT="$TIME$USER$GIT$DIR\033[0;0m$DEPLOYMENT_NOTIF"
   echo "$LEFT"
 }
 
@@ -106,6 +110,7 @@ print_prompt(){
   local COMPENSATE=11
   PS1=$(printf "%*s\r%s\n$EMPTY\$$GRAY" "$(($(tput cols) - ${compensate}))" "$RIGHT" "$LEFT")
 }
+
 
 # looks like the following:
 # [hh:mm] username@host (git branch || svn revision) ~/working/directory

@@ -1,6 +1,6 @@
 #!/bin/bash
 killall -q polybar
-while pgrep -x polybar >/dev/null; do sleep 0.1; done
+while pgrep -x polybar > /dev/null; do sleep 0.1; done
 
 PRIMARY=$(xrandr | grep primary | awk '{ print $1 }')
 MONITOR=${PRIMARY} polybar 1080p-bottom &

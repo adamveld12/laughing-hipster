@@ -77,7 +77,6 @@ case "$TERM" in
 esac
 
 
-
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
 # run these to increase concurrent connections in linux
 # sudo sysctl net.ipv4.ip_local_port_range="18000 61000"
