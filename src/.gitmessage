@@ -1,29 +1,19 @@
+# ^ <type>(optional scope): <description>
+# common <type>s include: feat, bugfix, chore, ci, docs, style, perf, test, build
+#                    fix: a commit of the type fix patches a bug in your codebase (this correlates with PATCH in Semantic Versioning).
+#                    feat: a commit of the type feat introduces a new feature to the codebase (this correlates with MINOR in Semantic Versioning).
+#
+# <description>: Capitalized, short (70 chars or less) summary
 
-# ^ [issue #id] [Add/Fix/Remove/Update/Refactor/Document] [summary] ^
-
-# Why is it necessary? (Bug fix, feature, improvements?)
-# How does the change address the issue?
-# What side effects does this change have?
-
-# Rationale: 
-# Capitalized, short (80 chars or less) summary
-# More detailed explanatory text, if necessary.  Wrap it to about 80
-# characters or so.  In some contexts, the first line is treated as the
-# subject of an email and the rest of the text as the body.  The blank
-# line separating the summary from the body is critical (unless you omit
-# the body entirely); tools like rebase can get confused if you run the
-# two together.
-# 
+# ^ [optional body]
 # Write your commit message in the imperative: "Fix bug" and not "Fixed bug"
 # or "Fixes bug."  This convention matches up with commit messages generated
 # by commands like git merge and git revert.
-# 
-# Further paragraphs come after blank lines.
-# 
-# - Bullet points are okay, too
-# 
-# - Typically a hyphen or asterisk is used for the bullet, followed by a
-#   single space, with blank lines in between, but conventions vary here
-# 
-# - Use a hanging indent
+
+# ^ [optional footer(s)]
+# BREAKING CHANGE: a commit that has a footer BREAKING CHANGE:, or appends a ! after the type/scope, introduces a breaking API change (correlating with MAJOR in Semantic Versioning). 
+# A BREAKING CHANGE can be part of commits of any type.
+# footers other than BREAKING CHANGE: <description> may be provided and follow a convention similar to git trailer format.
+
+# set up the linter @ https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional
 # Read more @ https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html

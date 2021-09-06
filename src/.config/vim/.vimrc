@@ -34,7 +34,7 @@ set noswapfile
 set backupcopy=yes
 set autoread
 set selection=exclusive
-set ttimeoutlen=60
+set ttimeoutlen=70
 set termguicolors
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamedplus

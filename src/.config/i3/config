@@ -7,6 +7,11 @@
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 12
 
+
+#   Mod1 = Alt
+#   Mod4 = Start button
+set $mod Mod4
+
 #########################################
 # STARTUP
 #########################################
@@ -20,19 +25,19 @@ exec_always --no-startup-id ~/.config/i3/polybar.sh
 # start picom for window composition
 exec_always --no-startup-id ~/.config/i3/picom.sh
 # set wallpaper
-exec_always --no-startup-id nitrogen --head=0 --save --set-scaled ~/Pictures/Wallpapers/retro.jpg
+exec_always --no-startup-id nitrogen --head=0 --save --set-scaled ~/Pictures/Wallpapers/logo.svg
 # start spotify-slack-status
-exec_always --no-startup-id spotify-slack-status -token $SLACK_TOKEN
-
+exec_always --no-startup-id spotify-slack-status -token $SLACK_TOKEN -playing-emoji spotify -paused-emoji spotify
 # start dunst for custom notification popups
 exec --no-startup-id ~/.config/i3/dunst.sh
+
 
 #############################
 # BINDINGS
 ##############################
 
 # screen shot (area)
-bindsym Mod1+x exec --no-startup-id gnome-screenshot -a -c -f /tmp/latest-screenshot.png
+bindsym $mod+x exec --no-startup-id gnome-screenshot -a -c -f /tmp/latest-screenshot.png
 
 # Pulse Audio controls
 # set default audio sink to laptop speakers
@@ -55,7 +60,7 @@ mode "Audio Setup" {
         bindsym Escape mode "default"
 }
 
-bindsym Mod1+Shift+a mode "Audio Setup"
+bindsym $mod+Shift+a mode "Audio Setup"
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -68,55 +73,55 @@ bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
 
 # lock the screen
-bindsym Mod1+Ctrl+Shift+l exec ~/.config/i3/lock.sh SUSPEND
+bindsym $mod+Ctrl+Shift+l exec ~/.config/i3/lock.sh SUSPEND
 
 # start a terminal
-bindsym Mod1+Return exec terminator
+bindsym $mod+Return exec terminator
 # start firefox
-bindsym Mod1+Shift+Return exec firefox
-bindsym Ctrl+Shift+Return exec /opt/google/chrome/chrome --type=renderer --disable-webrtc-apm-in-audio-service --lang=en-US  --enable-auto-reload --num-raster-threads=4 --enable-main-frame-before-activation --shared-files
+bindsym $mod+Shift+Return exec firefox
+bindsym Ctrl+Shift+Return exec /opt/google/chrome/chrome --type=renderer --disable-webrtc-apm-in-audio-service --lang=en-US  --enable-auto-
 # insomnia
-bindsym Mod1+Shift+i exec insomnia
+bindsym $mod+Shift+i exec insomnia
 
 #  Sets up external display
-bindsym Mod1+Shift+g exec ~/.config/i3/setup_external_displays.sh CONNECT && ~/.config/i3/polybar.sh
-bindsym Mod1+Shift+f exec ~/.config/i3/setup_external_displays.sh DISCONNECT && ~/.config/i3/polybar.sh
-bindsym Mod1+Shift+Ctrl+g exec ~/.config/i3/setup_external_displays.sh RECONNECT_PRIMARY && ~/.config/i3/polybar.sh
+bindsym $mod+Shift+g exec ~/.config/i3/setup_external_displays.sh CONNECT && ~/.config/i3/polybar.sh
+bindsym $mod+Shift+f exec ~/.config/i3/setup_external_displays.sh DISCONNECT && ~/.config/i3/polybar.sh
+bindsym $mod+Shift+Ctrl+g exec ~/.config/i3/setup_external_displays.sh RECONNECT_PRIMARY && ~/.config/i3/polybar.sh
 
-bindsym Mod1+Shift+x move workspace to output right
+bindsym $mod+Shift+x move workspace to output right
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that installed.
-bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # reload the configuration file
-bindsym Mod1+Shift+c reload
+bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym Mod1+Shift+r restart
+bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # move the currently focused window to the scratchpad
-bindsym Mod1+Shift+minus move scratchpad
+bindsym $mod+Shift+minus move scratchpad
 
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
-bindsym Mod1+minus scratchpad show
+bindsym $mod+minus scratchpad show
 
 # split in horizontal orientation
-bindsym Mod1+i split h
+bindsym $mod+i split h
 
 # split in vertical orientation
-bindsym Mod1+s split t
+bindsym $mod+s split t
 
 # enter fullscreen mode for the focused container
-bindsym Mod1+f fullscreen toggle
+bindsym $mod+f fullscreen toggle
 
-# use Mouse+Mod1 to drag floating windows to their wanted position
-floating_modifier Mod1
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
 
 # kill focused window
-bindsym Mod1+Shift+q kill
+bindsym $mod+Shift+q kill
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
@@ -126,69 +131,69 @@ set $up k
 set $right l
 
 # change focus
-bindsym Mod1+$left focus left
-bindsym Mod1+$down focus down
-bindsym Mod1+$up focus up
-bindsym Mod1+$right focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
 # alternatively, you can use the cursor keys:
-bindsym Mod1+Left focus left
-bindsym Mod1+Down focus down
-bindsym Mod1+Up focus up
-bindsym Mod1+Right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
 
 # move focused window
-bindsym Mod1+Shift+$left move left
-bindsym Mod1+Shift+$down move down
-bindsym Mod1+Shift+$up move up
-bindsym Mod1+Shift+$right move right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
 # alternatively, you can use the cursor keys:
-bindsym Mod1+Shift+Left move left
-bindsym Mod1+Shift+Down move down
-bindsym Mod1+Shift+Up move up
-bindsym Mod1+Shift+Right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym Mod1+e layout stacking
-bindsym Mod1+w layout tabbed
-bindsym Mod1+q layout toggle split
+bindsym $mod+e layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+q layout toggle split
 
 # toggle tiling / floating
-bindsym Mod1+Shift+space floating toggle
+bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym Mod1+space focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym Mod1+a focus parent
+bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym Mod1+d focus child
+#bindsym $mod+d focus child
 
 # switch to workspace
-bindsym Mod1+1 workspace 1
-bindsym Mod1+2 workspace 2
-bindsym Mod1+3 workspace 3
-bindsym Mod1+4 workspace 4
-bindsym Mod1+5 workspace 5
-bindsym Mod1+6 workspace 6
-bindsym Mod1+7 workspace 7
-bindsym Mod1+8 workspace 8
-bindsym Mod1+9 workspace 9
-bindsym Mod1+0 workspace 10
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym Mod1+Shift+1 move container to workspace 1
-bindsym Mod1+Shift+2 move container to workspace 2
-bindsym Mod1+Shift+3 move container to workspace 3
-bindsym Mod1+Shift+4 move container to workspace 4
-bindsym Mod1+Shift+5 move container to workspace 5
-bindsym Mod1+Shift+6 move container to workspace 6
-bindsym Mod1+Shift+7 move container to workspace 7
-bindsym Mod1+Shift+8 move container to workspace 8
-bindsym Mod1+Shift+9 move container to workspace 9
-bindsym Mod1+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -214,14 +219,9 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-bindsym Mod1+r mode "resize"
-
-# finds out, if available)
-#bar {
-        #status_command i3status
-#}
-
+bindsym $mod+r mode "resize"
 
 # shrink window borders
 for_window [class="^.*"] border pixel 1
 new_window 1pixel
+for_window [class="Tandem"] floating enable

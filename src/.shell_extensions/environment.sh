@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Bash behavior
-shopt -s checkwinsize                       # Checks window size to get proper line wrapping
+shopt -s checkwinsize                       # Checks window size to get proper line wrapping 
 shopt -s cdspell                            # Corrects minor spelling errors when cd-ing
 shopt -s checkjobs                          # Stops bash from exiting if there are jobs running. A second attempt at exiting will ignore.
 set -o vi                                   # Set prompt to vi mode
@@ -52,6 +52,7 @@ else
   export GOPATH=~/projects/go
   export DOTNETPATH=~/.dotnet/
 fi
+
 
 
 if [ -d "${HOME}/.config/vim" ] ; then

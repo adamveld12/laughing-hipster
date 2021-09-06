@@ -19,7 +19,7 @@ success = #55aa55
 warning = #ffda17
 
 [bar/1080p-top]
-monitor = ${env:MONITOR:DP-0}
+monitor = ${env:MONITOR:eDP-1}
 width = 100%
 height =25
 
@@ -64,7 +64,7 @@ dpi-x = 100
 [bar/1080p-bottom]
 ;remove padding around bar
 ;override-redirect = true
-monitor = ${env:MONITOR:DP-0}
+monitor = ${env:MONITOR:eDP-1}
 width = 100%
 height = 30
 
@@ -92,7 +92,7 @@ font-2 = "PragmataPro Liga:style=Regular:pixelsize=12:1"
 
 modules-left = spotify
 modules-center =
-modules-right = volume backlight  filesystem temperature cpu memory keyboard
+modules-right = displaymenu audiomenu volume backlight  filesystem temperature cpu memory keyboard
 
 bottom = true
 ; tray-position = right
@@ -121,7 +121,7 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 0
+border-size = 0 
 border-color = #00000000
 
 padding-left = 3
@@ -159,7 +159,7 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 0
+border-size = 0 
 border-color = #00000000
 
 padding-left = 3
@@ -184,10 +184,8 @@ tray-maxsize = 16
 
 cursor-click = pointer
 cursor-scroll = ns-resize
-dpi-y = 130
-dpi-x = 130
-
-
+dpi-y = 100
+dpi-x = 100
 
 [module/xwindow]
 type = internal/xwindow
@@ -243,7 +241,7 @@ label-empty-padding = 1
 type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
-wrapping-scroll = false
+wrapping-scroll = true
 
 ; Only show workspaces on the same output as the bar
 pin-workspaces = true
@@ -254,24 +252,24 @@ label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index%
-label-focused-background = ${module/bspwm.label-focused-background}
-label-focused-underline = ${module/bspwm.label-focused-underline}
-label-focused-padding = ${module/bspwm.label-focused-padding}
+label-focused-background = ${colors.background-alt}
+label-focused-underline = ${colors.success}
+label-focused-padding = 2 
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
-label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+label-unfocused-padding = 1
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %index%
-label-visible-background = ${self.label-focused-background}
-label-visible-underline = ${self.label-focused-underline}
-label-visible-padding = ${self.label-focused-padding}
+label-visible-background = ${colors.foreground-alt}
+label-visible-underline = ${colors.primary}
+label-visible-padding = 2
 
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
-label-urgent-background = ${module/bspwm.label-urgent-background}
-label-urgent-padding = ${module/bspwm.label-urgent-padding}
+label-urgent-background = ${colors.background-alt}
+label-urgent-padding = 2
 
 [module/mpd]
 type = internal/mpd
@@ -337,7 +335,8 @@ label = %percentage%%
 
 [module/wlan]
 type = internal/network
-interface = wlo1
+;interface = wlo1
+interface = wlan0
 interval = 5.0
 
 format-connected-prefix =
@@ -416,6 +415,7 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
+
 [module/battery]
 type = internal/battery
 ; Use the following command to list batteries and adapters:
@@ -479,6 +479,46 @@ ramp-0 = |_|
 ramp-1 = |-|
 ramp-2 = |^|
 ramp-foreground = ${colors.foreground-alt}
+
+[module/displaymenu]
+type = custom/menu
+expand-right = false
+format-spacing = 1
+label-open = DISPLAY
+label-open-foreground = ${colors.secondary}
+label-close = CANCEL
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = Connect
+menu-0-0-exec = ~/.config/i3/setup_external_displays.sh CONNECT
+
+menu-0-1 = Disconnect
+menu-0-1-exec = ~/.config/i3/setup_external_displays.sh DISCONNECT
+
+[module/audiomenu]
+type = custom/menu
+expand-right = false
+format-spacing = 1
+label-open = LINE-OUT
+label-open-foreground = ${colors.secondary}
+label-close = CANCEL
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = Speakers
+menu-0-0-exec = pactl set-default-sink 'alsa_output.pci-0000_00_1f.3.analog-stereo'
+
+menu-0-1 = Jabra
+menu-0-1-exec = pactl set-default-sink 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo'
+
+menu-0-2 = Razer Mic
+menu-0-2-exec = pactl set-default-sink 'alsa_output.usb-Razer_Inc_Razer_Seiren_X_UC2102L01304427-00.analog-stereo'
+
+menu-0-3 = HyperX Headset
+menu-0-3-exec = pactl set-default-sink 'alsa_output.usb-Kingston_HyperX_7.1_Audio_00000000-00.stereo-fallback'
 
 [module/powermenu]
 type = custom/menu

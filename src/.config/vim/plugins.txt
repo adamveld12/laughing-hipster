@@ -45,3 +45,4 @@ git://github.com/nanotech/jellybeans.vim.git
 git://github.com/vim-scripts/ecostation.git
 git://github.com/vim-scripts/rdark.git
 git://github.com/trevorrjohn/vim-obsidian.git
+git://github.com/sotte/presenting.vim.git

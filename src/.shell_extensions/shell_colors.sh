@@ -88,8 +88,8 @@ build_prompt_unix(){
   local GIT="$(colorize 252 124 ' $(parse_git_branch_or_tag) ')$(colorize 124 240 '$RARS')"
   local DIR="$(colorize 11 240 ' \w ')$(colorize 240 0 $RARS)"
   local DEPLOYMENT_NOTIF=""
-  if [ ! -z "${NODE_ENV}" ]; then
-      DEPLOYMENT_NOTIF=" (\$NODE_ENV='${NODE_ENV}')"
+  if [ ! -z "${DEPLOYMENT}" ]; then
+      DEPLOYMENT_NOTIF=" (DEPLOYMENT='${DEPLOYMENT}')"
   fi
 
   local LEFT="$TIME$USER$GIT$DIR\033[0;0m$DEPLOYMENT_NOTIF"
