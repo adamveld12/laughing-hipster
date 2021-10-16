@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# If the following text is found anywhere in the source for HEAD, we will prevent pushing
+dont_push_flag="DONT PUSH ME"
+
+flag_found=`git grep --color "$dont_push_flag" HEAD | grep -v 'pre-push'`
+if [ -n "$flag_found" ]
+then
+    # Display which commit the first occurence of the flag was found and exit failure
+    commit=`git log --pretty=format:'%Cred%h%Creset' -S "$dont_push_flag" | tail -n1`
+    echo "Found $flag_found, first occurence was in $commit, not pushing"
+    exit 1
+fi
+exit 0

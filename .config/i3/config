@@ -1,0 +1,236 @@
+# i3 config file (v4)
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:DejaVu Sans Mono 12
+
+
+#   Mod1 = Alt
+#   Mod4 = Start button
+set $mod Mod4
+
+#########################################
+# STARTUP
+#########################################
+
+# set dpi settings
+# for 4k
+#exec_always xrandr --dpi 165
+
+
+# clipboard
+exec wl-paste -t text --watch clipman store 
+
+# start dunst for custom notification popups
+exec_always --no-startup-id ~/.config/i3/dunst.sh
+
+# gnome-keyring
+exec_always --no-startup-id gnome-keyring-daemon -r
+
+# start waybar
+exec_always --no-startup-id ~/.config/waybar/start.sh
+# set wallpaper
+exec_always --no-startup-id nitrogen --head=0 --save --set-scaled ~/Pictures/Wallpapers/logo.svg
+
+
+#############################
+# BINDINGS
+##############################
+
+# screen shot (area)
+bindsym $mod+x exec --no-startup-id gnome-screenshot -a -c -f /tmp/latest-screenshot.png
+
+# Pulse Audio controls
+# set default audio sink to laptop speakers
+#exec --no-startup-id pactl set-default-sink 'alsa_output.pci-0000_00_1f.3.analog-stereo'
+# set default to jabra
+#pactl set-default-sink 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo'
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 'alsa_output.pci-0000_00_1f.3.analog-stereo' +5% && pactl set-sink-volume 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo' +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 'alsa_output.pci-0000_00_1f.3.analog-stereo' -5% && pactl set-sink-volume 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo' -5% #increase sound volume#decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 'alsa_output.pci-0000_00_1f.3.analog-stereo' toggle && pactl set-sink-mute 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo' toggle # mute sound
+
+# resize window (you can also use the mouse for that)
+mode "Audio Setup" {
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym 1 exec pactl set-default-sink 'alsa_output.pci-0000_00_1f.3.analog-stereo'
+        bindsym 2 exec pactl set-default-sink 'alsa_output.usb-0b0e_Jabra_SPEAK_510_USB_501AA56C0DBB020A00-00.analog-stereo'
+
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+a mode "Audio Setup"
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Backlight
+#
+bindsym XF86MonBrightnessUp exec brightnessctl set +5% # increase screen brightness
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%- # decrease screen brightness
+
+# lock the screen
+bindsym $mod+Ctrl+Shift+l exec ~/.config/i3/lock.sh SUSPEND
+
+# start a terminal
+bindsym $mod+Return exec terminator
+
+# start firefox
+bindsym $mod+Shift+Return exec firefox
+#bindsym Ctrl+Shift+Return exec /opt/google/chrome/chrome --type=renderer --disable-webrtc-apm-in-audio-service --lang=en-US  --enable-auto-
+# insomnia
+bindsym $mod+Shift+i exec insomnia
+
+#  Sets up external display
+bindsym $mod+Shift+g exec ~/.config/waybar/start.sh
+#bindsym $mod+Shift+g exec ~/.config/i3/setup_external_displays.sh CONNECT && ~/.config/i3/polybar.sh
+#bindsym $mod+Shift+f exec ~/.config/i3/setup_external_displays.sh DISCONNECT && ~/.config/i3/polybar.sh
+#bindsym $mod+Shift+Ctrl+g exec ~/.config/i3/setup_external_displays.sh RECONNECT_PRIMARY && ~/.config/i3/polybar.sh
+
+bindsym $mod+Shift+x swaymsg move workspace to output right
+
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that installed.
+bindsym $mod+d exec --no-startup-id rofi -show drun  -i -location 2 -yoffset 40
+bindsym $mod+shift+d exec --no-startup-id rofi -show run  -i -location 2 -yoffset 40
+
+
+# reload the configuration file
+bindsym $mod+Shift+c exec swaymsg reload
+# restart inplace (preserves your layout/session, can be used to upgrade)
+bindsym $mod+Shift+r exec swaymsg restart
+# exit (logs you out of your session)
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'Do you really want to exit? This will end your session.' -b 'Yes, exit' 'swaymsg exit'"
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# split in horizontal orientation
+bindsym $mod+i split h
+
+# split in vertical orientation
+bindsym $mod+s split t
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $left h
+set $down j
+set $up k
+set $right l
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+e layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+q layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 5 px or 5 ppt
+        bindsym $down       resize grow height 5 px or 5 ppt
+        bindsym $up         resize shrink height 5 px or 5 ppt
+        bindsym $right      resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 5 px or 5 ppt
+        bindsym Down        resize grow height 5 px or 5 ppt
+        bindsym Up          resize shrink height 5 px or 5 ppt
+        bindsym Right       resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# shrink window borders
+for_window [class="^.*"] border pixel 1
+#new_window 1pixel
+for_window [class="Tandem"] floating enable

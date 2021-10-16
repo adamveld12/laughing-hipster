@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ -f "$PWD/makefile" ] && [ ! -z "$(cat $PWD/makefile | grep '^lint:')" ]; then
+    echo "lint rule found in $PWD/makefile..."
+    make lint
+elif [ -f "$PWD/package.json" ] && [ ! -z "$(cat $PWD/package.json | grep '\"lint\"')" ]; then
+    echo "running npm run lint..."
+    npm run lint
+fi
+
+if [ -f "$PWD/makefile" ] && [ ! -z "$(cat $PWD/makefile | grep '^test:')" ]; then
+    echo "test rule found in $PWD/makefile..."
+    make test
+elif [ -f "$PWD/package.json" ] && [ ! -z "$(cat $PWD/package.json | grep '\"test\"')" ]; then
+    echo "running npm run test..."
+    npm run test
+fi
