@@ -150,4 +150,13 @@ else
   export PROMPT_COMMAND='PS1="$(history -a; history -c; history -r; build_prompt_unix)\n\$LA "'
 fi
 
+if ! [[ -f "${HOME}/.bash_logout" ]]; then
+files_debug_log "setting up .bash_logout for privacy"
+cat <<- EOF > ${HOME}/.bash_logout
+  # when leaving the console clear the screen to increase privacy
+  if [ "$SHLVL" = 1 ]; then
+      [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+  fi
+EOF
+fi
 

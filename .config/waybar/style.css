@@ -1,0 +1,121 @@
+/*
+ * https://coolors.co/264653-2a9d8f-e9c46a-f4a261-e76f51
+ * $charcoal: rgba(38, 70, 83, 1);
+ * $persian-green: rgba(42, 157, 143, 1);
+ * $orange-yellow-crayola: rgba(233, 196, 106, 1);
+ * $sandy-brown: rgba(244, 162, 97, 1);
+ * $burnt-sienna: rgba(231, 111, 81, 1);
+ */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "Pragmata Pro", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(43, 48, 59, 0.5);
+    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+    color: white;
+}
+
+tooltip {
+  background: rgba(43, 48, 59, 0.5);
+  border: 1px solid rgba(100, 114, 125, 0.5);
+}
+
+tooltip label {
+  color: white;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+    color: white;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.focused {
+    background: #64727D;
+    border-bottom: 3px solid white;
+}
+
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: black;
+    }
+}
+
+#mode, 
+#clock, 
+#battery, 
+#tray, 
+#network, 
+#memory, 
+#backlight,
+#idle-inhibitor,
+#custom-powerbar {
+    padding: 0 10px;
+    margin: 0 5px;
+    border-bottom: 1px solid rgba(38, 70, 83, 1);
+}
+
+#mode {
+    background: #64727D;
+    border-bottom: 3px solid white;
+}
+
+#clock {
+    background-color: #64727D;
+}
+
+#battery {
+    background-color: #ffffff;
+    color: black;
+}
+
+#battery.charging {
+    color: white;
+    background-color: #26A65B;
+}
+
+
+#custom-powerbar {
+    border-bottom: 0px solid rgba(0, 255, 0, 1);
+}
+
+#custom-powerbar.warning:not(.charging) {
+    background: #f53c3c;
+    color: white;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#custom-powerbar.charging,
+#custom-powerbar.fully-charged {
+    border-bottom: 2px solid rgb(0, 255, 0);
+}
+
+#custom-powerbar.discharging {
+    border-bottom: 2px solid rgba(233, 196, 106, 1);
+}
+
+#network.wifi {
+    border-bottom: 2px solid rgba(42, 157, 143, 1);
+}
+
+#network.disconnected {
+    color: rgba(231, 111, 81, 1);
+    border-bottom: 2px solid rgba(231, 111, 81, 1);
+}
+
+#window {
+	padding: 0 10px;
+}

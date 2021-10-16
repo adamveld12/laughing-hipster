@@ -1,0 +1,74 @@
+{
+        "layer": "top",
+        "height": 20,
+        "modules-left": [
+                "sway/workspaces",
+                "sway/mode",
+                "sway/window"
+        ],
+        "modules-center": [],
+        "modules-right": [
+                "idle_inhibitor",
+                "backlight",
+                "memory",
+                "network",
+                "custom/powerbar",
+                "clock",
+                "tray"
+        ],
+        "sway/window": {
+                "max-length": 100,
+                "rewrite": {
+                        "(.*) - Mozilla Firefox$": "🌎 $1",
+                        "(.*) - vim": "  $1",
+                        "(.*) - zsh": " [$1]",
+                        "(.*) - /bin/bash": " [$1]"
+                }
+        },
+        "memory": {
+                "format": "RAM: {}%"
+        },
+        "network": {
+                "format-wifi": " ({signalStrength}%) {essid}",
+                "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+                "format-linked": "{ifname} (No IP) ",
+                "format-disconnected": "Disconnected ⚠",
+                "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        },
+        "custom/powerbar": {
+                "return-type": "json",
+                "interval": 3,
+                "exec": "/bin/powerbar -full 'FULL - {usage}W' -charging '{state} {capacity}% - {usage}W - {H}h {M}m' -waybar 2> /dev/null"
+        },
+        "battery": {
+                "format": "{icon} {capacity}%",
+                "format-icons": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "clock": {
+                "format": "{:%a, %d. %b  %H:%M}"
+        },
+        "idle_inhibitor": {
+                "format": "{icon}",
+                "format-icons": {
+                        "activated": "No Sleep ",
+                        "deactivated": ""
+                }
+        },
+        "backlight": {
+                "device": "intel_backlight",
+                "format": "{icon} 100%",
+                "format-icons": [
+                        "",
+                        ""
+                ]
+        },
+        "tray": {
+                "spacing": 10
+        }
+}
