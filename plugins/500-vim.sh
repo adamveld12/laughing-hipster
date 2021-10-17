@@ -1,9 +1,26 @@
 #!/bin/sh
 
-if [[ -d "${HOME}/.config/vim" ]]; then
-	export VIM=${HOME}/.config/vim;
-	export VIMRUNTIME=${VIM}/runtime;
-    # export PATH=${VIM}:${PATH};
+export VIM="${HOME}/.config/vim";
+export VIMRUNTIME="${VIM}/runtime";
+export VIM_BUNDLE="${VIM}/runtime/bundle"
+
+if [[ -d ${VIM} ]]; then
+
+	install_vim_plugins() {
+		[[ -d ${VIM_BUNDLE} ]] && rm -rf ${VIM_BUNDLE};
+		mkdir -p ${VIM_BUNDLE};
+
+		pushd ${VIM_BUNDLE}
+		local PLUGINS=$(cat ${VIM}/plugins.txt);
+		for plugin in ${PLUGINS}; do
+			if [[ "${plugin:0:3}" = "git" ]]; then
+				echo "Installing $plugin...";
+				git clone -q $plugin > /dev/null &
+			fi
+		done
+		time wait;
+		popd;
+	}
 
 	files_linkdir "/usr/share/vim/vim82/" "${VIMRUNTIME}/";
 
@@ -23,9 +40,7 @@ if [[ -d "${HOME}/.config/vim" ]]; then
 
 	if ! [[ -d "${VIMRUNTIME}/bundle" ]]; then
 		files_debug_log "installing vim plugins...";
-		pushd ${VIM};
-		[[ -f "$(which rake)" ]] && rake;
-		popd;
+		install_vim_plugins
 	fi
 
 fi

@@ -16,6 +16,7 @@ COPY --chown=1000:1000 . /home/files/.files
 USER 1000
 RUN rm -rf .bash_rc .bash_logout .zshrc \
 	&& source /home/files/.files/sourceme.sh \
-	&& echo "source /home/files/.files/sourceme.sh" > /home/files/.bash_profile
+	&& echo "source /home/files/.files/sourceme.sh" > /home/files/.bash_profile \
+	&& rm -rf .profile .zlogin .zshrc .bashrc mkshrc
 
 CMD ["bash", "--login"]
