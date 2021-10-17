@@ -8,7 +8,7 @@ execute pathogen#helptags()
 set nocompatible
 
 "color schemes
-colorscheme torte
+"colorscheme torte
 "colorscheme jellybeans
 "colorscheme molokai
 "colorscheme wombat256i
@@ -154,7 +154,7 @@ map <leader>s <Plug>(easymotion-s2)
 nmap <leader>n :NERDTreeToggle %:p:h<CR>
 nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
 
-let g:NERDTreeBookmarksFile = ~/.config/vim/.NERDTreeBookmarks
+" let g:NERDTreeBookmarksFile = ~/.config/vim/.NERDTreeBookmarks
 
 " strips whitespace
 noremap <leader>ws :call StripWhitespace()<CR>

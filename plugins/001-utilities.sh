@@ -7,7 +7,6 @@ files_linkdir() {
 	local FORCE=$3;
 
 	if [[ -d "${SOURCE}" ]]; then
-		files_debug_log "$SOURCE EXISTS, force=${FORCE} should run? $(! [[ -z "${FORCE}" ]] && echo "yes")"
 
 		if ! [[ -z "${FORCE}" ]] || ! [[ -d "${DEST}" ]]; then
 			files_debug_log "LINKING $SOURCE -> $DEST"

@@ -1,6 +1,8 @@
 FROM archlinux:latest
 
+ARG INSTALL_TOOLS true
 ENV FILES_DEBUG true
+ENV FILES_INSTALL_TOOLS ${INSTALL_TOOLS:-true}
 
 RUN pacman -Sy --noconfirm openssh sudo vim git which gnupg make gcc binutils bison \
 	&& echo '%sudo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
