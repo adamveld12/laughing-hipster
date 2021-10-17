@@ -11,6 +11,6 @@ fi
 
 echo "rvm_silence_path_mismatch_check_flag=1" > ~/.rvmrc;
 [[ -s ${RVM_HOME}/scripts/rvm ]] && source ${RVM_HOME}/scripts/rvm;
-[[ -s ${RVM_HOME}/scripts/completion ]] && source ${RVM_HOME}/scripts/completion;
-# ! [[ -z "$(which rvm)" ]] && rvm use ruby-3.0.0 > /dev/null;
+# [[ -s ${RVM_HOME}/scripts/completion ]] && source ${RVM_HOME}/scripts/completion;
+[[ -s ${RVM_HOME}/scripts/rvm ]] && rvm use ruby-3.0.0 > /dev/null;
 

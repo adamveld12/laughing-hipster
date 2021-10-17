@@ -11,6 +11,7 @@ if [[ -d "${HOME}/.config/vim" ]]; then
 
 	if ! [[ -f "${VIMRUNTIME}/autoload/pathogen.vim" ]]; then
 		! [[ -d "/tmp/vim-pathogen" ]] && git clone git://github.com/tpope/vim-pathogen.git /tmp/vim-pathogen;
+		mkdir -p ${VIMRUNTIME}/autoload/;
 		cp -r /tmp/vim-pathogen/autoload/* ${VIMRUNTIME}/autoload;
 	fi
 
