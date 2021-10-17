@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export FILES_INSTALL_TOOLS=${FILES_INSTALL_TOOLS:-false};
+
 function files_debug_log() {
 	if ! [[ -z "${FILES_DEBUG}" ]]; then
 		echo -e "# [INFO] $@";
@@ -37,5 +39,6 @@ function reload_env() {
 		PATH=${HOME}/.bin:${PATH};
 	fi
 }
+
 
 reload_env
