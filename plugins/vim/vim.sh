@@ -7,14 +7,15 @@ if [[ -d "${FILES_USER_CONFIG}/vim" ]]; then
 	export VIM_SOURCE="${VIM}/.source";
 
 	vim_install_plugins() {
-		local PATHOGEN_TMP=="${VIM_SOURCE}/vim-pathogen";
+		local PATHOGEN_TMP="${VIM_SOURCE}/vim-pathogen";
 		if ! [[ -f "${VIMRUNTIME}/autoload/pathogen.vim" ]]; then
-			files_debug_log "installing pathogen.vim";
-			if ! [[ -d ${PATHOGEN_TMP} ]]; then
+			files_debug_log "[vim_install_plugins] installing pathogen.vim";
+			if ! [[ -d "${PATHOGEN_TMP}" ]]; then
 				git clone git://github.com/tpope/vim-pathogen.git ${PATHOGEN_TMP};
-				mkdir -p ${PATHOGEN_TMP}/autoload/;
-				cp -r ${PATHOGEN_TMP}/autoload/* ${VIMRUNTIME}/autoload/;
 			fi
+
+			mkdir -p ${VIMRUNTIME}/autoload/;
+			cp -r ${PATHOGEN_TMP}/autoload/* ${VIMRUNTIME}/autoload/;
 		fi
 
 
@@ -37,8 +38,8 @@ if [[ -d "${FILES_USER_CONFIG}/vim" ]]; then
 	vim_setup_runtime() {
 		[[ -d ${VIMRUNTIME} ]] && return 0;
 		files_debug_log "installing vim runtime files...";
-		! [[ -d "${VIM_SOURCE}" ]] && git clone https://github.com/vim/vim.git --branch "${VIM_VERSION:-v8.2.3551}" ${VIM_SOURCE};
-		files_linkdir "${VIM_SOURCE}/runtime/" "${VIMRUNTIME}/";
+		! [[ -d "${VIM_SOURCE}" ]] && git clone https://github.com/vim/vim.git --branch "${VIM_VERSION:-v8.2.3551}" "${VIM_SOURCE}/vim";
+		files_linkdir "${VIM_SOURCE}/vim/runtime/" "${VIMRUNTIME}/";
 	}
 
 	vim_setup_config() {
@@ -49,6 +50,9 @@ if [[ -d "${FILES_USER_CONFIG}/vim" ]]; then
 
 	vim_setup() {
 		! [[ -f ${HOME}/.vimrc ]] && ln -sf ${VIM}/.vimrc ${HOME}/.vimrc;
+        mkdir -p ${VIM}/backups;
+        mkdir -p ${VIM}/swaps;
+        mkdir -p ${VIM}/undo;
 
 		vim_setup_config;
 		vim_setup_runtime;
