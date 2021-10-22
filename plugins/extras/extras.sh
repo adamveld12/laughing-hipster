@@ -6,8 +6,8 @@ fi
 
 
 if ! [[ -d "${FILES_EXTRAS_DIR}" ]]; then
-	mkdir -p "${FILES_EXTRAS_DIR}";
-	files_linkdir "${FILES_PLUGIN_ROOT}/default.d/" "${FILES_EXTRAS_DIR}/";
+	files_debug_log "[extras] installing default files"
+	files_linkdir "${FILES_PLUGIN_ROOT}/defaults.d/" "${FILES_EXTRAS_DIR}/";
 fi
 
 for file in "${FILES_EXTRAS_DIR}"/*; do

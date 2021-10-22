@@ -25,9 +25,17 @@ files_linkdir() {
     #ls -lA "${SOURCE}" | grep "^-" | awk '{print $9}' | xargs -I {} ln -vfs "${SOURCE}/{}" "${DEST}/{}"
 }
 
+files_plugins_list() {
+	for plugin in ${FILES_PLUGINS[@]}; do
+		export FILES_PLUGIN_ROOT="${FILES_ROOT}/plugins/${plugin}";
+		echo "\"${plugin}\" @ ${FILES_PLUGIN_ROOT}";
+		unset FILES_PLUGIN_ROOT;
+	done
+}
+
 files_install() {
 	local target=${1};
-	local FILES_SOURCEME="[[ -s \"\${HOME}/.files/sourceme.sh\" ]] && source \${HOME}/.files/sourceme.sh";
+	local FILES_SOURCEME=$(cat ${FILES_ROOT}/install_script.sh);
 
 	if [[ -f "${target}" ]]; then
 		if [[ -z "$(cat ${target} | grep 'sourceme.sh')" ]]; then
@@ -48,14 +56,12 @@ load_env() {
 	fi
 
 	files_debug_log "[load_env] \$FILES_ROOT = ${FILES_ROOT}";
-
 	export FILES_USER_CONFIG="${HOME}/.config";
 
 	if [[ -z "${FILES_PLUGINS}" ]]; then
-		export FILES_PLUGINS=("brew" "ssh" "vim" "extras" "git-extras" "asdf" "helm" "starship");
+		export FILES_PLUGINS=("brew" "ssh" "vim" "git-extras" "asdf" "helm" "starship" "extras");
 	fi
 	files_debug_log "[load_env] using plugins FILES_PLUGINS=${FILES_PLUGINS}";
-
 
 	files_debug_log "[load_env] \$HOME='$HOME'";
 	# load plugns

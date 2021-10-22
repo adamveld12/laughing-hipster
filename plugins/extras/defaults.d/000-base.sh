@@ -39,9 +39,8 @@ export GIT_EDITOR=vim;
 export EDITOR=$GIT_EDITOR;
 export VISUAL=$EDITOR;
 
-export DEFAULT_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
-
-export PATH=${DEFAULT_PATH}:${HOME}/.bin;
+# export DEFAULT_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
+# export PATH=${DEFAULT_PATH}:${HOME}/.bin;
 
 if [[ -d "${HOME}/.dotnet" ]]; then
 	export DOTNET_CLI_TELEMETRY_OPTOUT=1;
@@ -51,6 +50,11 @@ fi
 
 if [[ -d "${HOME}/.bin" ]]; then
 	PATH=${HOME}/.bin:${PATH};
+fi
+
+if [[ -n "$DESKTOP_SESSION" ]];then
+    eval $(gnome-keyring-daemon --start);
+    export SSH_AUTH_SOCK;
 fi
 
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
