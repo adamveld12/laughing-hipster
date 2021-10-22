@@ -40,7 +40,7 @@ files_install() {
 	if [[ -f "${target}" ]]; then
 		if [[ -z "$(cat ${target} | grep 'sourceme.sh')" ]]; then
 			files_debug_log "[files_install] installing myself to $target";
-			echo ${FILES_SOURCEME} >> ${target};
+			echo "${FILES_SOURCEME}" >> ${target};
 		fi
 	fi
 }
