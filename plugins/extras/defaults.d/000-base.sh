@@ -33,7 +33,6 @@ bind '"\e\C-l"':clear-screen;      # <Escape>-<Ctrl>-l
 export LESS='-iMR';      # Case insensite search, verbose prompting and raw output
 export PAGER=less;       # Used to display text / man files
 
-# export POWERLINE_CONFIG_COMMAND=~/tools/powerline/powerline/scripts/powerline-config
 export GPG_TTY=$(tty);
 
 export GIT_EDITOR=vim;
@@ -50,6 +49,9 @@ if [[ -d "${HOME}/.dotnet" ]]; then
 	export PATH=${DOTNETPATH}:${PATH};
 fi
 
+if [[ -d "${HOME}/.bin" ]]; then
+	PATH=${HOME}/.bin:${PATH};
+fi
 
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
 # run these to increase concurrent connections in linux

@@ -1,6 +1,6 @@
 [alias]
     # View abbreviated SHA, description, and history graph
-	l = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 45
+	ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 45
 
     # View the current working tree status using the short format
     s = status -s
@@ -15,8 +15,7 @@
     # Pull in remote changes for the current repository and all its submodules
     p = !"git pull; git submodule foreach git pull origin master"
 
-    # Clone a repository including all submodules
-    c = clone --recursive
+    c = commit -pm
 
     cpv = commit -pmv
 
@@ -76,7 +75,7 @@
     trustExitCode = false
 
 [advice]
-    statusHints = false
+    statusHints = true
 
 [apply]
     # Detect whitespace errors when applying a patch
