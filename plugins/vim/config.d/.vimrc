@@ -9,7 +9,7 @@ set nocompatible
 
 "color schemes
 "colorscheme torte
-"colorscheme jellybeans
+colorscheme jellybeans
 "colorscheme molokai
 "colorscheme wombat256i
 "colorscheme dragon-energy

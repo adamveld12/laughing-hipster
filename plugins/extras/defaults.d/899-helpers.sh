@@ -96,7 +96,7 @@ function targz() {
 # Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
 function json() {
 	if [ -t 0 ]; then # argument
-		python -mjson.tool <<< "$*" | pygmentize -l javascript;
+		python -mjson.tool < "$*" | pygmentize -l javascript;
 	else # pipe
 		python -mjson.tool | pygmentize -l javascript;
 	fi;
@@ -120,7 +120,7 @@ function gitio() {
 }
 
 # list files
-alias ll='ls -hGla --color'
+alias ll='ls -hGla'
 
 #git
 alias gs='git status'
