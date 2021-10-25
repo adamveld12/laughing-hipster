@@ -1,11 +1,7 @@
 #!/bin/env bash
 
-if [[ -f "$(which brew 2>&1)" ]]; then
-    brew install kubectl;
-fi
-
-if [[ -f "$(which kubectl)" ]] && [[ -d "$(brew --prefix bash-completion)/etc/bash_completion.d" ]]; then
-    kubectl completion bash > "$(brew --prefix bash-completion)/etc/bash_completion.d/kubectl";
+if [[ -f "$(which kubectl)" ]]; then
+    [[ -f "$(brew --prefix bash-completion)/etc/bash_completion.d/kubectl" ]] || kubectl completion bash > $(brew --prefix bash-completion)/etc/bash_completion.d/kubectl;
 fi
 
 # This command is used a LOT both below and in daily life
@@ -101,6 +97,7 @@ kres(){
 
 # Rollout management.
 alias kgrs='kubectl get rs'
+alias kdrs='kubectl describe rs'
 alias krh='kubectl rollout history'
 alias kru='kubectl rollout undo'
 
