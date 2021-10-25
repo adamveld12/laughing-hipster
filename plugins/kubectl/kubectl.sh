@@ -1,15 +1,11 @@
 #!/bin/env bash
 
-if [[ -f "$(which kubectl)" ]]; then
-    __KUBECTL_COMPLETION_FILE="${ZSH_CACHE_DIR}/kubectl_completion"
+if [[ -f "$(which brew 2>&1)" ]]; then
+    brew install kubectl;
+fi
 
-    if [[ ! -f $__KUBECTL_COMPLETION_FILE || ! -s $__KUBECTL_COMPLETION_FILE ]]; then
-        kubectl completion zsh >! $__KUBECTL_COMPLETION_FILE
-    fi
-
-    [[ -f $__KUBECTL_COMPLETION_FILE ]] && source $__KUBECTL_COMPLETION_FILE
-
-    unset __KUBECTL_COMPLETION_FILE
+if [[ -f "$(which kubectl)" ]] && [[ -d "$(brew --prefix bash-completion)/etc/bash_completion.d" ]]; then
+    kubectl completion bash > "$(brew --prefix bash-completion)/etc/bash_completion.d/kubectl";
 fi
 
 # This command is used a LOT both below and in daily life
@@ -176,7 +172,8 @@ if (( ${+_comps[kubectl]} )); then
   kjx() { kubectl "$@" -o json | fx; }
   ky() { kubectl "$@" -o yaml | yh; }
 
-  compdef kj=kubectl
-  compdef kjx=kubectl
-  compdef ky=kubectl
+  # this stuff fails on OSX
+  # compdef kj=kubectl
+  # compdef kjx=kubectl
+  # compdef ky=kubectl
 fi

@@ -11,4 +11,6 @@ fi
 
 [[ -f "${LINUX_BREW_PATH}/bin/brew" ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)";
 
+[[ -f "$(brew --prefix bash-completion)/etc/bash_completion" ]] || brew install bash-completion
 
+source  "$(brew --prefix bash-completion)/etc/bash_completion";
