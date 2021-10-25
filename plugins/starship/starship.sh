@@ -1,10 +1,10 @@
 #!/bin/env bash
 
-if ! [[ -f "$(which starship)" ]] && [[ -f "$(which brew)" ]]; then
+if ! [[ -f "$(which starship 2>&1)" ]] && [[ -f "$(which brew 2>&1)" ]]; then
 	brew install starship;
 fi
 
-if [[ -f "$(which starship)" ]]; then
+if [[ -f "$(which starship 2>&1)" ]]; then
 	export STARSHIP_CONFIG_DIR="${FILES_USER_CONFIG}/starship";
 	export STARSHIP_CACHE="${STARSHIP_CONFIG_DIR}/cache";
 

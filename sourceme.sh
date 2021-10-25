@@ -66,12 +66,14 @@ load_env() {
 	files_debug_log "[load_env] \$HOME='$HOME'";
 	# load plugns
 	for plugin in ${FILES_PLUGINS[@]}; do
+       set +b;
 		export FILES_PLUGIN_ROOT="${FILES_ROOT}/plugins/${plugin}";
 		if [[ -f "${FILES_PLUGIN_ROOT}/${plugin}.sh" ]]; then
 			files_debug_log "[PLUGIN] LOADING ${plugin} @ ${FILES_PLUGIN_ROOT}";
 			source "${FILES_PLUGIN_ROOT}/${plugin}.sh";
 		fi
 		unset FILES_PLUGIN_ROOT;
+        set -b;
 	done
 
 	files_debug_log "[load_env] setting up ${FILES_USER_CONFIG} directory";

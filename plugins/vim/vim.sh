@@ -8,7 +8,9 @@ if [[ -d "${FILES_USER_CONFIG}/vim" ]]; then
 
 	vim_install_plugins() {
 		local PATHOGEN_TMP="${VIM_SOURCE}/vim-pathogen";
+
 		if ! [[ -f "${VIMRUNTIME}/autoload/pathogen.vim" ]]; then
+
 			files_debug_log "[vim_install_plugins] installing pathogen.vim";
 			if ! [[ -d "${PATHOGEN_TMP}" ]]; then
 				git clone git://github.com/tpope/vim-pathogen.git ${PATHOGEN_TMP};
@@ -19,20 +21,23 @@ if [[ -d "${FILES_USER_CONFIG}/vim" ]]; then
 		fi
 
 
-		[[ -d ${VIM_BUNDLE} ]] && return 0;
-		files_debug_log "installing vim plugins...";
+       if ! [[ -d ${VIM_BUNDLE} ]]; then
+            files_debug_log "[vim_install_plugins] installing vim plugins...";
 
-		mkdir -p ${VIM_BUNDLE};
-		pushd ${VIM_BUNDLE}
-		local PLUGINS=$(cat ${VIM}/plugins.txt);
-		for plugin in ${PLUGINS}; do
-			if [[ "${plugin:0:3}" = "git" ]]; then
-				echo "Installing $plugin...";
-				git clone -q $plugin > /dev/null &
-			fi
-		done
-		time wait;
-		popd;
+            mkdir -p ${VIM_BUNDLE};
+
+            pushd ${VIM_BUNDLE};
+            local PLUGINS=$(cat ${VIM}/plugins.txt);
+            for plugin in ${PLUGINS}; do
+                if [[ "${plugin:0:3}" = "git" ]]; then
+                    echo "Installing $plugin...";
+                    git clone -q $plugin > /dev/null &
+                fi
+            done
+
+            time wait;
+            popd;
+        fi
 	}
 
 	vim_setup_runtime() {
