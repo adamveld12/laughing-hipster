@@ -162,15 +162,3 @@ alias kgcj='kubectl get cronjob'
 alias kecj='kubectl edit cronjob'
 alias kdcj='kubectl describe cronjob'
 alias kdelcj='kubectl delete cronjob'
-
-# Only run if the user actually has kubectl installed
-if (( ${+_comps[kubectl]} )); then
-  kj() { kubectl "$@" -o json | jq; }
-  kjx() { kubectl "$@" -o json | fx; }
-  ky() { kubectl "$@" -o yaml | yh; }
-
-  # this stuff fails on OSX
-  # compdef kj=kubectl
-  # compdef kjx=kubectl
-  # compdef ky=kubectl
-fi
