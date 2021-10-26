@@ -16,7 +16,8 @@ git://github.com/ervandew/supertab.git
 git://github.com/tpope/vim-repeat.git
 git://github.com/tpope/vim-surround.git
 git://github.com/kien/ctrlp.vim.git
-git://github.com/vim-scripts/tComment
+git://github.com/vim-scripts/tComment.git
+git://github.com/wellle/targets.vim.git
 # syntax
 git://github.com/cakebaker/scss-syntax.vim.git
 git://github.com/pangloss/vim-javascript.git

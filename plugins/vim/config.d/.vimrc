@@ -1,32 +1,37 @@
 " change runtime path
 set runtimepath=~/.config/vim/runtime/
 
-execute pathogen#infect()
-execute pathogen#helptags()
+call pathogen#infect()
+Helptags
 
+"color schemes
+"colorscheme ecostation
+"colorscheme jellybeans
+"colorscheme torte
+"colorscheme dragon-energy
+"colorscheme wombat256i
+"colorscheme vim-colors-solarized
+"colorscheme rdark
+"colorscheme vilight
+"colorscheme vim-tomorrow-theme
+colorscheme monokai
+"colorscheme inkpot
+
+
+" Enable file type detection
+filetype plugin indent on
+"
 "we don't want vi compatibility AKA Make Vim more useful
 set nocompatible
 
-"color schemes
-"colorscheme torte
-colorscheme jellybeans
-"colorscheme molokai
-"colorscheme wombat256i
-"colorscheme dragon-energy
-"colorscheme patagonia-vim
-"colorscheme vim-colors-solarized
-"colorscheme vim-obsidian
-"colorscheme rdark
-"colorscheme ecostation
-"colorscheme vilight
-"colorscheme vim-tomorrow-theme
-"colorscheme monokai
-"colorscheme inkpot
-"colorscheme CmptrClr
+" Use the OS clipboard by default (on versions compiled with `+clipboard`)
+set clipboard=unnamed
+
 
 set omnifunc=syntaxcomplete#Complete
 set completeopt-=preview
 
+set termguicolors
 set wildignore=*.png,*.jpg,node_modules,*.min.js,*.txt,*.bak,*.exe,vendor.js
 set autochdir
 set tags=./.git/tags,tags;$HOME
@@ -35,9 +40,7 @@ set backupcopy=yes
 set autoread
 set selection=exclusive
 set ttimeoutlen=70
-set termguicolors
-" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamedplus
+
 " Enhance command-line completion
 set wildmenu
 " Allow cursor keys in insert mode
@@ -56,8 +59,14 @@ set binary
 " Don't add empty newlines at the end of files
 set noeol
 
-set history=500  " Number of things to remember in history.
+" Number of things to remember in history.
+set history=1500
 set t_Co=256
+
+if has('gui_running')
+  set go =mt
+  set guifont=Literation\ Mono\ for\ Powerline:h12,Literation_Mono_for_Powerline:h12,Inconsolata\ for\ Powerline:h10,Ubuntu\ Mono:h26,Consolas:h12,Courier:h12
+endif
 
 " Centralize backups, swapfiles and undo history
 if exists("&backupdir")
@@ -89,6 +98,7 @@ set tabstop=4
 set expandtab
 set shiftwidth=4
 
+
 " Show “invisible” characters
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set list
@@ -119,10 +129,6 @@ set showcmd
 
 " Start scrolling x lines before the horizontal window border
 set scrolloff=4
-
-autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd Filetype go setlocal ts=4 sw=4 sts=4 noexpandtab
 
 
 " Change mapleader
@@ -196,6 +202,7 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " generate tags
 nnoremap <leader>c :! ctags -R -f ./.git/tags .<CR>
 
+
 " enable neocomplete
 let g:neocomplete#enable_at_startup = 0
 
@@ -221,35 +228,7 @@ let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_fmt_command = "goimports"
 let g:go_fmt_autosave = 1
-" -b -w -p"
 
-let g:syntastic_go_checkers = ['go', 'errcheck', 'gofmt', 'golint', 'govet']
-"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-" Automatic commands
-if has("autocmd")
-  " Use relative line numbers
-  if exists("&relativenumber")
-    set relativenumber
-    au BufReadPost * set relativenumber
-  endif
-
-  " rename symbol
-  au FileType go nmap <Leader>r <Plug>(go-rename)
-
-  " show type info
-  au FileType go nmap <Leader>ki <Plug>(go-info)
-
-  " go def
-  au FileType go nmap <Leader>di <Plug>(go-def-split)
-  au FileType go nmap <Leader>ds <Plug>(go-def-vertical)
-  au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-
-  " go docs
-  au FileType go nmap <Leader>gd <Plug>(go-doc)
-  au FileType go nmap <Leader>gi <Plug>(go-doc-vertical)
-  au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-endif
 
 " ctrl p
 let g:ctrlp_map = '<C-P>'
@@ -258,7 +237,6 @@ let g:ctrlp_map = '<C-P>'
 let g:ctrlp_cmd = 'CtrlPLastMode'
 let g:ctrlp_extensions = ['line']
 let g:ctrlp_show_hidden = 1
-
 
 "'c' - the directory of the current file.
 "'a' - the directory of the current file, unless it is a subdirectory of the cwd
@@ -339,38 +317,72 @@ let g:syntastic_loc_list_height = 1
 let g:syntastic_enable_balloons = 1
 
 let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_go_checkers = ['go', 'errcheck', 'gofmt', 'golint', 'govet']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 " YCM
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
 
-" Enable file type detection
-filetype plugin indent on
-
-augroup myvimrc
-  au!
-  au BufWritePost .vimrc so $MYVIMRC
-augroup END
-
 " Automatic commands
 if has("autocmd")
-    " Treat .json files as .js
-    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-    " Treat .md files as Markdown
-    autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+  " Use relative line numbers
+  if exists("&relativenumber")
+    set relativenumber
+    au BufReadPost * set relativenumber
+  endif
+
+  " rename symbol
+  au FileType go nmap <Leader>r <Plug>(go-rename)
+
+  " show type info
+  au FileType go nmap <Leader>ki <Plug>(go-info)
+
+  " go def
+  au FileType go nmap <Leader>di <Plug>(go-def-split)
+  au FileType go nmap <Leader>ds <Plug>(go-def-vertical)
+  au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+  " go docs
+  au FileType go nmap <Leader>gd <Plug>(go-doc)
+  au FileType go nmap <Leader>gi <Plug>(go-doc-vertical)
+  au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
     autocmd BufRead,BufNewFile *.html setfiletype html syntax=htmldjango
     autocmd BufRead,BufNewFile *.template setfiletype html template syntax=htmldjango
-    autocmd BufRead,BufNewFile *.go setfiletype golang syntax=go
     autocmd BufRead,BufNewFile *.php setfiletype php syntax=go
-    autocmd BufRead,BufNewFile Dockerfile* setfiletype Dockerfile syntax=go
+    autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+
+    autocmd BufRead,BufNewFile *.go setfiletype golang syntax=go
+    autocmd Filetype go setlocal ts=4 sw=4 sts=4 noexpandtab
+
+    " Treat .json files as .js
+    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+    autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab
+
     " Spell check and line wrap just for git commit messages
     autocmd Filetype gitcommit setlocal spell textwidth=80
+
+    " Source vim configuration upon save
+    augroup vimrc
+        autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+        autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
+    augroup END
+
+    " Auto reload files when edited outside of vim
+    " Triger `autoread` when files changes on disk
+    " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+    " https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+            \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+
+    " Notification after file change
+    " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+    autocmd FileChangedShellPost *
+      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+    au GUIEnter * set vb t_vb=
 endif
 
 
-au GUIEnter * set vb t_vb=
-
-if has('gui_running')
-  set go =mt
-  set guifont=Literation\ Mono\ for\ Powerline:h12,Literation_Mono_for_Powerline:h12,Inconsolata\ for\ Powerline:h10,Ubuntu\ Mono:h26,Consolas:h12,Courier:h12
-endif
