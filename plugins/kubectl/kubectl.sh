@@ -1,7 +1,14 @@
 #!/bin/env bash
 
-if [[ -f "$(which kubectl)" ]]; then
-    [[ -f "$(brew --prefix bash-completion)/etc/bash_completion.d/kubectl" ]] || kubectl completion bash > $(brew --prefix bash-completion)/etc/bash_completion.d/kubectl;
+KUBECTL_VERSION=${KUBECTL_VERSION:-"latest"};
+
+if ! [[ -f "$(which kubectl 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
+    asdf plugin add kubectl;
+    asdf install kubectl ${KUBECTL_VERSION};
+fi
+
+if [[ -f "$(which kubectl 2>&1)" ]]; then
+    [[ -f "/etc/bash_completion.d/kubectl" ]] || kubectl completion bash > /etc/bash_completion.d/kubectl;
 fi
 
 # This command is used a LOT both below and in daily life

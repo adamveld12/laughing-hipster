@@ -1,28 +1,19 @@
 #!/bin/env bash
 
 # Find where asdf should be installed
-ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
-ASDF_COMPLETIONS="$ASDF_DIR/completions"
+ASDF_VERSION="${ASDF_VERSION:-"0.8.1"}";
+ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}";
+ASDF_COMPLETIONS="$ASDF_DIR/completions";
 
-# If not found, check for Homebrew package
-if [[ ! -f "$ASDF_DIR/asdf.sh" || ! -f "$ASDF_COMPLETIONS/asdf.bash" ]] && [[ -f $(which brew 2>&1) ]]; then
-   ASDF_DIR="$(brew --prefix asdf)"
-   ASDF_COMPLETIONS="$ASDF_DIR/etc/bash_completion.d"
+
+if [[ ! -f "$ASDF_DIR/asdf.sh" ]]; then
+    echo "[asdf] Installing asdf to ${ASDF_DIR}...";
+    git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v${ASDF_VERSION};
 fi
 
-if ! [[ -f "${ASDF_DIR}/asdf.sh" ]] && [[ -f $(which brew 2>&1) ]]; then
-    echo "[asdf] Installing asdf via brew";
-    brew install asdf;
-fi
+[[ -f "$ASDF_DIR/asdf.sh" ]] && . "$ASDF_DIR/asdf.sh"
+[[ -f "${ASDF_COMPLETIONS}/asdf.bash" ]] && . ${ASDF_COMPLETIONS}/asdf.bash;
 
-
-# Load command
-if [[ -f "$ASDF_DIR/asdf.sh" ]]; then
-    . "$ASDF_DIR/asdf.sh"
-
-    # Load completions
-    if [[ -f "$ASDF_COMPLETIONS/asdf.bash" ]]; then
-        . "$ASDF_COMPLETIONS/asdf.bash"
-    fi
-fi
-
+alias asdf_list_all='asdf plugin list all';
+alias asdf_add='asdf plugin add';
+alias asdf_list_versions='asdf list all';
