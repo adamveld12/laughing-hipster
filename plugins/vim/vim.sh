@@ -55,9 +55,9 @@ if [[ -d "${FILES_USER_CONFIG}/vim" ]]; then
 
 	vim_setup() {
 		! [[ -f ${HOME}/.vimrc ]] && ln -sf ${VIM}/.vimrc ${HOME}/.vimrc;
-        mkdir -p ${VIM}/backups;
-        mkdir -p ${VIM}/swaps;
-        mkdir -p ${VIM}/undo;
+		mkdir -p ${VIM}/backups;
+		mkdir -p ${VIM}/swaps;
+		mkdir -p ${VIM}/undo;
 
 		vim_setup_config;
 		vim_setup_runtime;

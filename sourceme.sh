@@ -58,6 +58,13 @@ load_env() {
 	files_debug_log "[load_env] \$FILES_ROOT = ${FILES_ROOT}";
 	export FILES_USER_CONFIG="${HOME}/.config";
 
+	export FILES_CACHE_DIR="${FILES_ROOT}/.tmp/";
+
+	if [[ -d "${FILES_CACHE_DIR}" ]]; then
+		files_debug_log "[load env] Setting up cache directory @ ${FILES_CACHE_DIR}";
+		mkdir -p ${FILES_CACHE_DIR};
+	fi
+
 	if [[ -z "${FILES_PLUGINS}" ]]; then
 		export FILES_PLUGINS=("brew" "ssh" "vim" "git-extras" "asdf" "helm" "starship" "extras");
 	fi

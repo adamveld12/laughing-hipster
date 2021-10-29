@@ -1,7 +1,10 @@
 #!/bin/env bash
 
-if ! [[ -f "$(which starship 2>&1)" ]] && [[ -f "$(which brew 2>&1)" ]]; then
-	brew install starship;
+STARSHIP_VERSION=${STARSHIP_VERSION:-"latest"};
+
+if ! [[ -f "$(which starship 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
+    asdf plugin add starship;
+    asdf install startship ${STARSHIP_VERSION};
 fi
 
 if [[ -f "$(which starship 2>&1)" ]]; then
