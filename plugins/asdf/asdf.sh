@@ -17,3 +17,19 @@ fi
 alias asdf_list_all='asdf plugin list all';
 alias asdf_add='asdf plugin add';
 alias asdf_list_versions='asdf list all';
+
+
+# adds a plugin @ a version, installs and uses it
+asdf_use() {
+    local plugin=${1};
+    local version=${2:-'latest'};
+
+
+    if [[ -z "${plugin}" ]]; then
+        echo "usage: asdf_use <plugin> [version]"
+    fi
+
+    asdf plugin add ${plugin};
+    asdf install ${plugin} ${version};
+    asdf local ${plugin} ${version};
+}
