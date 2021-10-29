@@ -12,8 +12,8 @@ RUN pacman -Sy --noconfirm openssh sudo vim git curl which gnupg make gcc binuti
 WORKDIR /home/files
 COPY --chown=1000:1000 . /home/files/.files
 USER 1000
-RUN rm -rf .bash_rc .bash_logout .zshrc .profile .zlogin .zshrc .bashrc mkshrc
-RUN echo "[[ -f '/home/files/.files/sourceme.sh' ]] && source /home/files/.files/sourceme.sh" > /home/files/.bash_profile
-RUN source /home/files/.files/sourceme.sh
+RUN rm -rf .bash_rc .bash_logout .zshrc .profile .zlogin .zshrc .bashrc mkshrc \
+    && cat /home/files/.files/install_script.sh > /home/files/.bash_profile \
+    && source /home/files/.bash_profile
 
 CMD ["bash", "--login"]
