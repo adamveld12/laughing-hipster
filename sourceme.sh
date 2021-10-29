@@ -1,5 +1,13 @@
 #!/bin/sh
 
+files_debug_off() {
+    unset FILES_DEBUG;
+}
+
+files_debug_on() {
+    export FILES_DEBUG=true;
+}
+
 # debug logging
 files_debug_log() {
 	if ! [[ -z "${FILES_DEBUG}" ]]; then
@@ -21,6 +29,7 @@ files_linkdir() {
 			find "${SOURCE}" -type f | sed "s=${SOURCE}==" | xargs -I {} ln -fs ${SOURCE}{} ${DEST}{};
 		fi
 	fi
+
     # ln on windows pretty much only works with hardlinks it seems
     #ls -lA "${SOURCE}" | grep "^-" | awk '{print $9}' | xargs -I {} ln -vfs "${SOURCE}/{}" "${DEST}/{}"
 }
