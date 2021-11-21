@@ -6,6 +6,10 @@ export SSH_DIR="${HOME}/.ssh";
 
 files_linkdir "${FILES_PLUGIN_ROOT}/defaults.d" "${SSH_DIR}";
 
+if [[ -f "$(which ssh-agent 2>&1)" ]]; then
+    eval $(ssh-agent) 2>&1 > /dev/null;
+fi
+
 
 # Open an ssh tunnel
 ssh_tunnel(){

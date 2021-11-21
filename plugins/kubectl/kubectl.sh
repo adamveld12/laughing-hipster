@@ -7,8 +7,8 @@ if ! [[ -f "$(which kubectl 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
     asdf install kubectl ${KUBECTL_VERSION};
 fi
 
-if [[ -f "$(which kubectl 2>&1)" ]]; then
-    [[ -f "/etc/bash_completion.d/kubectl" ]] || kubectl completion bash > /etc/bash_completion.d/kubectl;
+if [[ -f "$(which kubectl 2>&1)" ]] && [[ -d "${BASH_COMPLETION_DIR}" ]]; then
+     source $(kubectl completion bash);
 fi
 
 # This command is used a LOT both below and in daily life
