@@ -8,7 +8,7 @@ if ! [[ -f "$(which kubectl 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
 fi
 
 if [[ -f "$(which kubectl 2>&1)" ]] && [[ -d "${BASH_COMPLETION_DIR}" ]]; then
-     source $(kubectl completion bash);
+     [[ -f "${BASH_COMPLETION_DIR}/kubectl" ]] || kubectl completion bash > "${BASH_COMPLETION_DIR}/kubectl";
 fi
 
 # This command is used a LOT both below and in daily life
