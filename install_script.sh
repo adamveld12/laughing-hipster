@@ -4,7 +4,7 @@
 export FILES_ROOT="${HOME}/.files";
 
 # Set plugins to load here. Run files_plugins_list to see available plugins.
-export FILES_PLUGINS=("asdf" "ssh" "vim" "git-extras" "kubectl" "helm" "starship" "extras");
+export FILES_PLUGINS=("asdf" "ssh" "vim" "git-extras" "kubectl" "helm" "starship" "extras" "wezterm");
 
 [[ -s "${HOME}/.files/sourceme.sh" ]] && source ${HOME}/.files/sourceme.sh;
 
