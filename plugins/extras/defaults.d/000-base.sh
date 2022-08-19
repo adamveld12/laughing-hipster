@@ -52,10 +52,6 @@ if [[ -d "${HOME}/.bin" ]]; then
 	PATH=${HOME}/.bin:${PATH};
 fi
 
-if [[ -n "$DESKTOP_SESSION" ]];then
-    eval $(gnome-keyring-daemon --start);
-    export SSH_AUTH_SOCK;
-fi
 
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
 # run these to increase concurrent connections in linux
