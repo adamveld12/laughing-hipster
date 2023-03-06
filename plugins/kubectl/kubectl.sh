@@ -7,14 +7,15 @@ if ! [[ -f "$(which kubectl 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
     asdf install kubectl ${KUBECTL_VERSION};
 fi
 
-if [[ -f "$(which kubectl 2>&1)" ]]; then
-    if [[ -d "/etc/bash_completion.d" ]]; then
-        [[ -f "/etc/bash_completion.d/kubectl" ]] || kubectl completion bash > /etc/bash_completion.d/kubectl;
-    fi
-fi
 
 # This command is used a LOT both below and in daily life
 alias k=kubectl
+
+if [[ -f "$(which kubectl 2>&1)" ]]; then
+    source <(kubectl completion bash);
+    complete -F __start_kubectl k;
+fi
+
 
 # Execute a kubectl command against all namespaces
 alias kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
