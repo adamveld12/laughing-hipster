@@ -33,34 +33,34 @@ config.window_background_opacity = 0.5;
 config.keys = {
     -- This will create a new split and run your default program inside it
     {
-        key="s",
+        key="i",
         mods="CTRL|SHIFT",
         action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}
     },
     {
-        key="i",
+        key="s",
         mods="CTRL|SHIFT",
         action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}
     },
     {
         key="j",
         mods="CTRL|SHIFT",
-        action=wezterm.action{AdjustPaneSize={"Down", 2}}
+        action=wezterm.action{AdjustPaneSize={"Down", 4}}
     },
     {
         key="k",
-        mods="CTRL|SHIFT",
-        action=wezterm.action{AdjustPaneSize={"Up", 2}}
+        mods="CTRL|ALT",
+        action=wezterm.action{AdjustPaneSize={"Up", 4}}
     },
     {
         key="h",
-        mods="CTRL|SHIFT",
-        action=wezterm.action{AdjustPaneSize={"Left", 2}}
+        mods="CTRL|ALT",
+        action=wezterm.action{AdjustPaneSize={"Left", 4}}
     },
     {
         key="l",
-        mods="CTRL|SHIFT",
-        action=wezterm.action{AdjustPaneSize={"Right", 2}}
+        mods="CTRL|ALT",
+        action=wezterm.action{AdjustPaneSize={"Right", 4}}
     },
     {
         key="h",
@@ -85,7 +85,12 @@ config.keys = {
     {
         key="w",
         mods="CTRL",
-        action=wezterm.action{CloseCurrentTab={confirm=false}}
+        action=wezterm.action{CloseCurrentPane={confirm=false}}
+    },
+    {
+        key="w",
+        mods="CTRL|SHIFT",
+        action=wezterm.action{CloseCurrentTab={confirm=true}}
     }
 };
 

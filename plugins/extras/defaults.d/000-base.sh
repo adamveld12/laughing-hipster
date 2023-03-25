@@ -25,10 +25,6 @@ export HISTIGNORE="[   ]*:&:bg:fg:exit:clear";   # Don't save these commands in 
 export HISTORY_COMMAND="history -a; history -c; history -r;"; # flush each command to history immediately
 stty -ixon;
 
-# bindings
-bind '"\C-l"':redraw-current-line; # <Ctrl>-l
-bind '"\e\C-l"':clear-screen;      # <Escape>-<Ctrl>-l
-
 # see environ manfile - just setting up my shell environment
 export LESS='-iMR';      # Case insensite search, verbose prompting and raw output
 export PAGER=less;       # Used to display text / man files
@@ -39,19 +35,13 @@ export GIT_EDITOR=vim;
 export EDITOR=$GIT_EDITOR;
 export VISUAL=$EDITOR;
 
-# export DEFAULT_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
-# export PATH=${DEFAULT_PATH}:${HOME}/.bin;
-
-if [[ -d "${HOME}/.dotnet" ]]; then
-	export DOTNET_CLI_TELEMETRY_OPTOUT=1;
-	export DOTNETPATH=~/.dotnet/;
-	export PATH=${DOTNETPATH}:${PATH};
-fi
-
 if [[ -d "${HOME}/.bin" ]]; then
 	PATH=${HOME}/.bin:${PATH};
 fi
 
+# bindings
+bind '"\C-l"':redraw-current-line; # <Ctrl>-l
+bind '"\e\C-l"':clear-screen;      # <Escape>-<Ctrl>-l
 
 # http://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
 # run these to increase concurrent connections in linux

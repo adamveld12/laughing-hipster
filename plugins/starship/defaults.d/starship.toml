@@ -1,21 +1,17 @@
-# Inserts a blank line between shell prompts
 add_newline = true
 
 scan_timeout = 50
 
 format = "$all"
 
-# Replace the "❯" symbol in the prompt with "➜"
-[character]                            # The name of the module we are configuring is "character"
-success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+[character]
+success_symbol = "[➜](bold green)"
 
-
-# Disable the package module, hiding it from the prompt completely
 [package]
 disabled = true
 
 [kubernetes]
-format = 'on [⛵ ($user on )($cluster in )$context \($namespace\)](dimmed green) '
+format = '[⛵ $context](dimmed green) '
 disabled = false
 
 [git_metrics]

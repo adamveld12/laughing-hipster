@@ -39,6 +39,7 @@ ssh_pubkey(){
   ssh-keygen -y -f $1;
 }
 
+# generate a new key
 ssh_newkey() {
 	local name=$1;
 	local comment=$2;
