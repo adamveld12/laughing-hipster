@@ -18,7 +18,7 @@ esac
 # History
 # https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps
 shopt -s histappend;                       # Append to the history file, not overwrite
-export HISTCONTRO=Lignoreboth:erasedups;                    # No duplicate commands in history
+export HISTCONTROL="ignoreboth:erasedups";                    # No duplicate commands in history
 export HISTSIZE=25000;
 export HISTFILESIZE=10000;
 export HISTIGNORE="[   ]*:&:bg:fg:exit:clear";   # Don't save these commands in the history

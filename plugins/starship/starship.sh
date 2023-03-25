@@ -9,15 +9,16 @@ if ! [[ -f "$(which starship 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
 fi
 
 if [[ -f "$(which starship 2>&1)" ]]; then
-	export STARSHIP_CONFIG_DIR="${FILES_USER_CONFIG}";
+	export STARSHIP_CONFIG_DIR="${FILES_USER_CONFIG}/starship";
 	export STARSHIP_CACHE="${STARSHIP_CONFIG_DIR}/cache";
 
 	files_debug_log "[starship] installing default config";
-    [[ -f "${FILES_USER_CONFIG}/starship.toml" ]] || ln -sf  "${FILES_PLUGIN_ROOT}/defaults.d/starship.toml" ${FILES_USER_CONFIG};
+    [[ -f "${STARSHIP_CONFIG_DIR}/starship.toml" ]] || ln -sf  "${FILES_PLUGIN_ROOT}/defaults.d/starship.toml" ${STARSHIP_CONFIG_DIR};
 
 	starship_run() {
 		local shell=${1:-bash};
-		eval "$(starship init ${1})";
+		eval "$(starship init ${1} --print-full-init)";
+		export PROMPT_COMMAND='PS1=$(starship prompt)';
 	}
 
 	starship_install() {

@@ -9,6 +9,6 @@ if [[ -f "$(which wezterm 2>&1)" ]]; then
 
     if ! [[ -f "${WEZTERM_CONFIG_FILE}" ]]; then
         files_debug_log "linking"
-        files_linkdir "${FILES_PLUGIN_ROOT}/defaults.d/" "${FILES_USER_CONFIG}/wezterm";
+        files_linkdir "${FILES_PLUGIN_ROOT}/defaults.d/" "${FILES_USER_CONFIG}/wezterm/";
     fi
 fi
