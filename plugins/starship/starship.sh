@@ -14,7 +14,7 @@ if [[ -f "$(which starship 2>&1)" ]]; then
 	export STARSHIP_CONFIG="${STARSHIP_CONFIG_DIR}/starship.toml";
 
 	files_debug_log "[starship] installing default config";
-    [[ -f "${STARSHIP_CONFIG_DIR}/starship.toml" ]] || ln -sf  "${FILES_PLUGIN_ROOT}/defaults.d/starship.toml" ${STARSHIP_CONFIG};
+       [[ -f "${STARSHIP_CONFIG}" ]] || ln -sf  "${FILES_PLUGIN_ROOT}/defaults.d/starship.toml" ${STARSHIP_CONFIG};
 
 	starship_run() {
 		local shell=${1:-bash};
