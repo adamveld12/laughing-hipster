@@ -1,6 +1,6 @@
 [alias]
     # View abbreviated SHA, description, and history graph
-	ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 45
+    ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 45
 
     # View the current working tree status using the short format
     s = status -s
@@ -148,7 +148,7 @@
 
 [pull]
     default = current
-	ff = only
+    ff = only
 
 [user]
     email = adamveld12@gmail.com

@@ -11,6 +11,9 @@ success_symbol = "[➜](bold green)"
 [package]
 disabled = true
 
+[python]
+disabled = true
+
 [kubernetes]
 format = '[⛵ $context](green) '
 disabled = false
