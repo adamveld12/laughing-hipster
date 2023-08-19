@@ -36,7 +36,7 @@ export EDITOR=$GIT_EDITOR;
 export VISUAL=$EDITOR;
 
 if [[ -d "${HOME}/.bin" ]]; then
-	PATH=${HOME}/.bin:${PATH};
+	PATH=${HOME}/.bin:${HOME}/.local/bin:${PATH};
 fi
 
 # bindings

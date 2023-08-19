@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Sway (Debug)
+Comment=An i3-compatible Wayland compositor
+Exec=sway --debug --verbose
+Type=Application
+Environment=wayland

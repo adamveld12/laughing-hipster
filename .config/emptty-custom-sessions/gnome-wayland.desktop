@@ -146,3 +146,4 @@ TryExec=/usr/bin/gnome-session
 Type=Application
 DesktopNames=GNOME
 X-GDM-SessionRegisters=true
+Environment=wayland

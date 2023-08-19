@@ -30,6 +30,9 @@ config.inactive_pane_hsb = {
 
 config.window_background_opacity = 0.5;
 
+
+-- config.leader = { key = 'a', mods = 'CTRL' }
+
 config.keys = {
     -- This will create a new split and run your default program inside it
     {
@@ -44,7 +47,7 @@ config.keys = {
     },
     {
         key="j",
-        mods="CTRL|SHIFT",
+        mods="CTRL|ALT",
         action=wezterm.action{AdjustPaneSize={"Down", 4}}
     },
     {
@@ -84,14 +87,9 @@ config.keys = {
     },
     {
         key="w",
-        mods="CTRL",
+        mods="CTRL|SHIFT",
         action=wezterm.action{CloseCurrentPane={confirm=false}}
     },
-    {
-        key="w",
-        mods="CTRL|SHIFT",
-        action=wezterm.action{CloseCurrentTab={confirm=true}}
-    }
 };
 
 return config;

@@ -43,7 +43,7 @@ set tags=./.git/tags,tags
 set clipboard+=unnamedplus
 
 
-set guifont=Literation\ Mono\ for\ Powerline:h12,Literation_Mono_for_Powerline:h12,Inconsolata\ for\ Powerline:h10,Ubuntu\ Mono:h26,Consolas:h12,Courier:h12
+set guifont=Pragmata\ Pro\ Mono\ Liga:h12,Literation_Mono_for_Powerline:h12,Inconsolata\ for\ Powerline:h10,Ubuntu\ Mono:h26,Consolas:h12,Courier:h12
 
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 
