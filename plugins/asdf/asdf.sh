@@ -33,3 +33,21 @@ asdf_use() {
     asdf install ${plugin} ${version};
     asdf local ${plugin} ${version};
 }
+
+asdf_local_use() {
+    local TOOL_VERSIONS_PATH='.tool-versions';
+    if [ -z "${1}" ]; then
+        TOOL_VERSIONS_PATH="${1}";
+    fi
+
+    cat ${TOOL_VERSIONS_PATH}  | xargs -I {} asdf local {};
+}
+
+asdf_add_plugins() {
+    local TOOL_VERSIONS_PATH='.tool-versions';
+    if [ -z "${1}" ]; then
+        TOOL_VERSIONS_PATH="${1}";
+    fi
+
+    awk '{print $1}' ${TOOL_VERSIONS_PATH}  | xargs -I {} asdf plugin add {};
+}

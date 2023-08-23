@@ -17,12 +17,15 @@ esac
 
 # History
 # https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps
-shopt -s histappend;                       # Append to the history file, not overwrite
+shopt -s histappend;                                        # Append to the history file, not overwrite
 export HISTCONTROL="ignoreboth:erasedups";                    # No duplicate commands in history
 export HISTSIZE=25000;
 export HISTFILESIZE=10000;
-export HISTIGNORE="[   ]*:&:bg:fg:exit:clear";   # Don't save these commands in the history
-export HISTORY_COMMAND="history -a; history -c; history -r;"; # flush each command to history immediately
+export HISTIGNORE="[   ]*:&:bg:fg:exit:clear:ls:history:gs:code:git:reset:cd:echo:cat";   # Don't save these commands in the history
+export HISTORY_COMMAND="history -a;";                             # flush each command to history immediately
+# update
+export PROMPT_COMMAND="$PROMPT_COMMAND $HISTORY_COMMAND";
+
 stty -ixon;
 
 # see environ manfile - just setting up my shell environment

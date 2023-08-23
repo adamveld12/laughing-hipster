@@ -31,6 +31,12 @@ if [[ -f "$(which starship 2>&1)" ]]; then
 		fi
 	}
 
+    starship_set_window_title(){
+        echo -ne "\033]0; $(basename "$PWD") \007"
+    }
+
+    starship_precmd_user_func="starship_set_window_title"
+
 	[[ -f "${HOME}/.bashrc" ]] && starship_install "${HOME}/.bashrc";
 	[[ -f "${HOME}/.bash_profile" ]] && starship_install "${HOME}/.bash_profile";
 	[[ -f "${HOME}/.profile" ]] && starship_install "${HOME}/.profile";

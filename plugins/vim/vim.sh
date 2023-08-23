@@ -10,31 +10,29 @@ if [[ -d "${FILES_USER_CONFIG}/vim" ]]; then
 		local PATHOGEN_TMP="${VIM_SOURCE}/vim-pathogen";
 
 		if ! [[ -f "${VIMRUNTIME}/autoload/pathogen.vim" ]]; then
-
 			files_debug_log "[vim_install_plugins] installing pathogen.vim";
-			if ! [[ -d "${PATHOGEN_TMP}" ]]; then
-				git clone git://github.com/tpope/vim-pathogen.git ${PATHOGEN_TMP};
-			fi
+			# if ! [[ -d "${PATHOGEN_TMP}" ]]; then
+				# git clone git://github.com/tpope/vim-pathogen.git ${PATHOGEN_TMP};
+			# fi
 
+            curl -LSso ${VIMRUNTIME}/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 			mkdir -p ${VIMRUNTIME}/autoload/;
 			cp -r ${PATHOGEN_TMP}/autoload/* ${VIMRUNTIME}/autoload/;
 		fi
 
 
-       if ! [[ -d ${VIM_BUNDLE} ]]; then
+       if ! [[ -d "${VIM_BUNDLE}" ]]; then
             files_debug_log "[vim_install_plugins] installing vim plugins...";
 
             mkdir -p ${VIM_BUNDLE};
-
             pushd ${VIM_BUNDLE};
             local PLUGINS=$(cat ${VIM}/plugins.txt);
             for plugin in ${PLUGINS}; do
-                if [[ "${plugin:0:3}" = "git" ]]; then
+                if [[ "${plugin:0:5}" = "https" ]]; then
                     echo "Installing $plugin...";
-                    git clone -q $plugin > /dev/null &
+                    git clone -q $plugin 2>&1 /dev/null &
                 fi
             done
-
             time wait;
             popd;
         fi
