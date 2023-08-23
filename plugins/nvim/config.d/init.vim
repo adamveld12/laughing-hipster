@@ -80,7 +80,7 @@ set showcmd
 set scrolloff=4
 
 lua require('plugins')
-
+lua require('lsp')
 
 " Change mapleader
 let mapleader = ","
@@ -132,10 +132,10 @@ noremap <C-l> <C-w>l
 map <leader>x :%s/\s\+$//<CR>:noh<Cr>
 
 "reload vim config
-noremap <leader>rr :so ~/.vimrc<CR>
+noremap <leader>rr :so ~/.config/nvim/init.vim<CR>
 
 "open vimrc in a new tab
-map <leader>v :tabedit ~/.vimrc<CR>
+map <leader>v :tabedit ~/.config/nvim/init.vim<CR>
 map <F1> <Nop>
 
 " Save a file as root (,W)
@@ -197,7 +197,13 @@ if has("autocmd")
   au FileType go nmap <Leader>gd <Plug>(go-doc)
   au FileType go nmap <Leader>gi <Plug>(go-doc-vertical)
   au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
 endif
+
+augroup packer_user_config
+  autocmd!
+  autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+augroup end
 
 " ctrl p
 let g:ctrlp_map = '<C-P>'
