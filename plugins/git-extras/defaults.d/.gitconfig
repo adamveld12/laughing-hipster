@@ -1,6 +1,7 @@
 [alias]
     # View abbreviated SHA, description, and history graph
-	ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 45
+    ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 75
+    lsa = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph
 
     # View the current working tree status using the short format
     s = status -s
@@ -21,12 +22,6 @@
 
     # Commit all changes
     ca = !git add -A && git commit -av -S
-
-    # commits with gpgsign flag
-    cs = commit -S
-
-    # commits with gpgsign and inline message flag
-    csm = commit -S -m
 
     # Switch to a branch, creating it if necessary
     go = checkout -B
@@ -57,7 +52,7 @@
     # Find commits by commit message
     fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
-  # Remove branches that have already been merged with master
+    # Remove branches that have already been merged with master
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
 [diff]
@@ -126,12 +121,9 @@
     # Include summaries of merged commits in newly created merge commit messages
     log = true
     # better merge messages
-    summary=true
+    summary = true
 
 # URL shorthands
-[url "https://git.vdhsn.com"]
-    insteadOf = git@git.vdhsn.com
-
 [url "git://github.com/"]
     insteadOf = "github:"
 
@@ -148,7 +140,7 @@
 
 [pull]
     default = current
-	ff = only
+    ff = only
 
 [user]
     email = adamveld12@gmail.com
@@ -160,7 +152,7 @@
     template = ~/.config/git/.gitmessage
 
 [help]
-    autocorrect=20
+    autocorrect = 20
 
 [credential]
     # for OSX
@@ -170,3 +162,6 @@
 
 [gpg]
     program = gpg
+
+[rerere]
+   enabled = true

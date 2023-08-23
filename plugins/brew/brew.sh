@@ -1,7 +1,8 @@
 #!/bin/env bash
 
 export LINUX_BREW_PATH="/home/linuxbrew/.linuxbrew";
-export MAC_BREW_PATH="/usr/local/Homebrew";
+export MAC_BREW_PATH="/opt/homebrew/";
+
 
 if  [[ ! -d "${LINUX_BREW_PATH}" && ! -d "${MAC_BREW_PATH}" ]]; then
 	echo "Installing brew";
