@@ -10,3 +10,9 @@ fi
 if [[ -f "$(which helm 2>&1)" ]]; then
   source <(helm completion bash)
 fi
+
+
+helm-setup-plugins() {
+    helm plugin install https://github.com/databus23/helm-diff
+    helm plugin install https://github.com/jkroepke/helm-secrets --version v3.12.0
+}
