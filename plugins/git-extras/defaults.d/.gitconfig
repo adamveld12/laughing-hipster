@@ -1,6 +1,8 @@
 [alias]
     # View abbreviated SHA, description, and history graph
-    ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 75
+    #ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 75
+    ls =  log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --graph HEAD...origin/main
+    ls-branch =  log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --graph HEAD
     lsa = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph
 
     # View the current working tree status using the short format
@@ -93,7 +95,7 @@
     trustctime = false
     autocrlf = false
     eol = 'lf'
-    editor = $EDITOR
+    editor = code --wait
     hooksPath = ~/.config/git/.githooks/
 
 [color]
@@ -164,4 +166,7 @@
     program = gpg
 
 [rerere]
-   enabled = true
+	enabled = true
+
+[gpg "ssh"]
+    allowedSignersFile = /Users/adam/.ssh/allowed_signers
