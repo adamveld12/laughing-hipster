@@ -143,11 +143,12 @@
 [pull]
     default = current
     ff = only
+	rebase = true
 
 [user]
-    email = adamveld12@gmail.com
+    email = adam@bobsled.co
     name = Adam Veldhousen
-    signingkey =  4FA79E5B6598505C8DFA30A7A466CEE1415C0B9C
+    signingkey = ~/.ssh/github.id_ed25519
 
 [commit]
     gpgsign = true
@@ -158,11 +159,10 @@
 
 [credential]
     # for OSX
-    #helper = osxkeychain
-    # for Linux
-    helper = store --file ~/.config/git/.git-credentials
+    helper = osxkeychain
 
 [gpg]
+    format = ssh
     program = gpg
 
 [rerere]

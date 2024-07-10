@@ -1,14 +1,50 @@
 add_newline = true
 
 scan_timeout = 50
+command_timeout = 1000
 
-format = "$all"
+
+format = """
+${custom.bs_universe}\
+${custom.bs_env}\
+$gcloud\
+$azure\
+$aws\
+${custom.dbx}\
+${custom.bs_aws}\
+$line_break\
+$time\
+$directory\
+$git_branch\
+$git_commit\
+$line_break\
+$cmd_duration \
+$character
+"""
 
 [character]
-success_symbol = "[➜](bold green)"
+#success_symbol = "[➜](bold green)"
+success_symbol = "[>](bold green)"
+error_symbol = "[✖](bold red)"
 
 [package]
 disabled = true
+
+[cmd_duration]
+min_time = 5_000  # Show command duration over 10,000 milliseconds (=10 sec)
+format = " took [$duration]($style)"
+
+[nodejs]
+format = "[$symbol($version)]($style)"
+
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
+
+[directory]
+#style = "blue"
+read_only = ""
+truncation_length = 4
 
 [kubernetes]
 format = '[⛵ $context](dimmed green) '
@@ -16,3 +52,48 @@ disabled = false
 
 [git_metrics]
 disabled = false
+
+[time]
+disabled = false
+style = "bold white"
+format = "[$time]($style) "
+
+[aws]
+force_display = false
+disabled = false
+symbol = 'AWS:'
+style ='bold yellow'
+format = '$symbol[($profile)($duration)]($style) '
+
+[azure]
+disabled = false
+symbol = 'AZ:'
+format = '$symbol[($username)]($style) '
+
+[gcloud]
+format = '$symbol[$account(@$domain)(\($project\))]($style) '
+symbol = 'GCP:'
+
+[custom.dbx]
+command = "basename $(jq -r '(.tokens | keys)[0]' ~/.databricks/token-cache.json)"
+style = 'red'
+format = 'DBX:[$output]($style) '
+when = 'test -f ~/.databricks/token-cache.json'
+
+[custom.bs_universe]
+command = "echo $BOBSLED_UNIVERSE"
+style = 'blue'
+format = 'Universe:[$output]($style) '
+when = 'test ! -z $BOBSLED_UNIVERSE'
+
+[custom.bs_env]
+command = "echo $ENV-${BOBSLED_UNIVERSE}"
+style = 'blue'
+format = 'Env:[$output]($style) '
+when = 'test ! -z $ENV'
+
+[custom.bs_aws]
+command = "aws sts get-caller-identity | jq -r '.Arn'"
+style = 'bold yellow'
+format = 'AWS:[$output]($style) '
+when = 'test ! -z "${AWS_ACCESS_KEY_ID}"'
