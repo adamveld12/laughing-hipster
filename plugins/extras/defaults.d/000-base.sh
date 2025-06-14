@@ -2,7 +2,7 @@
 
 shopt -s checkwinsize;                       # Checks window size to get proper line wrapping
 shopt -s cdspell;                            # Corrects minor spelling errors when cd-ing
-shopt -s checkjobs;                          # Stops bash from exiting if there are jobs running. A second attempt at exiting will ignore.
+#shopt -s checkjobs;                          # Stops bash from exiting if there are jobs running. A second attempt at exiting will ignore.
 set -o vi;                                   # Set prompt to vi mode
 set -o notify;                               # Report status of terminated background jobs immediately
 set -b;                                      # report job status immediately
