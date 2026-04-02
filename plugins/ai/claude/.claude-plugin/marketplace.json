@@ -1,0 +1,26 @@
+{
+  "name": "dotfiles-marketplace",
+  "owner": {
+    "name": "dotfiles Inc.",
+    "url": "https://github.com/adamveld12/files"
+  },
+  "metadata": {
+    "description": "Official dotfiles plugin marketplace for Adam's Claude Code extensions",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "dev",
+      "description": "AI-powered development tools that get smarter with every use. Make each unit of engineering work easier than the last. Includes specialized agents, commands, and skills.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Adam Veldhousen",
+        "url": "https://github.com/adamveld12/files",
+        "email": "adam@vdhsn.com"
+      },
+      "homepage": "https://words.vdhsn.com",
+      "tags": ["ai-powered", "compound-engineering", "workflow-automation", "code-review", "quality", "knowledge-management", "image-generation"],
+      "source": "./plugins/dev"
+    }
+  ]
+}

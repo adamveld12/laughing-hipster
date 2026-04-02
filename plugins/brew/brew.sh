@@ -1,8 +1,7 @@
 #!/bin/env bash
 
-export LINUX_BREW_PATH="/home/linuxbrew/.linuxbrew";
-export MAC_BREW_PATH="/opt/homebrew/";
-
+LINUX_BREW_PATH="/home/linuxbrew/.linuxbrew";
+MAC_BREW_PATH="/opt/homebrew/";
 
 if  [[ ! -d "${LINUX_BREW_PATH}" && ! -d "${MAC_BREW_PATH}" ]]; then
 	echo "Installing brew";
@@ -12,9 +11,20 @@ if  [[ ! -d "${LINUX_BREW_PATH}" && ! -d "${MAC_BREW_PATH}" ]]; then
 	rm -rf /tmp/brew_install.sh;
 fi
 
-[[ -f "${LINUX_BREW_PATH}/bin/brew" ]] && eval "$(${LINUX_BREW_PATH}/bin/brew shellenv)";
-[[ -f "${MAC_BREW_PATH}/bin/brew" ]] && eval "$(${MAC_BREW_PATH}/bin/brew shellenv)";
 
-[[ -f "$(brew --prefix bash-completion)/etc/bash_completion" ]] || brew install bash-completion
+if [[ -d "${MAC_BREW_PATH}" ]]; then
+    HOMEBREW_PREFIX="${MAC_BREW_PATH}";
+elif [[ -d "${LINUX_BREW_PATH}" ]]; then
+    HOMEBREW_PREFIX="${LINUX_BREW_PATH}";
+else
+    echo "no brew detected"
+    return -1;
+fi
 
-source  "$(brew --prefix bash-completion)/etc/bash_completion";
+export HOMEBREW_PREFIX;
+
+if [[ -f "${HOMEBREW_PREFIX}/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)";
+    [[ -f "$(${HOMEBREW_PREFIX}/bin/brew --prefix bash-completion)/etc/bash_completion" ]] || ${HOMEBREW_PREFIX}/bin/brew install bash-completion;
+    [[ -f "$(${HOMEBREW_PREFIX}/bin/brew --prefix bash-completion)/etc/bash_completion" ]] && source  "$(${HOMEBREW_PREFIX}/bin/brew --prefix bash-completion)/etc/bash_completion";
+fi

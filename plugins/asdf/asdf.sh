@@ -1,22 +1,23 @@
 #!/bin/env bash
 
 # Find where asdf should be installed
-ASDF_VERSION="${ASDF_VERSION:-"0.8.1"}";
-ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}";
-ASDF_COMPLETIONS="$ASDF_DIR/completions";
+ASDF_TOOL_VERSIONS_FILENAME=".tool-versions";
+ASDF_DATA_DIR="${HOME}/.asdf";
+ASDF_CONFIG_FILE="${HOME}/.asdfrc";
+ASDF_COMPLETIONS="${ASDF_DATA_DIR}/completions";
 
 
-if [[ ! -f "$ASDF_DIR/asdf.sh" ]]; then
-    echo "[asdf] Installing asdf to ${ASDF_DIR}...";
-    git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v${ASDF_VERSION};
+if [[ ! -f "$(which asdf)" ]]; then
+    echo "[asdf] Installing asdf to ${ASDF_DATA_DIR}...";
+    brew install asdf
 fi
 
-[[ -f "$ASDF_DIR/asdf.sh" ]] && . "$ASDF_DIR/asdf.sh"
+[[ -d "$ASDF_DATA_DIR/shims" ]] && PATH="${ASDF_DATA_DIR}/shims:${PATH}";
 [[ -f "${ASDF_COMPLETIONS}/asdf.bash" ]] && . ${ASDF_COMPLETIONS}/asdf.bash;
 
-alias asdf_list_all='asdf plugin list all';
+alias asdf_ls='asdf plugin list all';
 alias asdf_add='asdf plugin add';
-alias asdf_list_versions='asdf list all';
+alias asdf_ll='asdf list all';
 
 
 # adds a plugin @ a version, installs and uses it

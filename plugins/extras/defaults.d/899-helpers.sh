@@ -133,6 +133,14 @@ function bitwarden_login() {
 	bw login ${EMAIL:-adam@vdhsn.com};
 }
 
+function setup_gpg() {
+	gpgconf --launch gpg-agent;
+
+    gpg-connect-agent updatestartuptty /bye >/dev/null
+
+    unset SSH_AGENT_PID
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
+}
 # list files
 alias ll='ls -hGla'
 
@@ -150,3 +158,4 @@ alias gcompare='git diff $(git merge-base HEAD origin/main)...HEAD'
 
 # editors - osx
 alias zed='/Applications/Zed.app/Contents/MacOS/cli'
+alias c="claude --model opusplan --permission-mode plan"

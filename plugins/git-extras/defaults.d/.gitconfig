@@ -1,14 +1,14 @@
 [alias]
     # View abbreviated SHA, description, and history graph
-    #ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 75
-    ls =  log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --graph HEAD...origin/main
+    ls = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph -n 75
+    lls =  log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --graph HEAD...origin/main
     ls-branch =  log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --graph HEAD
     lsa = log --pretty=format:'%Cblue%h -%d %Cgreen%an %Creset%s - %Cred%GS' --abbrev-commit --date=relative --branches --graph
 
     # View the current working tree status using the short format
     s = status -s
 
-    ezcommit = !"git add -p; git commit -m \"$(claude -p 'Look at the staged git changes and create a summarizing git commit title using conventional commit format. Write a very concise 1-3 sentence expanded summary two lines below the title.')\""
+    ezcommit = !"git add -p; git commit -m \"$(claude -p 'Look at the staged git changes and create a summarizing git commit title using conventional commit format. Write a very concise 1-3 sentence expanded summary two lines below the title. Avoid using markdown or any other formatting for the first line. The summary should have bullet points. ONLY output the commit message')\""
 
     # Show the diff between the latest commit and the current state
     d = !"git diff --color --patch-with-stat"
@@ -97,7 +97,6 @@
     trustctime = false
     autocrlf = false
     eol = 'lf'
-    editor = code --wait
     hooksPath = ~/.config/git/.githooks/
 
 [color]
@@ -161,7 +160,7 @@
 
 [credential]
     # for OSX
-    helper = osxkeychain
+	helper = cache --timeout=82400
 
 [gpg]
     format = ssh

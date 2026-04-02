@@ -1,0 +1,38 @@
+{
+  "name": "dev",
+  "version": "0.1.0",
+  "description": "AI-powered development tools. Agents, commands, skills, MCP servers for code review, research, design, and workflow automation.",
+  "author": {
+    "name": "Adam Veldhousen",
+    "email": "adam@vdhsn.com",
+    "url": "https://github.com/adamveld12/files"
+  },
+  "homepage": "https://words.vdhsn.com",
+  "repository": "https://github.com/adamveld12/files",
+  "license": "MIT",
+  "keywords": [
+    "ai-powered",
+    "compound-engineering",
+    "workflow-automation",
+    "code-review",
+    "python",
+    "typescript",
+    "knowledge-management",
+    "image-generation",
+    "playwright",
+    "browser-automation"
+  ],
+  "mcpServers": {
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "Playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "env": {}
+    }}
+}
