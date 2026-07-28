@@ -1,13 +1,11 @@
 #!/bin/env bash
 HELM_VERSION=${HELM_VERSION:-"latest"};
 
-if ! [[ -f "$(which helm 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
-    asdf plugin add helm;
-    asdf install helm ${HELM_VERSION};
-    asdf local helm ${HELM_VERSION};
+if declare -F asdf_ensure_tool >/dev/null 2>&1; then
+    asdf_ensure_tool helm "${HELM_VERSION}" "https://github.com/Antiarchitect/asdf-helm.git";
 fi
 
-if [[ -f "$(which helm 2>&1)" ]]; then
+if command -v asdf >/dev/null 2>&1 && asdf which helm >/dev/null 2>&1; then
   source <(helm completion bash)
 fi
 

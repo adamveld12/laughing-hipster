@@ -2,11 +2,13 @@
 
 KUBECTL_VERSION=${KUBECTL_VERSION:-"latest"};
 
-if ! [[ -f "$(which kubectl 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
-    asdf plugin add kubectl;
-    asdf install kubectl ${KUBECTL_VERSION};
+if declare -F asdf_ensure_tool >/dev/null 2>&1; then
+    asdf_ensure_tool kubectl "${KUBECTL_VERSION}" "https://github.com/asdf-community/asdf-kubectl.git";
 fi
 
+if command -v asdf >/dev/null 2>&1 && asdf which kubectl >/dev/null 2>&1 && [[ -d "${BASH_COMPLETION_DIR}" ]]; then
+    [[ -f "${BASH_COMPLETION_DIR}/kubectl" ]] || kubectl completion bash > "${BASH_COMPLETION_DIR}/kubectl";
+fi
 
 # This command is used a LOT both below and in daily life
 alias k=kubectl
