@@ -385,4 +385,3 @@ if has("autocmd")
     au GUIEnter * set vb t_vb=
 endif
 
-

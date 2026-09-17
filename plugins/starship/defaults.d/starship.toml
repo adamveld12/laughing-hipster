@@ -1,6 +1,7 @@
 add_newline = true
 
-scan_timeout = 50
+scan_timeout = 500
+command_timeout = 60
 
 format = "$all"
 
@@ -10,9 +11,16 @@ success_symbol = "[➜](bold green)"
 [package]
 disabled = true
 
+[python]
+disabled = true
+
 [kubernetes]
-format = '[⛵ $context](dimmed green) '
+format = '[⛵ $context](green) '
 disabled = false
 
-[git_metrics]
-disabled = false
+[kubernetes.context_aliases]
+"cluster.prd.ax.int" = "⚠️  cluster.prd.ax.int ⚠️ "
+
+[[battery.display]]
+threshold = 25
+style = "bold red"

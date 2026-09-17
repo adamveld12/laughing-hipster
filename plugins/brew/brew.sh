@@ -14,6 +14,5 @@ fi
 [[ -f "${LINUX_BREW_PATH}/bin/brew" ]] && eval "$(${LINUX_BREW_PATH}/bin/brew shellenv)";
 [[ -f "${MAC_BREW_PATH}/bin/brew" ]] && eval "$(${MAC_BREW_PATH}/bin/brew shellenv)";
 
-[[ -f "$(brew --prefix bash-completion)/etc/bash_completion" ]] || brew install bash-completion
-
-source  "$(brew --prefix bash-completion)/etc/bash_completion";
+[[ -d "$(brew --prefix)/etc/bash_completion.d" ]] || brew install bash-completion@2
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
