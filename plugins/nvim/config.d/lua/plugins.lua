@@ -1,18 +1,39 @@
 
-vim.cmd [[packadd packer.nvim]]
+-- Clone packer on a fresh machine, otherwise `packadd` fails with E919.
+-- Returns true when packer was just installed, so the caller can PackerSync.
+local function ensure_packer()
+    local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
+    local bootstrapped = false
 
-return require("packer").startup(function(use)
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+        print('installing packer.nvim...')
+        vim.fn.system({
+            'git', 'clone', '--depth', '1',
+            'https://github.com/wbthomason/packer.nvim', install_path,
+        })
+        bootstrapped = vim.v.shell_error == 0
+    end
+
+    vim.cmd [[packadd packer.nvim]]
+
+    return bootstrapped
+end
+
+local bootstrapped = ensure_packer()
+
+require("packer").startup(function(use)
+    -- Packer can manage itself. opt = true keeps it under pack/packer/opt,
+    -- matching ensure_packer() above -- otherwise packer's clean step deletes
+    -- the bootstrap clone and it re-installs on every launch.
+    use {'wbthomason/packer.nvim', opt = true}
 
     -- Git 
     use 'tpope/vim-fugitive'
 
 
     -- Utils
-    use 'scrooloose/syntastic'
-    use 'kien/ctrlp.vim'
-    use 'scrooloose/nerdtree'
+    use {'nvim-telescope/telescope.nvim', requires = 'nvim-lua/plenary.nvim'}
+    use 'preservim/nerdtree'
     use 'tpope/vim-dadbod'
 
     -- use 'bling/vim-airline'
@@ -40,17 +61,11 @@ return require("packer").startup(function(use)
     use 'sotte/presenting.vim'
 
     -- Syntax Highlighting
-    use 'cakebaker/scss-syntax.vim'
-    use 'pangloss/vim-javascript'
-    use 'vim-ruby/vim-ruby'
-    use 'vim-scripts/matchit.zip'
-    use 'oscarh/vimerl'
+    -- Language syntax comes from Neovim's bundled runtime files plus
+    -- treesitter (see lua/treesitter.lua). Only plugins that add behaviour
+    -- Neovim has no equivalent for live here. See docs/cut-list.md.
     use 'sukima/xmledit'
-    use 'mxw/vim-jsx'
     use 'gorodinskiy/vim-coloresque'
-    use 'groenewege/vim-less'
-    use 'tpope/vim-markdown'
-    use 'tpope/vim-haml'
 
 	-- golang
 	use 'ray-x/go.nvim'
@@ -61,3 +76,5 @@ return require("packer").startup(function(use)
 
 
 end)
+
+return bootstrapped
