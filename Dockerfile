@@ -2,7 +2,7 @@ FROM archlinux:latest
 
 ENV FILES_DEBUG true
 
-RUN pacman -Sy --noconfirm openssh sudo vim git curl which gnupg make gcc binutils bison \
+RUN pacman -Sy --disable-sandbox-syscalls --noconfirm openssh sudo vim git curl which gnupg make gcc binutils bison \
 	&& echo '%sudo ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
 	&& groupadd sudo \
 	&& useradd -m -u 1000 -G sudo files \
