@@ -170,3 +170,7 @@
 
 [gpg]
     program = gpg
+
+# Keep machine-specific identity and credentials outside this repository.
+[include]
+    path = ~/.config/git/local
