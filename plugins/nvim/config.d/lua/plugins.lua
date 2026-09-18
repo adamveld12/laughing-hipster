@@ -32,9 +32,8 @@ require("packer").startup(function(use)
 
 
     -- Utils
-    use 'scrooloose/syntastic'
-    use 'kien/ctrlp.vim'
-    use 'scrooloose/nerdtree'
+    use {'nvim-telescope/telescope.nvim', requires = 'nvim-lua/plenary.nvim'}
+    use 'preservim/nerdtree'
     use 'tpope/vim-dadbod'
 
     -- use 'bling/vim-airline'
@@ -62,17 +61,11 @@ require("packer").startup(function(use)
     use 'sotte/presenting.vim'
 
     -- Syntax Highlighting
-    use 'cakebaker/scss-syntax.vim'
-    use 'pangloss/vim-javascript'
-    use 'vim-ruby/vim-ruby'
-    use 'vim-scripts/matchit.zip'
-    use 'oscarh/vimerl'
+    -- Language syntax comes from Neovim's bundled runtime files plus
+    -- treesitter (see lua/treesitter.lua). Only plugins that add behaviour
+    -- Neovim has no equivalent for live here. See docs/cut-list.md.
     use 'sukima/xmledit'
-    use 'mxw/vim-jsx'
     use 'gorodinskiy/vim-coloresque'
-    use 'groenewege/vim-less'
-    use 'tpope/vim-markdown'
-    use 'tpope/vim-haml'
 
 	-- golang
 	use 'ray-x/go.nvim'

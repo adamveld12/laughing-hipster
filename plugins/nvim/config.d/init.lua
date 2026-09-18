@@ -88,29 +88,6 @@ vim.g.node_host_prog = vim.call('system', 'which neovim-node-host | tr -d "\n"')
 
 -------------------- PLUGIN SETTINGS ----------------------
 
--- syntastic
-vim.g.syntastic_go_checkers = {'go', 'errcheck', 'gofmt', 'golint', 'govet'}
-
--- ctrlp
-vim.g.ctrlp_map = '<C-P>'
-vim.g.ctrlp_cmd = 'CtrlPLastMode'
-vim.g.ctrlp_extensions = {'line'}
-vim.g.ctrlp_show_hidden = 1
-
--- 'c' - the directory of the current file.
--- 'a' - the directory of the current file, unless it is a subdirectory of the cwd
--- 'r' - the nearest ancestor of the current file that contains one of these directories or files: .git .hg .svn .bzr _darcs
--- 'w' - modifier to "r": start search from the cwd instead of the current file's directory
--- 0 or '' (empty string) - disable this feature.
-vim.g.ctrlp_working_path_mode = 'ra'
-
-vim.g.ctrlp_by_filename = 0
-vim.g.ctrlp_max_files = 5000
-vim.g.ctrlp_custom_ignore = {
-    dir = [[\v[\/]\.(git|hg|svn)$]],
-    file = [[\v\.(exe|so|dll)$]],
-}
-
 -- neovide
 if vim.g.neovide then
     vim.g.neovide_cursor_vfx_mode = 'railgun'
@@ -136,6 +113,12 @@ map('', '<leader>e', ':lw 5<CR>')
 -- nerdtree
 map('n', '<leader>n', ':NERDTreeToggle %:p:h<CR>', {noremap = false})
 map('n', '<leader>m', ':NERDTreeClose<CR>:NERDTreeFind<CR>', {noremap = false})
+
+-- telescope (replaces ctrlp's <C-P>)
+map('n', '<C-P>', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>')
 
 -- pane resizing
 map('', '<C-w>', ':resize -3<Cr>')
@@ -232,6 +215,7 @@ if not ok then
 end
 
 pcall(require, 'lsp')
+pcall(require, 'treesitter')
 
 -- packer just cloned itself; pull everything down on this first run
 if ok and bootstrapped then
