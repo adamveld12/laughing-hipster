@@ -24,7 +24,6 @@ if [[ -e "${GIT_GLOBAL_CONFIG}" || -L "${GIT_GLOBAL_CONFIG}" ]]; then
 
     if [[ "${GIT_GLOBAL_CONFIG_TARGET}" != "${GIT_EXTRAS_CONFIG}" && "${GIT_GLOBAL_CONFIG_TARGET}" != "${GIT_LEGACY_CONFIG}" ]]; then
         if [[ -e "${GIT_EXTRAS_LOCAL_CONFIG}" || -L "${GIT_EXTRAS_LOCAL_CONFIG}" ]]; then
-            echo "[git-extras] Cannot install ${GIT_GLOBAL_CONFIG}: ${GIT_EXTRAS_LOCAL_CONFIG} already exists" >&2;
             GIT_EXTRAS_INSTALL_CONFIG=false;
         elif [[ -L "${GIT_GLOBAL_CONFIG}" ]]; then
             files_debug_log "[git-extras] preserving ${GIT_GLOBAL_CONFIG} as ${GIT_EXTRAS_LOCAL_CONFIG}";
