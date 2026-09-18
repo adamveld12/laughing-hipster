@@ -3,13 +3,11 @@
 STARSHIP_VERSION=${STARSHIP_VERSION:-"latest"};
 STARSHIP_CONFIG_DIR="${FILES_USER_CONFIG}/starship";
 
-if ! [[ -f "$(which starship 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
-    asdf plugin add starship;
-    asdf install starship ${STARSHIP_VERSION};
-    asdf local starship ${STARSHIP_VERSION};
+if declare -F asdf_ensure_tool >/dev/null 2>&1; then
+    asdf_ensure_tool starship "${STARSHIP_VERSION}" "https://github.com/gr1m0h/asdf-starship.git";
 fi
 
-if [[ -f "$(which starship 2>&1)" ]]; then
+if command -v asdf >/dev/null 2>&1 && asdf which starship >/dev/null 2>&1; then
 	export STARSHIP_CACHE="${STARSHIP_CONFIG_DIR}/cache";
 	export STARSHIP_CONFIG="${STARSHIP_CONFIG_DIR}/starship.toml";
 

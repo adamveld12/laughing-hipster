@@ -1,20 +1,43 @@
 #!/bin/env bash
 
-KUBECTL_VERSION=${KUBECTL_VERSION:-"latest"};
+KUBECTL_VERSION="${KUBECTL_VERSION:-latest}";
+HELM_VERSION="${HELM_VERSION:-latest}";
+KREW_VERSION="${KREW_VERSION:-latest}";
+K9S_VERSION="${K9S_VERSION:-latest}";
+SOPS_VERSION="${SOPS_VERSION:-latest}";
 
-if ! [[ -f "$(which kubectl 2>&1)" ]] && [[ -d "${HOME}/.asdf" ]]; then
-    asdf plugin add kubectl;
-    asdf install kubectl ${KUBECTL_VERSION};
+if declare -F asdf_ensure_tool >/dev/null 2>&1; then
+    asdf_ensure_tool kubectl "${KUBECTL_VERSION}" "https://github.com/asdf-community/asdf-kubectl.git";
+    asdf_ensure_tool helm "${HELM_VERSION}" "https://github.com/Antiarchitect/asdf-helm.git";
+    asdf_ensure_tool krew "${KREW_VERSION}" "https://github.com/bjw-s/asdf-krew.git";
+    asdf_ensure_tool k9s "${K9S_VERSION}" "https://github.com/looztra/asdf-k9s.git";
+    asdf_ensure_tool sops "${SOPS_VERSION}" "https://github.com/feniix/asdf-sops.git";
 fi
 
+if command -v asdf >/dev/null 2>&1 && asdf which kubectl >/dev/null 2>&1 && [[ -d "${BASH_COMPLETION_DIR}" ]]; then
+    [[ -f "${BASH_COMPLETION_DIR}/kubectl" ]] || kubectl completion bash > "${BASH_COMPLETION_DIR}/kubectl";
+fi
 
 # This command is used a LOT both below and in daily life
 alias k=kubectl
 
-if [[ -f "$(which kubectl 2>&1)" ]]; then
+if command -v kubectl >/dev/null 2>&1; then
     source <(kubectl completion bash);
     complete -F __start_kubectl k;
 fi
+
+if command -v helm >/dev/null 2>&1; then
+    source <(helm completion bash);
+fi
+
+if command -v k9s >/dev/null 2>&1; then
+    source <(k9s completion bash);
+fi
+
+helm-setup-plugins() {
+    helm plugin install https://github.com/databus23/helm-diff
+    helm plugin install https://github.com/jkroepke/helm-secrets --version v3.12.0
+}
 
 
 # Execute a kubectl command against all namespaces

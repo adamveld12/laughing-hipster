@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Podman Image CI
 
 on: [push]
 
@@ -7,10 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Build the Docker image
+      - name: Install Podman
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes podman
+      - name: Build and publish the container image
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+          printf '%s' "${DOCKER_PASS}" | podman login docker.io --username "${DOCKER_USER}" --password-stdin
           VERSION=${GITHUB_REF#"refs/heads/"} COMMIT_SHA=${GITHUB_SHA} INITIATOR=${GITHUB_ACTOR} make publish
