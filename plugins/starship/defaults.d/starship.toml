@@ -5,15 +5,10 @@ command_timeout = 1000
 
 
 format = """
-${custom.bs_universe}\
-${custom.bs_env}\
 $gcloud\
 $azure\
 $aws\
-${custom.bs_cloudflare}\
-${custom.dbx}\
 ${custom.bs_aws}\
-${custom.oci}\
 $line_break\
 $time\
 $directory\
@@ -76,38 +71,8 @@ format = '$symbol[($username)]($style) '
 format = '$symbol[$account(@$domain)(\($project\))]($style) '
 symbol = 'GCP:'
 
-[custom.dbx]
-command = "basename $(jq -r '(.tokens | keys)[0]' ~/.databricks/token-cache.json)"
-style = 'red'
-format = 'DBX:[$output]($style) '
-when = 'test -f ~/.databricks/token-cache.json'
-
-[custom.bs_universe]
-command = "echo $BOBSLED_UNIVERSE"
-style = 'blue'
-format = 'Universe:[$output]($style) '
-when = 'test ! -z $BOBSLED_UNIVERSE'
-
-[custom.bs_env]
-command = "echo $ENV-${BOBSLED_UNIVERSE}"
-style = 'blue'
-format = 'Env:[$output]($style) '
-when = 'test ! -z $ENV'
-
-[custom.bs_aws]
+[custom.aws]
 command = "aws sts get-caller-identity | jq -r '.Arn'"
 style = 'bold yellow'
 format = 'AWS:[$output]($style) '
 when = 'test ! -z "${AWS_ACCESS_KEY_ID}"'
-
-[custom.bs_cloudflare]
-command = "echo ${CLOUDFLARE_API_TOKEN} | cut -c 1-7"
-style = 'yellow'
-format = 'CF:[$output]($style) '
-when = 'test ! -z "${CLOUDFLARE_API_TOKEN}"'
-
-[custom.oci]
-command = "echo ${OCI_CLI_PROFILE}"
-style = 'bright-red'
-format = 'OCI:[$output]($style) '
-when = 'test ! -z "$OCI_CLI_PROFILE"'
