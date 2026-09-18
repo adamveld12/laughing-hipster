@@ -10,6 +10,6 @@ if ! [[ -d "${FILES_EXTRAS_DIR}" ]]; then
 	files_linkdir "${FILES_PLUGIN_ROOT}/defaults.d/" "${FILES_EXTRAS_DIR}/";
 fi
 
-for file in "${FILES_EXTRAS_DIR}"/*; do
+for file in "${FILES_EXTRAS_DIR}"/*.sh; do
 	[[ -f "${file}" ]] && source "${file}";
 done;

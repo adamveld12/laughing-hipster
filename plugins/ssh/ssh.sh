@@ -8,6 +8,10 @@ files_linkdir "${FILES_PLUGIN_ROOT}/defaults.d" "${SSH_DIR}";
 
 if [[ -f "$(which ssh-agent 2>&1)" ]]; then
     eval $(ssh-agent) 2>&1 > /dev/null;
+
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+        ssh-add --apple-load-keychain 2>/dev/null;
+    fi
 fi
 
 

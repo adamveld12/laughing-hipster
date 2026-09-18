@@ -119,6 +119,16 @@ function gitio() {
 	curl -i http://git.io/ -F "url=${2}" -F "code=${1}";
 }
 
+function check_certificate() {
+	if [ -z "${1}" ]; then
+		echo "Fetches an SSL cert and dumps details in a human readable format"
+		echo "Usage: 'check_certificate www.example.com'";
+		return 1;
+	fi
+
+	openssl s_client -connect "${1}:443" 2>/dev/null | openssl x509 -noout -text -dates
+}
+
 # list files
 alias ll='ls -hGla'
 
@@ -130,3 +140,5 @@ alias gmt='git mergetool'
 alias grc='git rebase --continue'
 alias gk='git fetch origin; git remote prune origin; gitk --all &'
 alias gl='git log --pretty=format:"%h %ar by %an: %s"'
+
+alias c="claude --model opusplan --permission-mode plan"
