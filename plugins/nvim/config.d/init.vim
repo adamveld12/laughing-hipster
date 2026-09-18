@@ -79,8 +79,9 @@ set showcmd
 " Start scrolling x lines before the horizontal window border
 set scrolloff=4
 
-lua require('plugins')
-lua require('lsp')
+"lua require('plugins')
+"lua require('lsp')
+lua require('init')
 
 " Change mapleader
 let mapleader = ","
