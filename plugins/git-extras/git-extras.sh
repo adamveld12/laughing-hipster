@@ -49,6 +49,7 @@ unset GIT_EXTRAS_CONFIG GIT_EXTRAS_LOCAL_CONFIG GIT_GLOBAL_CONFIG GIT_LEGACY_CON
 unset GIT_LEGACY_XDG_CONFIG GIT_EXTRAS_INSTALL_CONFIG GIT_GLOBAL_CONFIG_TARGET;
 
 alias gs='git status';
+alias gp='git pull';
 alias gm='git merge --ff-only';
 alias gpr='git pull --rebase';
 alias gmt='git mergetool';

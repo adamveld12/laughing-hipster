@@ -41,7 +41,9 @@ style = "bold white"
 [directory]
 #style = "blue"
 read_only = ""
-truncation_length = 4
+home_symbol = "~"
+truncation_length = 0
+truncate_to_repo = false
 
 [kubernetes]
 format = '[⛵ $context](dimmed green) '

@@ -75,7 +75,7 @@ load_env() {
 	fi
 
 	if [[ -z "${FILES_PLUGINS}" ]]; then
-		export FILES_PLUGINS=("brew" "ssh" "vim" "git-extras" "asdf" "kubernetes" "starship" "extras");
+		export FILES_PLUGINS=("brew" "ssh" "vim" "nvim" "git-extras" "asdf" "kubernetes" "starship" "extras");
 	fi
 	files_debug_log "[load_env] using plugins FILES_PLUGINS=${FILES_PLUGINS}";
 
