@@ -142,7 +142,6 @@ map('', '<leader>x', ':%s/\\s\\+$//<CR>:noh<Cr>')
 
 -- reload vim config
 map('', '<leader>rr', ':so ' .. config_dir .. '/init.lua<CR>')
-map('n', '<Leader>sv', ':source $MYVIMRC<CR>')
 
 -- open vimrc in a new tab
 map('', '<leader>v', ':tabedit ' .. config_dir .. '/init.lua<CR>')
