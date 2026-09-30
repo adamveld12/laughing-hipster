@@ -116,7 +116,7 @@ map('n', '<leader>m', ':NERDTreeClose<CR>:NERDTreeFind<CR>', {noremap = false})
 
 -- telescope (replaces ctrlp's <C-P>)
 map('n', '<C-P>', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
+map('n', '<C-f>', '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>')
 
