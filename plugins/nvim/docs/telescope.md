@@ -15,7 +15,7 @@ Bindings from `config.d/init.lua` (leader is `,`):
 | Key | Picker |
 |---|---|
 | `<C-P>` | `find_files` — same key ctrlp used |
-| `,fg` | `live_grep` — search file *contents* as you type |
+| `<C-f>` | `live_grep` — search file *contents* as you type |
 | `,fb` | `buffers` |
 | `,fh` | `help_tags` |
 
@@ -37,7 +37,7 @@ available.
 
 - **Opening a file you can only half-remember.** `<C-P>` then fragments of the name; the preview
   confirms before you commit.
-- **Finding where a symbol is used** across a repo with `,fg`, then `<Tab>` to mark the
+- **Finding where a symbol is used** across a repo with `<C-f>`, then `<Tab>` to mark the
   interesting hits and `<C-q>` to turn them into a quickfix list to work through.
 - **Reading docs without leaving the buffer** — `,fh` searches help tags with the help text
   previewed live.
