@@ -81,7 +81,7 @@ set scrolloff=4
 
 "lua require('plugins')
 "lua require('lsp')
-"lua require('init')
+lua require('init')
 
 " Change mapleader
 let mapleader = ","
