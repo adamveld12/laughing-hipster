@@ -10,12 +10,15 @@ symbols — in a floating window with a live preview. Replaced `ctrlp.vim` in th
 
 ## 80/20 usage
 
-Bindings from `config.d/init.lua` (leader is `,`):
+Bindings from the TELESCOPE section of `config.d/init.lua` (leader is `,`). `<C-P>`, `<C-f>`,
+`,tp` and `,tf` search from the current buffer's git root (falling back to the cwd), so they
+see the whole repo even though `autochdir` keeps the cwd at the current file's folder:
 
 | Key | Picker |
 |---|---|
 | `<C-P>` | `find_files` — same key ctrlp used |
 | `<C-f>` | `live_grep` — search file *contents* as you type |
+| `,tp` / `,tf` | `find_files` / `live_grep`, but `<CR>` opens the result in a new tab |
 | `,fb` | `buffers` |
 | `,fh` | `help_tags` |
 
@@ -24,13 +27,15 @@ Inside a picker:
 | Key | Does |
 |---|---|
 | `<C-n>` / `<C-p>` | next / previous result |
-| `<CR>` | open |
+| `<CR>` | open in a new vertical split (new tab under `,tp` / `,tf`) |
+| `<C-o>` | open in the current window, replacing it |
 | `<C-x>` / `<C-v>` / `<C-t>` | open in split / vsplit / new tab |
 | `<C-u>` / `<C-d>` | scroll the preview |
 | `<Tab>` | multi-select, then `<C-q>` sends the selection to quickfix |
 | `<Esc>` | close (press twice from insert) |
 
-`live_grep` needs `ripgrep` on `PATH`. `find_files` respects `.gitignore` when `fd` or `rg` is
+Results never open inside the NERDTree window; picking from there uses the first regular
+window in the tab instead. `live_grep` needs `ripgrep` on `PATH`. `find_files` respects `.gitignore` when `fd` or `rg` is
 available.
 
 ## When to use

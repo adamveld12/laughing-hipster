@@ -114,11 +114,7 @@ map('', '<leader>e', ':lw 5<CR>')
 map('n', '<leader>n', ':NERDTreeToggle %:p:h<CR>', {noremap = false})
 map('n', '<leader>m', ':NERDTreeClose<CR>:NERDTreeFind<CR>', {noremap = false})
 
--- telescope (replaces ctrlp's <C-P>)
-map('n', '<C-P>', '<cmd>Telescope find_files<CR>')
-map('n', '<C-f>', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>')
+-- telescope (<C-P>, <C-f>, ,tp, ,tf, ,fb, ,fh) is set up under TELESCOPE below
 
 -- pane resizing
 map('', '<C-w>', ':resize -3<Cr>')
@@ -142,7 +138,6 @@ map('', '<leader>x', ':%s/\\s\\+$//<CR>:noh<Cr>')
 
 -- reload vim config
 map('', '<leader>rr', ':so ' .. config_dir .. '/init.lua<CR>')
-map('n', '<Leader>sv', ':source $MYVIMRC<CR>')
 
 -- open vimrc in a new tab
 map('', '<leader>v', ':tabedit ' .. config_dir .. '/init.lua<CR>')
@@ -220,6 +215,71 @@ pcall(require, 'treesitter')
 -- packer just cloned itself; pull everything down on this first run
 if ok and bootstrapped then
     vim.cmd('PackerSync')
+end
+
+-------------------- TELESCOPE ----------------------------
+-- Pickers search from the git root of the current buffer, not the cwd:
+-- autochdir (OPTIONS above) keeps the cwd at the current file's directory,
+-- and telescope's default (vim.uv.cwd()) would only see that one folder.
+
+local has_telescope, telescope = pcall(require, 'telescope')
+if has_telescope then
+    local actions = require('telescope.actions')
+    local builtin = require('telescope.builtin')
+
+    -- Never open a result inside the NERDTree window: hand telescope the first
+    -- regular window in the tab instead. 0 means "the window you came from".
+    local function selection_window()
+        if vim.bo.filetype ~= 'nerdtree' then return 0 end
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype ~= 'nerdtree' and vim.bo[buf].buftype == '' then
+                return win
+            end
+        end
+        return 0
+    end
+
+    -- <CR> opens in a new vertical split; <C-o> keeps the old "replace this
+    -- window" behaviour. <C-x>/<C-v>/<C-t> stay as telescope's defaults.
+    local select_maps = {
+        ['<CR>'] = actions.select_vertical,
+        ['<C-o>'] = actions.select_default,
+    }
+
+    telescope.setup {
+        defaults = {
+            get_selection_window = selection_window,
+            mappings = {i = select_maps, n = select_maps},
+        },
+    }
+
+    local function project_root()
+        return vim.fs.root(0, '.git') or vim.uv.cwd()
+    end
+
+    -- picker: a telescope.builtin function. tab: open the result in a new tab.
+    local function from_root(picker, tab)
+        return function()
+            picker {
+                cwd = project_root(),
+                attach_mappings = function(_, map)
+                    if tab then
+                        map({'i', 'n'}, '<CR>', actions.select_tab)
+                    end
+                    return true
+                end,
+            }
+        end
+    end
+
+    local map = vim.keymap.set
+    map('n', '<C-P>', from_root(builtin.find_files))
+    map('n', '<C-f>', from_root(builtin.live_grep))
+    map('n', '<leader>tp', from_root(builtin.find_files, true))
+    map('n', '<leader>tf', from_root(builtin.live_grep, true))
+    map('n', '<leader>fb', builtin.buffers)
+    map('n', '<leader>fh', builtin.help_tags)
 end
 
 -------------------- COLORSCHEME --------------------------
