@@ -181,14 +181,6 @@ map('n', 'QQ', ':q!<CR>')
 -- paste on selection
 map('x', 'p', [["_dP]])
 
--- toggle comment with Ctrl-/ (built-in gc; remap so the gc mappings apply).
--- Most terminals send Ctrl-/ as <C-_>, so map both.
-for _, lhs in ipairs({'<C-/>', '<C-_>'}) do
-    vim.keymap.set('n', lhs, 'gcc', {remap = true, desc = 'Toggle comment'})
-    vim.keymap.set('x', lhs, 'gc', {remap = true, desc = 'Toggle comment'})
-    vim.keymap.set('i', lhs, '<Esc>gcca', {remap = true, desc = 'Toggle comment'})
-end
-
 -------------------- AUTOCOMMANDS -------------------------
 
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -202,25 +194,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd('InsertLeavePre', {
     group = vim.api.nvim_create_augroup('strip_trailing_ws', {clear = true}),
     command = [[:%s/\s\+$//e]],
-})
-
--- Reload buffers changed on disk by other processes (needs tmux focus-events
--- for FocusGained). Buffers with unsaved edits still prompt instead.
-opt.autoread = true
-local autoread = vim.api.nvim_create_augroup('autoread', {clear = true})
-vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI', 'TermLeave'}, {
-    group = autoread,
-    callback = function()
-        if vim.fn.mode() ~= 'c' and vim.fn.getcmdwintype() == '' then
-            vim.cmd('checktime')
-        end
-    end,
-})
-vim.api.nvim_create_autocmd('FileChangedShellPost', {
-    group = autoread,
-    callback = function(args)
-        vim.notify('Reloaded ' .. vim.fn.fnamemodify(args.file, ':~:.') .. ' (changed on disk)', vim.log.levels.WARN)
-    end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePost', {

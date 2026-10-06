@@ -10,7 +10,9 @@ files_debug_on() {
 
 # debug logging
 files_debug_log() {
-	[[ -z "${FILES_DEBUG}" ]] || echo -e "# [FILES INFO] $@"
+	if ! [[ -z "${FILES_DEBUG}" ]]; then
+		echo -e "# [INFO] $@";
+	fi
 }
 
 # symbolic links all files in a directory into the target
