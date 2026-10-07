@@ -21,7 +21,7 @@ shopt -s histappend;                                        # Append to the hist
 export HISTCONTROL="ignoreboth:erasedups";                    # No duplicate commands in history
 export HISTSIZE=25000;
 export HISTFILESIZE=10000;
-export HISTIGNORE="[   ]*:&:bg:fg:exit:clear:ls:history:gs:code:git:reset:cd:echo:cat";   # Don't save these commands in the history
+export HISTIGNORE='[   ]*:&:bg:fg:exit:clear:ls:history:gs:code:git:reset:cd:echo:cat:pwd:\[\[ *:\[ *:test *:ls *:ll:ll *:which *:type *:man *:* --help:* -h:load_env:load_env *';   # Don't save these commands in the history
 export HISTORY_COMMAND="history -a;";                             # flush each command to history immediately
 # update
 export PROMPT_COMMAND="$PROMPT_COMMAND $HISTORY_COMMAND";

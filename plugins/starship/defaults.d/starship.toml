@@ -8,7 +8,8 @@ format = """
 $gcloud\
 $azure\
 $aws\
-${custom.bs_aws}\
+$kubernetes\
+${custom.aws}\
 $line_break\
 $time\
 $directory\
@@ -46,8 +47,20 @@ truncation_length = 0
 truncate_to_repo = false
 
 [kubernetes]
-format = '[⛵ $context](dimmed green) '
+format = '[⛵ $context]($style) '
+style = 'dimmed green'
 disabled = false
+
+# EKS contexts: arn:aws:eks:<region>:<account>:cluster/<name> -> <account>/<region>/<name>
+# First match wins, so the prod entry (red) has to come before the catch-all.
+[[kubernetes.contexts]]
+context_pattern = 'arn:aws:eks:(?P<region>[\w-]+):(?P<account>\d+):cluster/(?P<cluster>[\w-]*prod[\w-]*)'
+context_alias = '$account/$region/$cluster'
+style = 'bold red'
+
+[[kubernetes.contexts]]
+context_pattern = 'arn:aws:eks:(?P<region>[\w-]+):(?P<account>\d+):cluster/(?P<cluster>[\w-]+)'
+context_alias = '$account/$region/$cluster'
 
 [git_metrics]
 disabled = false

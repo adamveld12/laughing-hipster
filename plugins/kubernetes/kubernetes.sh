@@ -39,6 +39,10 @@ helm-setup-plugins() {
     helm plugin install https://github.com/jkroepke/helm-secrets --version v3.12.0
 }
 
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH";
+
+alias kubectx='kubectl-ctx'
+
 
 # Execute a kubectl command against all namespaces
 alias kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
