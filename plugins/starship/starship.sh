@@ -17,7 +17,7 @@ if command -v asdf >/dev/null 2>&1 && asdf which starship >/dev/null 2>&1; then
 
 	starship_run() {
 		local shell=${1:-bash};
-		eval "$(starship init ${1} --print-full-init)";
+		eval "$(starship init --print-full-init ${shell})";
 		export PROMPT_COMMAND='PS1=$(starship prompt)';
 	}
 
