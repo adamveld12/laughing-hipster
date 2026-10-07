@@ -23,3 +23,16 @@ if command -v brew >/dev/null 2>&1; then
     [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] || brew install bash-completion@2;
     [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && source "$(brew --prefix)/etc/profile.d/bash_completion.sh";
 fi
+
+
+brew_setup_deps() {
+	if ! [[ -x "$(brew --prefix)/bin/fzf" ]]; then
+		brew install fzf
+	fi
+
+	eval "$(fzf --bash)";
+}
+
+brew_setup_deps;
+
+

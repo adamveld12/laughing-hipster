@@ -8,7 +8,8 @@ format = """
 $gcloud\
 $azure\
 $aws\
-${custom.bs_aws}\
+$kubernetes\
+${custom.aws}\
 $line_break\
 $time\
 $directory\
