@@ -98,8 +98,8 @@ end
 map('n', '<Space>', ':noh<CR>')   -- Clear highlights
 map('n', '\\', '<cmd>noh<CR>')    -- Clear highlights
 
--- replace with regular newlines
-map('', '<leader>k', ':%s/ //g<CR>')
+-- strip carriage returns (^M from CRLF files)
+map('', '<leader>k', ':%s/\\r//g<CR>')
 
 -- list buffers
 map('', '<leader>w', ':buffers<CR>')

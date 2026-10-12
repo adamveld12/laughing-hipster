@@ -45,7 +45,7 @@ Conflicts to know about:
 | `Space` / `\` | clear search highlight |
 | `Ctrl-/` | toggle comment (normal, visual, insert) |
 | `,x` | strip trailing whitespace |
-| `,k` | delete every space in the file (`:%s/ //g`) |
+| `,k` | strip carriage returns (`^M` from CRLF files) |
 | `,j` / `,J` | join lines / join without adding spaces |
 | `Shift-u` | half-page up |
 | `>` / `<` (visual) | indent and keep the selection |
