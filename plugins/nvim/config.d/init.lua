@@ -117,10 +117,20 @@ map('n', '<leader>m', ':NERDTreeClose<CR>:NERDTreeFind<CR>', {noremap = false})
 -- telescope (<C-P>, <C-f>, ,tp, ,tf, ,fb, ,fh) is set up under TELESCOPE below
 
 -- pane resizing
-map('', '<C-w>', ':resize -3<Cr>')
-map('', '<C-x>', ':resize +3<Cr>')
-map('', '<C-a>', ':vertical resize +3<Cr>')
-map('', '<C-d>', ':vertical resize -3<Cr>')
+map('', '<C-w>', ':resize -4<Cr>')
+map('', '<C-x>', ':resize +4<Cr>')
+map('', '<C-a>', ':vertical resize +4<Cr>')
+map('', '<C-d>', ':vertical resize -4<Cr>')
+
+-- Ctrl+Shift variants (needs CSI-u key encoding from the terminal/tmux)
+map('', '<C-S-w>', ':resize -4<Cr>')
+map('', '<C-S-x>', ':resize +4<Cr>')
+map('', '<C-S-a>', ':vertical resize +4<Cr>')
+map('', '<C-S-d>', ':vertical resize -4<Cr>')
+map('', '<C-S-h>', ':vertical resize -4<Cr>')
+map('', '<C-S-l>', ':vertical resize +4<Cr>')
+map('', '<C-S-k>', ':resize +4<Cr>')
+map('', '<C-S-j>', ':resize -4<Cr>')
 
 map('', '<C-S-Left>', ':vertical resize -5<CR>')
 map('', '<C-S-Right>', ':vertical resize +5<CR>')
