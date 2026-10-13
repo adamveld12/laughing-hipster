@@ -11,8 +11,9 @@ symbols — in a floating window with a live preview. Replaced `ctrlp.vim` in th
 ## 80/20 usage
 
 Bindings from the TELESCOPE section of `config.d/init.lua` (leader is `,`). `<C-P>`, `<C-f>`,
-`,tp` and `,tf` search from the current buffer's git root (falling back to the cwd), so they
-see the whole repo even though `autochdir` keeps the cwd at the current file's folder:
+`,tp` and `,tf` search from the current buffer's git root, so they see the whole repo even though
+`autochdir` keeps the cwd at the current file's folder. Outside a git repo they use the root of the
+NERDTree open in this tab, and with no tree open, the file's own folder:
 
 | Key | Picker |
 |---|---|

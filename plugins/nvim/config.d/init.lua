@@ -255,7 +255,8 @@ if ok and bootstrapped then
 end
 
 -------------------- TELESCOPE ----------------------------
--- Pickers search from the git root of the current buffer, not the cwd:
+-- Pickers search from the git root of the current buffer (then the NERDTree
+-- root, then the file's directory), not the cwd:
 -- autochdir (OPTIONS above) keeps the cwd at the current file's directory,
 -- and telescope's default (vim.uv.cwd()) would only see that one folder.
 
@@ -291,8 +292,22 @@ if has_telescope then
         },
     }
 
+    -- root of the NERDTree open in this tab, or nil
+    local function nerdtree_root()
+        if vim.fn.exists('g:NERDTree') == 1
+            and vim.fn.eval('g:NERDTree.IsOpen()') == 1 then
+            return vim.fn.eval('g:NERDTree.ForCurrentTab().getRoot().path.str()')
+        end
+    end
+
+    -- git root, then NERDTree root, then the file's directory (cwd for
+    -- unnamed buffers). From inside the tree, look for git from its root.
     local function project_root()
-        return vim.fs.root(0, '.git') or vim.uv.cwd()
+        local tree = nerdtree_root()
+        local start = vim.bo.filetype == 'nerdtree' and tree or 0
+        local file_dir = vim.bo.buftype == '' and vim.fn.expand('%:p:h') or ''
+        return vim.fs.root(start, '.git') or tree
+            or (file_dir ~= '' and file_dir) or vim.uv.cwd()
     end
 
     -- picker: a telescope.builtin function. tab: open the result in a new tab.
