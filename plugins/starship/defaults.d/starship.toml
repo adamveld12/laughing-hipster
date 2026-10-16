@@ -46,11 +46,6 @@ home_symbol = "~"
 truncation_length = 0
 truncate_to_repo = false
 
-[kubernetes]
-format = '[⛵ $context]($style) '
-style = 'dimmed green'
-disabled = false
-
 # EKS contexts: arn:aws:eks:<region>:<account>:cluster/<name> -> <account>/<region>/<name>
 # First match wins, so the prod entry (red) has to come before the catch-all.
 [[kubernetes.contexts]]
@@ -59,8 +54,19 @@ context_alias = '$account/$region/$cluster'
 style = 'bold red'
 
 [[kubernetes.contexts]]
+context_pattern = 'arn:aws:eks:(?P<region>[\w-]+):(?P<account>\d+):cluster/(?P<cluster>[\w-]*stage[\w-]*)'
+context_alias = '$account/$region/$cluster'
+style = 'bold yellow'
+
+[[kubernetes.contexts]]
 context_pattern = 'arn:aws:eks:(?P<region>[\w-]+):(?P<account>\d+):cluster/(?P<cluster>[\w-]+)'
 context_alias = '$account/$region/$cluster'
+
+[kubernetes]
+format = '[⛵ $context]($style) '
+style = 'dimmed green'
+disabled = false
+
 
 [git_metrics]
 disabled = false
@@ -70,12 +76,19 @@ disabled = false
 style = "bold white"
 format = "[$time]($style) "
 
+[custom.aws]
+disabled = false
+command = "aws sts get-caller-identity | jq -r '.Arn'"
+style = 'bold yellow'
+format = 'AWS Static:[$output]($style) '
+when = 'test ! -z "${AWS_ACCESS_KEY_ID}"'
+
 [aws]
 force_display = false
 disabled = false
-symbol = 'AWS:'
+symbol = 'AWS: '
 style ='bold yellow'
-format = '$symbol[($profile)($duration)]($style) '
+format = '$symbol[($profile) ($duration)]($style) '
 
 [azure]
 disabled = false
@@ -86,8 +99,3 @@ format = '$symbol[($username)]($style) '
 format = '$symbol[$account(@$domain)(\($project\))]($style) '
 symbol = 'GCP:'
 
-[custom.aws]
-command = "aws sts get-caller-identity | jq -r '.Arn'"
-style = 'bold yellow'
-format = 'AWS:[$output]($style) '
-when = 'test ! -z "${AWS_ACCESS_KEY_ID}"'

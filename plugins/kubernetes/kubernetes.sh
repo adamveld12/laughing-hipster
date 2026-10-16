@@ -39,6 +39,29 @@ helm-setup-plugins() {
     helm plugin install https://github.com/jkroepke/helm-secrets --version v3.12.0
 }
 
+krew-setup-plugins() {
+	kubectl krew install ktop
+	kubectl krew install ctx
+}
+
+k8s-setup-local() {
+	if command -v brew >/dev/null 2>&1; then
+		brew install colima docker docker-buildx docker-credential-helper kubectl kind ctlptl tilt-dev/tap/tilt kustomize
+		brew install --cask headlamp
+
+		mkdir -p ~/.docker/cli-plugins
+		ln -sfn "$(brew --prefix)/opt/docker-buildx/bin/docker-buildx" ~/.docker/cli-plugins/docker-buildx
+
+	fi
+}
+
+k8s-local-up() {
+	if command -v colima >/dev/null 2>&1; then
+		colima start --cpu 4 --memory 8 --disk 60 --vm-type vz --vz-rosetta --mount-type virtiofs
+		ctlptl create cluster kind --registry=ctlptl-registry
+	fi
+}
+
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH";
 
 alias kubectx='kubectl-ctx'
