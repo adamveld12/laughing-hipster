@@ -98,8 +98,8 @@ end
 map('n', '<Space>', ':noh<CR>')   -- Clear highlights
 map('n', '\\', '<cmd>noh<CR>')    -- Clear highlights
 
--- replace with regular newlines
-map('', '<leader>k', ':%s/ //g<CR>')
+-- strip carriage returns (^M from CRLF files)
+map('', '<leader>k', ':%s/\\r//g<CR>')
 
 -- list buffers
 map('', '<leader>w', ':buffers<CR>')
@@ -117,10 +117,20 @@ map('n', '<leader>m', ':NERDTreeClose<CR>:NERDTreeFind<CR>', {noremap = false})
 -- telescope (<C-P>, <C-f>, ,tp, ,tf, ,fb, ,fh) is set up under TELESCOPE below
 
 -- pane resizing
-map('', '<C-w>', ':resize -3<Cr>')
-map('', '<C-x>', ':resize +3<Cr>')
-map('', '<C-a>', ':vertical resize +3<Cr>')
-map('', '<C-d>', ':vertical resize -3<Cr>')
+map('', '<C-w>', ':resize -4<Cr>')
+map('', '<C-x>', ':resize +4<Cr>')
+map('', '<C-a>', ':vertical resize +4<Cr>')
+map('', '<C-d>', ':vertical resize -4<Cr>')
+
+-- Ctrl+Shift variants (needs CSI-u key encoding from the terminal/tmux)
+map('', '<C-S-w>', ':resize -4<Cr>')
+map('', '<C-S-x>', ':resize +4<Cr>')
+map('', '<C-S-a>', ':vertical resize +4<Cr>')
+map('', '<C-S-d>', ':vertical resize -4<Cr>')
+map('', '<C-S-h>', ':vertical resize -4<Cr>')
+map('', '<C-S-l>', ':vertical resize +4<Cr>')
+map('', '<C-S-k>', ':resize +4<Cr>')
+map('', '<C-S-j>', ':resize -4<Cr>')
 
 map('', '<C-S-Left>', ':vertical resize -5<CR>')
 map('', '<C-S-Right>', ':vertical resize +5<CR>')
@@ -181,6 +191,14 @@ map('n', 'QQ', ':q!<CR>')
 -- paste on selection
 map('x', 'p', [["_dP]])
 
+-- toggle comment with Ctrl-/ (built-in gc; remap so the gc mappings apply).
+-- Most terminals send Ctrl-/ as <C-_>, so map both.
+for _, lhs in ipairs({'<C-/>', '<C-_>'}) do
+    vim.keymap.set('n', lhs, 'gcc', {remap = true, desc = 'Toggle comment'})
+    vim.keymap.set('x', lhs, 'gc', {remap = true, desc = 'Toggle comment'})
+    vim.keymap.set('i', lhs, '<Esc>gcca', {remap = true, desc = 'Toggle comment'})
+end
+
 -------------------- AUTOCOMMANDS -------------------------
 
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -194,6 +212,25 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd('InsertLeavePre', {
     group = vim.api.nvim_create_augroup('strip_trailing_ws', {clear = true}),
     command = [[:%s/\s\+$//e]],
+})
+
+-- Reload buffers changed on disk by other processes (needs tmux focus-events
+-- for FocusGained). Buffers with unsaved edits still prompt instead.
+opt.autoread = true
+local autoread = vim.api.nvim_create_augroup('autoread', {clear = true})
+vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI', 'TermLeave'}, {
+    group = autoread,
+    callback = function()
+        if vim.fn.mode() ~= 'c' and vim.fn.getcmdwintype() == '' then
+            vim.cmd('checktime')
+        end
+    end,
+})
+vim.api.nvim_create_autocmd('FileChangedShellPost', {
+    group = autoread,
+    callback = function(args)
+        vim.notify('Reloaded ' .. vim.fn.fnamemodify(args.file, ':~:.') .. ' (changed on disk)', vim.log.levels.WARN)
+    end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
@@ -218,7 +255,8 @@ if ok and bootstrapped then
 end
 
 -------------------- TELESCOPE ----------------------------
--- Pickers search from the git root of the current buffer, not the cwd:
+-- Pickers search from the git root of the current buffer (then the NERDTree
+-- root, then the file's directory), not the cwd:
 -- autochdir (OPTIONS above) keeps the cwd at the current file's directory,
 -- and telescope's default (vim.uv.cwd()) would only see that one folder.
 
@@ -254,8 +292,22 @@ if has_telescope then
         },
     }
 
+    -- root of the NERDTree open in this tab, or nil
+    local function nerdtree_root()
+        if vim.fn.exists('g:NERDTree') == 1
+            and vim.fn.eval('g:NERDTree.IsOpen()') == 1 then
+            return vim.fn.eval('g:NERDTree.ForCurrentTab().getRoot().path.str()')
+        end
+    end
+
+    -- git root, then NERDTree root, then the file's directory (cwd for
+    -- unnamed buffers). From inside the tree, look for git from its root.
     local function project_root()
-        return vim.fs.root(0, '.git') or vim.uv.cwd()
+        local tree = nerdtree_root()
+        local start = vim.bo.filetype == 'nerdtree' and tree or 0
+        local file_dir = vim.bo.buftype == '' and vim.fn.expand('%:p:h') or ''
+        return vim.fs.root(start, '.git') or tree
+            or (file_dir ~= '' and file_dir) or vim.uv.cwd()
     end
 
     -- picker: a telescope.builtin function. tab: open the result in a new tab.

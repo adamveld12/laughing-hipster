@@ -4,7 +4,8 @@ One file per plugin in `config.d/lua/plugins.lua`: what it is, what it does, the
 commands that cover most real use, and when it earns its place.
 
 Conventions for writing these live in [AGENTS.md](AGENTS.md). Plugins that were removed, and the
-evidence for each removal, are in [cut-list.md](cut-list.md).
+evidence for each removal, are in [cut-list.md](cut-list.md). This repo's own keybindings are in
+[keymaps.md](keymaps.md).
 
 ## Editor and tools
 
