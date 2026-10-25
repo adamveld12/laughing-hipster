@@ -12,7 +12,8 @@ padding = { x = 0, y = 0 }
 dynamic_title = true
 # Fallback title used until something sets it dynamically.
 title = "Alacritty"
-decorations = "Transparent"
+decorations = "Buttonless"
+startup_mode = "Maximized"
 opacity = 0.7
 
 [font]
