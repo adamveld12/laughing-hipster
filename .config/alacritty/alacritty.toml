@@ -82,3 +82,10 @@ action = "Quit"
 key = "W"
 mods = "Command"
 action = "Quit"
+
+# Shift+Enter -> Ctrl+J (LF): Claude Code's universal newline. Works around
+# Shift+Enter not being disambiguated in this Alacritty build.
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\n"
