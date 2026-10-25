@@ -1,0 +1,83 @@
+# Configuration for Alacritty, the GPU enhanced terminal emulator
+
+[env]
+# If this property is not set, alacritty will set it to xterm-256color.
+TERM = "xterm-256color"
+
+[window]
+dimensions = { columns = 80, lines = 24 }
+padding = { x = 0, y = 0 }
+# Allow the shell/apps (e.g. starship's window-title escape sequence) to set
+# the title dynamically.
+dynamic_title = true
+# Fallback title used until something sets it dynamically.
+title = "Alacritty"
+decorations = "Transparent"
+opacity = 0.7
+
+[font]
+size = 13.0
+
+[font.normal]
+family = "PragmataPro Mono Liga"
+
+[font.bold]
+family = "PragmataPro Mono Liga"
+
+[font.italic]
+family = "PragmataPro Mono Liga"
+
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[colors]
+draw_bold_text_with_bright_colors = true
+# Without this, any cell with an explicit background color (tmux status bar,
+# starship prompt segments, syntax highlighting, etc.) renders fully opaque
+# and ignores window.opacity.
+transparent_background_colors = true
+
+[bell]
+animation = "EaseOutExpo"
+duration = 1
+
+[selection]
+semantic_escape_chars = ",│`|:\"' ()[]{}<>"
+
+[mouse]
+hide_when_typing = false
+
+[[mouse.bindings]]
+mouse = "Middle"
+action = "PasteSelection"
+
+[terminal]
+shell = { program = "/bin/bash", args = ["--login"] }
+
+# Vi mode (scrollback navigation/selection) uses Alacritty's built-in default
+# toggle: Ctrl+Shift+Space. Not overridden.
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "Q"
+mods = "Command"
+action = "Quit"
+
+[[keyboard.bindings]]
+key = "W"
+mods = "Command"
+action = "Quit"

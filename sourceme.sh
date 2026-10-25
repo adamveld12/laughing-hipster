@@ -20,12 +20,14 @@ files_linkdir() {
 	local FORCE=$3;
 
 	if [[ -d "${SOURCE}" ]]; then
-		if ! [[ -z "${FORCE}" ]] || ! [[ -d "${DEST}" ]]; then
-			files_debug_log "LINKING $SOURCE -> $DEST"
-			mkdir -p ${DEST};
-			find "${SOURCE}" -type d | sed "s=${SOURCE}==" | xargs -I {} mkdir -p ${DEST}{};
-			find "${SOURCE}" -type f | sed "s=${SOURCE}==" | xargs -I {} ln -fs ${SOURCE}{} ${DEST}{};
-		fi
+		files_debug_log "LINKING $SOURCE -> $DEST"
+		mkdir -p ${DEST};
+		find "${SOURCE}" -type d | sed "s=${SOURCE}==" | xargs -I {} mkdir -p "${DEST}{}";
+		find "${SOURCE}" -type f | sed "s=${SOURCE}==" | while read -r REL; do
+			if ! [[ -z "${FORCE}" ]] || ! [[ -e "${DEST}${REL}" ]]; then
+				ln -fs "${SOURCE}${REL}" "${DEST}${REL}";
+			fi
+		done
 	fi
 
     # ln on windows pretty much only works with hardlinks it seems
