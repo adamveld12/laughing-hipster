@@ -18,6 +18,16 @@ nvim_setup_treesitter_cli() {
     brew install tree-sitter-cli;
 }
 
+nvim_setup_binary() {
+    command -v nvim >/dev/null 2>&1 && return 0;
+    command -v brew >/dev/null 2>&1 || return 0;
+
+    files_debug_log "[nvim] installing nvim via brew";
+    brew install neovim;
+}
+
+nvim_setup_binary;
+
 [[ -d "${FILES_USER_CONFIG}/nvim" ]] || nvim_setup_config
 
 if command -v nvim >/dev/null 2>&1; then
