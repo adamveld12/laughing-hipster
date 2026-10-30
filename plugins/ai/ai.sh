@@ -37,6 +37,7 @@ function ai_setup_skills() {
 	mkdir -p ${AI_AGENT_SKILLS_DIR} || return 1;
 
 	files_linkdir "${FILES_PLUGIN_AI_AGENT_SKILLS}/tools" "${AI_AGENT_SKILLS_DIR}/tools" true;
+	files_linkdir "${FILES_PLUGIN_AI_AGENT_SKILLS}/agentic" "${AI_AGENT_SKILLS_DIR}/agentic" true;
 }
 
 [[ -f "${AI_AGENT_SKILLS_DIR}/tools" ]] || ai_setup_skills

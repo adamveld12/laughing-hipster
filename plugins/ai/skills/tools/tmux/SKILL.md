@@ -8,6 +8,8 @@ license: Vibecoded
 
 Use tmux as a programmable terminal multiplexer for interactive work. Works on Linux and macOS with stock tmux; avoid custom config by using a private socket.
 
+For coordinating several coding agents across panes, sessions or hosts, use the `agentic-orchestration` skill instead (default socket, naming, message format, safety).
+
 ## Quickstart (isolated socket)
 
 ```bash
