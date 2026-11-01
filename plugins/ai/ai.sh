@@ -7,7 +7,7 @@ export AI_AGENT_SKILLS_DIR="${AI_AGENT_DIR}/skills";
 export FILES_PLUGIN_AI_AGENT_SKILLS="${FILES_PLUGIN_ROOT}/skills";
 
 
-# install opencode, jcode, codex and claude
+# install opencode, jcode, codex, claude, antigravity and pi
 if command -v brew >/dev/null 2>&1; then
 	AGENTS=("opencode" "jcode" "codex" "claude")
 
@@ -16,6 +16,16 @@ if command -v brew >/dev/null 2>&1; then
 			brew install $agent
 		fi
 	done
+
+	# antigravity ships as a cask, and its binary (agy) differs from the package name
+	if ! command -v agy >/dev/null 2>&1; then
+		brew install --cask antigravity-cli
+	fi
+
+	# pi coding agent, it's binary (pi) differs from the package name
+	if ! command -v pi >/dev/null 2>&1; then
+		brew install pi-coding-agent
+	fi
 fi
 
 
