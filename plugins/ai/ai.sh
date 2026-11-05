@@ -26,6 +26,14 @@ if command -v brew >/dev/null 2>&1; then
 	if ! command -v pi >/dev/null 2>&1; then
 		brew install pi-coding-agent
 	fi
+
+	if ! command -v otel-gui >/dev/null 2>&1; then
+		brew install metafab/tap/otel-gui;
+	fi
+
+	export OTEL_EXPORTER_OTLP_ENDPOINT='http://localhost:4318';
+	export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT='true';
+	alias omp="OTEL_SERVICE_NAME='omp' omp";
 fi
 
 
