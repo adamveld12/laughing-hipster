@@ -1,6 +1,6 @@
 ---
 name: workflow-brainstorm
-description: Grill the user to turn a Hail Spectrum product idea (new feature, enhancement, content, architecture change) into a rock-solid, single-problem PRD a builder can pick up. Use whenever the user says things like "I want to brainstorm...", "I need help thinking about/through...", "help me plan out...", or otherwise wants to flesh out, spec, or write a PRD for anything in the product.
+description: Grill the user to turn a idea (new feature, enhancement, content, architecture change) into a rock-solid, single-problem PRD a builder can pick up. Use whenever the user says things like "I want to brainstorm...", "I need help thinking about/through...", "help me plan out...", or otherwise wants to flesh out, spec, or write a PRD for anything in the product.
 allowed-tools: Read Grep Glob AskUserQuestion Bash(git:*) Bash(gh:*) WebSearch WebFetch
 ---
 
