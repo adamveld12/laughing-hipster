@@ -35,10 +35,12 @@ end
 -- async, and a no-op once the parsers are present
 pcall(ts.install, languages)
 
--- highlighting is Neovim's, not the plugin's -- see :h treesitter-highlight
+-- highlighting is Neovim's, not the plugin's -- see :h treesitter-highlight.
+-- Match every filetype: parser names differ from filetypes (sh -> bash,
+-- typescriptreact -> tsx), and vim.treesitter.start resolves that mapping.
+-- Filetypes without an installed parser keep regex syntax highlighting.
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('treesitter_highlight', {clear = true}),
-    pattern = languages,
     callback = function()
         pcall(vim.treesitter.start)
     end,

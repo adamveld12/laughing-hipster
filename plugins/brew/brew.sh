@@ -19,12 +19,13 @@ fi
 [[ -x "${MAC_BREW_PATH}/bin/brew" ]] && eval "$(${MAC_BREW_PATH}/bin/brew shellenv)";
 [[ -x "${APPLE_SILICON_BREW_PATH}/bin/brew" ]] && eval "$(${APPLE_SILICON_BREW_PATH}/bin/brew shellenv)";
 
+# `brew shellenv` above exports HOMEBREW_PREFIX; `brew --prefix` costs ~0.5s per call.
 if command -v brew >/dev/null 2>&1; then
-    [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] || brew install bash-completion@2;
-    [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && source "$(brew --prefix)/etc/profile.d/bash_completion.sh";
+    [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]] || brew install bash-completion@2;
+    [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]] && source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh";
 
     brew_setup_deps() {
-        [[ -x "$(brew --prefix)/bin/fzf" ]] || brew install fzf;
+        [[ -x "${HOMEBREW_PREFIX}/bin/fzf" ]] || brew install fzf;
         eval "$(fzf --bash)";
     }
 
