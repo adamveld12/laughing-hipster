@@ -15,19 +15,29 @@ files_debug_log() {
 
 # symbolic links all files in a directory into the target
 files_linkdir() {
-	local SOURCE=$1;
-	local DEST=$2;
+	# Strip trailing slashes so REL always starts with "/" and callers can
+	# pass either form (GNU find omits the doubled slash BSD find prints).
+	local SOURCE="${1%/}";
+	local DEST="${2%/}";
 	local FORCE=$3;
 
 	if [[ -d "${SOURCE}" ]]; then
 		files_debug_log "LINKING $SOURCE -> $DEST"
-		mkdir -p ${DEST};
-		find "${SOURCE}" -type d | sed "s=${SOURCE}==" | xargs -I {} mkdir -p "${DEST}{}";
-		find "${SOURCE}" -type f | sed "s=${SOURCE}==" | while read -r REL; do
-			if ! [[ -z "${FORCE}" ]] || ! [[ -e "${DEST}${REL}" ]]; then
-				ln -fs "${SOURCE}${REL}" "${DEST}${REL}";
+		# One find per call; everything else is a bash builtin unless a
+		# directory or link is actually missing or wrong. This runs on every
+		# shell start, so each extra process adds noticeable startup time.
+		local SRC_PATH REL TARGET;
+		while IFS= read -r SRC_PATH; do
+			REL="${SRC_PATH#"${SOURCE}"}";
+			TARGET="${DEST}${REL}";
+			if [[ -d "${SRC_PATH}" ]]; then
+				[[ -d "${TARGET}" ]] || mkdir -p "${TARGET}";
+			elif [[ "${TARGET}" -ef "${SRC_PATH}" ]]; then
+				continue; # already linked
+			elif [[ -n "${FORCE}" ]] || [[ ! -e "${TARGET}" ]]; then
+				ln -fs "${SRC_PATH}" "${TARGET}";
 			fi
-		done
+		done < <(find "${SOURCE}" -type d -o -type f);
 	fi
 
     # ln on windows pretty much only works with hardlinks it seems

@@ -14,7 +14,7 @@
 
 ## Users & context
 
-- **Primary user:** <persona / access flag, e.g. `meteorologistAccess` users>
+- **Primary user:** <persona / access flag>
 - **Trigger:** <when/why they reach for this>
 - **Today's workaround:** <what they do now>
 

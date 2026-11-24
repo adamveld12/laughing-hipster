@@ -6,13 +6,41 @@ export SSH_DIR="${HOME}/.ssh";
 
 files_linkdir "${FILES_PLUGIN_ROOT}/defaults.d" "${SSH_DIR}";
 
-if [[ -f "$(which ssh-agent 2>&1)" ]]; then
-    eval $(ssh-agent) 2>&1 > /dev/null;
+ssh_setup_agent() {
+	# Preserve a live forwarded agent on incoming SSH connections.
+	if [[ -n "${SSH_CONNECTION}" && -S "${SSH_AUTH_SOCK}" ]]; then
+		return 0;
+	fi
 
-    if [[ "$(uname -s)" == "Darwin" ]]; then
-        ssh-add --apple-load-keychain 2>/dev/null;
-    fi
-fi
+	# Prefer 1Password's SSH agent socket when present (macOS Group Container, then ~/.1password).
+	local op_sock;
+	for op_sock in \
+		"${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" \
+		"${HOME}/.1password/agent.sock"; do
+		if [[ -S "${op_sock}" ]]; then
+			export SSH_AUTH_SOCK="${op_sock}";
+			return 0;
+		fi
+	done
+
+	command -v ssh-agent >/dev/null 2>&1 || return 0;
+
+	# Reuse a single persistent agent socket so shells never leak ssh-agent processes.
+	local fallback_sock="${SSH_DIR}/ssh-agent.sock";
+	export SSH_AUTH_SOCK="${fallback_sock}";
+
+	# ssh-add -l exits 0 (has keys) or 1 (running, empty); exit 2 means missing/dead socket.
+	ssh-add -l >/dev/null 2>&1;
+	if [[ $? -eq 2 ]]; then
+		rm -f "${fallback_sock}";
+		eval "$(ssh-agent -a "${fallback_sock}" -s)" >/dev/null 2>&1;
+		if [[ "$(uname -s)" == "Darwin" ]]; then
+			ssh-add --apple-load-keychain >/dev/null 2>&1;
+		fi
+	fi
+}
+
+ssh_setup_agent;
 
 
 # Open an ssh tunnel
